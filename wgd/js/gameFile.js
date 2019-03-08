@@ -11,25 +11,17 @@ var gameFunc = function(){
 	//var akumax;
 	var sprite;
 	var bullets;
-	var firerate;
-	var nextFire;
 };
 
-	/*fire: function(){
-    if (game.time.now > nextFire && bullets.countDead() > 0)
-    {
-        nextFire = game.time.now + fireRate;
-        var bullet = bullets.getFirstDead();
-        bullet.reset(sprite.x - 8, sprite.y - 8);
-        game.physics.arcade.moveToPointer(bullet, 300);
-    }
-	}*/
-
+	var firerate;
+	var nextFire;
+	var playerSpriteWidth = 32, playerSpriteHeight = 48;
+	
 gameFunc.prototype = {
 	preload: function(){
 		game.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
-		game.load.spritesheet('dude', 'assets/starstruck/dude.png', 32, 48);
+		game.load.spritesheet('dude', 'assets/starstruck/dude.png', playerSpriteWidth, playerSpriteHeight);
 		game.load.spritesheet('droid', 'assets/starstruck/droid.png', 32, 32);
 		game.load.image('starSmall', 'assets/starstruck/star.png');
 		game.load.image('starBig', 'assets/starstruck/star2.png');
@@ -48,11 +40,13 @@ gameFunc.prototype = {
 	facing = 'left'
 		jumpTimer = 0;
 		game.physics.startSystem(Phaser.Physics.ARCADE);
+		game.physics.gravity=0;
 
 		game.stage.backgroundColor = '#000000';
 
 		bg = game.add.tileSprite(0, 0, 800, 600, 'background');
 		bg.fixedToCamera = true;
+		
 
 		map = game.add.tilemap('PLANTER');
 
@@ -62,16 +56,24 @@ gameFunc.prototype = {
 
 		layer = map.createLayer('Background');
 		layer = map.createLayer('Foreground');
-
+		
 		//  Un-comment this on to see the collision tiles
-		layer.debug = true;
+		//layer.debug = true;
 
 		layer.resizeWorld();
 
 		game.physics.arcade.gravity.y = 800;
 
+		
+		sprite = game.add.sprite(1000,100, 'arrow');
+		sprite.anchor.set(0.5);
+		
 		player = game.add.sprite(32, 32, 'dude');
 		game.physics.enable(player, Phaser.Physics.ARCADE);
+		
+		//player.onWall=false;
+		//player.canJump=true;
+		
 
 	    //  call akuma
 		//akumax = game.add.sprite(200, 200, 'akuma');
@@ -81,19 +83,14 @@ gameFunc.prototype = {
 		bullets = game.add.group();
 		bullets.enableBody = true;
 		bullets.physicsBodyType = Phaser.Physics.ARCADE;
+		//bullets.body.allowGravity=false;              why do you not work?
 		
 		bullets.createMultiple(50, 'bullet');
 		bullets.setAll('checkWorldBounds', true);
 		bullets.setAll('outOfBoundsKill', true);
 		
-		sprite = game.add.sprite(400,300, 'arrow');
-		sprite.anchor.set(0.5);
-		
-		game.physics.enable(sprite,Phaser.Physics.ARCADE);
-		sprite.body.allowRotation = false;
 		//Bikini Bottom
 
-		
 		player.body.bounce.y = 0.2;
 		player.body.collideWorldBounds = true;
 		player.body.setSize(20, 32, 5, 16);
@@ -107,24 +104,48 @@ gameFunc.prototype = {
 		cursors = game.input.keyboard.createCursorKeys();
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
-		player.x = 1000;
+		player.x = 600;
+		player.y = 1200;
 	},
+
+/*handleJump: Function(){
+	
+	//snail can jump when:
+	//canJump is true and snail is on ground
+	
+	if(this.canJump && this.player.body.blocked.down || this.onWall){
+		this.player.body.velocity.y = -350;
+		
+		if(this.onWall){
+			this.player.rotation *=-90;			//changes player rotation when on wall
+		}
+		
+		this.canJump=false;
+		
+		
+	}
+	
+	
+}*/
 	
 	update: function(){
 		//akumax.animations.play('AkumaJump');
 	    game.physics.arcade.collide(player, layer);
 
 		player.body.velocity.x = 0;
+		player.body.collide
 		
 		//////////////
 		sprite.rotation = game.physics.arcade.angleToPointer(sprite);
 		
+		sprite.x=player.x + (playerSpriteWidth/2);
+		sprite.y = player.y + (playerSpriteHeight/2);
 		if(game.input.activePointer.isDown){
 			fire();
 		}
-		//////////////
 		
-		if (cursors.left.isDown)
+//Input//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (game.input.keyboard.isDown(Phaser.Keyboard.A))
 		{
 			player.body.velocity.x = -150;
 
@@ -134,7 +155,7 @@ gameFunc.prototype = {
 				this.facing = 'left';
 			}
 		}
-		else if (cursors.right.isDown)
+		else if (game.input.keyboard.isDown(Phaser.Keyboard.D))
 		{
 			player.body.velocity.x = 150;
 
@@ -165,11 +186,26 @@ gameFunc.prototype = {
 
 		if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
 		{
-			player.body.velocity.y = -250;
+			player.body.velocity.y = -350;
 			jumpTimer = game.time.now + 750;
 		}
+//input//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 
 }
+
+
+
+	function fire(){
+    if (game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = game.time.now + fireRate;
+        var bullet = bullets.getFirstDead();
+        bullet.reset(sprite.x - 8, sprite.y - 8);
+        game.physics.arcade.moveToPointer(bullet, 800);
+    }
+	}
+
+	
 
 
