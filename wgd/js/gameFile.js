@@ -11,12 +11,14 @@ var gameFunc = function(){
 	//var akumax;
 	var sprite;
 	var bullets;
+	
+	var wep;
 };
 
 	var firerate;
 	var nextFire;
 	var playerSpriteWidth = 32, playerSpriteHeight = 48;
-	
+		
 gameFunc.prototype = {
 	preload: function(){
 		game.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
@@ -80,14 +82,14 @@ gameFunc.prototype = {
 		//akumax.animations.add('AkumaJump', Phaser.Animation.generateFrameNames('punch', 1, 7), 5, true);
 		
 		//Bikini Bottom
-		bullets = game.add.group();
-		bullets.enableBody = true;
-		bullets.physicsBodyType = Phaser.Physics.ARCADE;
+		//bullets = game.add.group();
+		//bullets.enableBody = true;
+		//bullets.physicsBodyType = Phaser.Physics.ARCADE;
 		//bullets.body.allowGravity=false;              why do you not work?
 		
-		bullets.createMultiple(50, 'bullet');
-		bullets.setAll('checkWorldBounds', true);
-		bullets.setAll('outOfBoundsKill', true);
+		//bullets.createMultiple(50, 'bullet');
+		//bullets.setAll('checkWorldBounds', true);
+		//bullets.setAll('outOfBoundsKill', true);
 		
 		//Bikini Bottom
 
@@ -106,6 +108,9 @@ gameFunc.prototype = {
 		
 		player.x = 600;
 		player.y = 1200;
+		
+		wep = new Weapon(0,0,0,0,800,0,0,3);
+		wep.init();
 	},
 
 /*handleJump: Function(){
@@ -141,7 +146,7 @@ gameFunc.prototype = {
 		sprite.x=player.x + (playerSpriteWidth/2);
 		sprite.y = player.y + (playerSpriteHeight/2);
 		if(game.input.activePointer.isDown){
-			fire();
+			wep.fire();
 		}
 		
 //Input//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,12 +195,9 @@ gameFunc.prototype = {
 			jumpTimer = game.time.now + 750;
 		}
 //input//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	}
-
+	}	
 }
-
-
-
+	/*
 	function fire(){
     if (game.time.now > nextFire && bullets.countDead() > 0)
     {
@@ -205,7 +207,7 @@ gameFunc.prototype = {
         game.physics.arcade.moveToPointer(bullet, 800);
     }
 	}
-
+*/
 	
 
 
