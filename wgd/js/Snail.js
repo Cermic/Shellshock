@@ -31,7 +31,7 @@ Snail.prototype.init = function() {
 			game.camera.follow(this.snail);
 			
 			//Weapon
-			weapon = new Weapon(0,0,0,0,800,0,5);
+			weapon = new Weapon(0,0,0,0,800,'arrow','bullet',5, 100);
 			weapon.init();
 			
 			
