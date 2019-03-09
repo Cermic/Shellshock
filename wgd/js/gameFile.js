@@ -12,7 +12,7 @@ var gameFunc = function(){
 	var jumpButton;		
 };
 
-
+	var m_inputHandler;
 
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	
@@ -69,8 +69,10 @@ gameFunc.prototype = {
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
 		
-		player = new Snail();
+		player = new Snail('RedSnail', 0);
 		player.init();
+		
+		m_inputHandler = new InputHandler();
 		
 	},
 	
@@ -78,7 +80,8 @@ gameFunc.prototype = {
 	update: function(){
 		
 		player.update();
-		player.move();
+		//player.move();
+		m_inputHandler.updateActivePlayer(player);
 				
 	}
 

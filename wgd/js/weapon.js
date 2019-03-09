@@ -1,4 +1,4 @@
-//Global Weapon Variables//
+//Global Member Variables//
 var projectiles;
 var costAP;		
 var maxAmmo;
@@ -37,11 +37,7 @@ Weapon.prototype.init = function()
 	this.nextFire = 0;
 	
 	this.weaponSprite = game.add.sprite(1000, 100, this.weaponSprite);
-	this.weaponSprite.anchor.set(0.55);
-	//this.weaponSprite.anchor.x += .5;
-	//this.weaponSprite.anchor.y -= .5;
-	this.weaponSprite.scale.x *= -1; 
-	this.weaponSprite.scale.y *= -1; 
+	this.weaponSprite.anchor.set(0.5);
 	
 	//Set up weapon projectiles...
 	this.projectiles = game.add.group();
@@ -54,28 +50,28 @@ Weapon.prototype.init = function()
 
 }; 	
 	
-Weapon.prototype.update = function(arg, facing)
+//Initialisation Function//	
+Weapon.prototype.update = function(snailObj)
 {
-		this.weaponSprite.rotation = game.physics.arcade.angleToPointer(arg);
-		//this.weaponSprite.x = arg.x + 10;
-		//this.weaponSprite.y = arg.y + 24;
-		if(facing == 'left')
-		{
-			this.weaponSprite.x = arg.x + 10;
-			this.weaponSprite.y = arg.y + 24;
-			this.weaponSprite.scale.x = -1;
-			this.weaponSprite.scale.y = -1;
-		} else if(facing == 'right')
-		{
-			this.weaponSprite.x = arg.x + 22;
-			this.weaponSprite.y = arg.y + 24;
-			this.weaponSprite.scale.x = -1; 
-			this.weaponSprite.scale.y = 1;
-		}
+	this.weaponSprite.rotation = game.physics.arcade.angleToPointer(snailObj.m_sprite);
+	//this.weaponSprite.x = arg.x + 10;
+	//this.weaponSprite.y = arg.y + 24;
+	if(snailObj.m_facing == 'left')
+	{
+		this.weaponSprite.x = snailObj.m_sprite.x + 4;
+		this.weaponSprite.scale.x = -1;
+		this.weaponSprite.scale.y = -1;
+	} else if(snailObj.m_facing == 'right')
+	{
+		this.weaponSprite.x = snailObj.m_sprite.x + 28;
+		this.weaponSprite.scale.x = -1; 
+		this.weaponSprite.scale.y = 1;
+	}
+	this.weaponSprite.y = snailObj.m_sprite.y + 20;
 };
 	
 //Fire Weapon Function//
-Weapon.prototype.fire = function(arg)
+Weapon.prototype.fire = function()
 {
     if (game.time.now > this.nextFire && this.projectiles.countDead() > 0)
     {
