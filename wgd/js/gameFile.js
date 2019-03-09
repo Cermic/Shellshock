@@ -7,7 +7,6 @@ var gameFunc = function(){
 	
 	
 	var player;
-	var facing
 	
 	var cursors;
 	var jumpButton;		
@@ -15,7 +14,7 @@ var gameFunc = function(){
 
 
 
-	var playerSpriteWidth = 32, playerSpriteHeight = 48;
+	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	
 	
 	
@@ -33,6 +32,9 @@ gameFunc.prototype = {
 		
 		game.load.image('arrow', 'assets/sprites/arrow.png');
 		game.load.image('bullet', 'assets/sprites/purple_ball.png');
+		
+		game.load.spritesheet('RedSnail', 'assets/sprites/Red_Snail_Movement.png', 32, 32);
+		game.load.image('Beezooka', 'assets/sprites/Beezooka.png');
 
 	},
 	

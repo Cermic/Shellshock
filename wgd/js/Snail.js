@@ -8,33 +8,31 @@ function Snail() {
 var timer;
 var snail;
 var weapon;
-
+var facing;
 
 Snail.prototype.init = function() {
 	
 			//Sprite
-		    this.snail = game.add.sprite(32, 32, 'dude');
+		    this.snail = game.add.sprite(32, 32, 'RedSnail');
 			game.physics.enable(this.snail, Phaser.Physics.ARCADE);
 			this.snail.x = 1000;
 			
 			//Physics
 			this.snail.body.bounce.y = 0.2;
 			this.snail.body.collideWorldBounds = true;
-			this.snail.body.setSize(20, 32, 5, 16);
+			this.snail.body.setSize(32, 32, 5, 1);
 			
 			//Animations
-			this.snail.animations.add('left', [0, 1, 2, 3], 10, true);
-			this.snail.animations.add('turn', [4], 20, true);
-			this.snail.animations.add('right', [5, 6, 7, 8], 10, true);
+			this.snail.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+			this.snail.animations.add('right',[8, 9, 10, 11, 12, 13, 14, 15], 10, true);
 			
 			//Camera
 			game.camera.follow(this.snail);
 			
 			//Weapon
-			weapon = new Weapon(0,0,0,0,800,'arrow','bullet',5, 100);
+			weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
 			weapon.init();
-			
-			
+		
 }
 
 
@@ -43,7 +41,7 @@ Snail.prototype.update = function() {
 	this.snail.body.velocity.x = 0;		
 	game.physics.arcade.collide(this.snail, layer);	
 	
-	weapon.update(this.snail);
+	weapon.update(this.snail, this.facing);
 }
 
 
@@ -71,7 +69,7 @@ Snail.prototype.move = function() {
 		else if (cursors.right.isDown)
 		{
 			this.snail.body.velocity.x = 150;
-
+			
 			if (this.facing != 'right')
 			{
 				this.snail.animations.play('right');
@@ -90,7 +88,7 @@ Snail.prototype.move = function() {
 				}
 				else
 				{
-					this.snail.frame = 5;
+					this.snail.frame = 8;
 				}
 
 				this.facing = 'idle';

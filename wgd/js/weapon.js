@@ -36,6 +36,13 @@ Weapon.prototype.init = function()
 	//Reset cooldown between shots...
 	this.nextFire = 0;
 	
+	this.weaponSprite = game.add.sprite(1000, 100, this.weaponSprite);
+	this.weaponSprite.anchor.set(0.55);
+	//this.weaponSprite.anchor.x += .5;
+	//this.weaponSprite.anchor.y -= .5;
+	this.weaponSprite.scale.x *= -1; 
+	this.weaponSprite.scale.y *= -1; 
+	
 	//Set up weapon projectiles...
 	this.projectiles = game.add.group();
 	this.projectiles.enableBody = true;
@@ -47,9 +54,24 @@ Weapon.prototype.init = function()
 
 }; 	
 	
-Weapon.prototype.update = function(arg)
+Weapon.prototype.update = function(arg, facing)
 {
-		
+		this.weaponSprite.rotation = game.physics.arcade.angleToPointer(arg);
+		//this.weaponSprite.x = arg.x + 10;
+		//this.weaponSprite.y = arg.y + 24;
+		if(facing == 'left')
+		{
+			this.weaponSprite.x = arg.x + 10;
+			this.weaponSprite.y = arg.y + 24;
+			this.weaponSprite.scale.x = -1;
+			this.weaponSprite.scale.y = -1;
+		} else if(facing == 'right')
+		{
+			this.weaponSprite.x = arg.x + 22;
+			this.weaponSprite.y = arg.y + 24;
+			this.weaponSprite.scale.x = -1; 
+			this.weaponSprite.scale.y = 1;
+		}
 };
 	
 //Fire Weapon Function//
@@ -59,7 +81,7 @@ Weapon.prototype.fire = function(arg)
     {
         this.nextFire = game.time.now + this.fireRate;
         var projectile = this.projectiles.getFirstDead();
-        projectile.reset(arg.x - 8, arg.y - 8);
+        projectile.reset(this.weaponSprite.x - 8, this.weaponSprite.y - 8);
         game.physics.arcade.moveToPointer(projectile, this.fireVelocity);
 	}
 };
