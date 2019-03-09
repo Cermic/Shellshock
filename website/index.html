@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Shellshock Index</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" href="https://i.ibb.co/GJ4T0x1/snail-icon.png" alt="snail-icon">
+<style>
+
+
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+{font-size:200px}
+
+.w3-straw,.w3-hover-straw:hover
+{
+	color:#fff!important;
+	background-color:#D8BF8A!important
+}
+
+.w3-tan,.w3-hover-tan:hover
+{
+	color:#fff!important;
+	background-color:#CE9E84!important
+}
+
+.w3-olivine,.w3-hover-olivine:hover
+{
+	color:#fff!important;
+	background-color:#A5CB84!important
+}
+
+.w3-polo-blue,.w3-hover-polo-blue:hover
+{
+	color:#fff!important;
+	background-color:#84AECE!important
+}
+
+.w3-east-side,.w3-hover-east-side:hover
+{
+	color:#fff!important;
+	background-color:#A482CD!important
+}
+
+.w3-suva-gray,.w3-hover-suva-gray:hover
+{
+	color:#fff!important;
+	background-color:#848284!important
+}
+
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-olivine w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+    <a href="play.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Play Shellshock</a>
+    <a href="team.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Developer Team</a>
+	<a href="documentation.html" class="w3-bar-item w3-button w3-padding-large">Shellshock Documentation</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navBar" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="play.html" class="w3-bar-item w3-button w3-padding-large">Play Shellshock</a>
+    <a href="team.html" class="w3-bar-item w3-button w3-padding-large">Developer Team</a>
+	<a href="documentation.html" class="w3-bar-item w3-button w3-padding-large">Shellshock Documentation</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-suva-gray w3-center" style="padding:96px 16px">
+  <h1 class="w3-margin ">Image of the game go here.</h1>
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-polo-blue w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1>What is Shellshock?</h1>
+      <h5 class="w3-padding-32">Shellshock is great. It has X and Y and lots of other things. - Sum up the game here. Platform , target audience, blah blah.</h5>
+
+      <p class="w3-text-white">Describe the game more deeply here and justify why it's so good.</p>
+    </div>
+
+    <div class="w3-third w3-center">
+      <img src="https://i.ibb.co/C8LKfF5/SnailO.png" width="200" height="200">
+    </div>
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-tan w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+  
+      <div class="w3-center">
+      <h1>Demo Video</h1>
+      <h5>Below is a video showing some Shellshock gameplay, enjoy!</h5>
+      <p class="w3-text-grey"></p>
+	  
+		<div class="w3-center">
+			<iframe width="800" height="600" src="https://www.youtube.com/embed/6Dh-RL__uN4">
+			</iframe>
+		</div>
+		
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-olivine w3-padding-16 w3-center">  
+  <div class="w3-xlarge w3-padding-5">
+ </div>
+ <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navBar");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>
