@@ -50,6 +50,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 }
 
 </style>
+
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <script type="text/javascript" src="js/gameFile.js"></script>
+	<script type="text/javascript" src="js/Weapon.js"></script>
+	<script>
+		var game = new Phaser.Game(1000, 600, Phaser.AUTO, "gameDiv");
+		game.state.add("gameState",gameFunc);
+		game.state.start("gameState");
+	</script>
 <body>
 
 <!-- Navbar -->
@@ -80,7 +89,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-row-padding w3-polo-blue w3-padding-64 w3-container">
   <div class="w3-content w3-center">
         <h1>Shellshock</h1>
-	  <p> Integrate game here. </p>
+	  <div style="text-align:center;border:0px solid white" id="gameDiv"></div>
   </div>
 </div>
 
