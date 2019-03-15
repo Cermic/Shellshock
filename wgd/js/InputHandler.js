@@ -2,7 +2,7 @@ var cursors;
 var jumpButton;		
 
 var InputHandler = function(){ 
-		
+	
 	this.cursors = game.input.keyboard.createCursorKeys();
 	this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	//Gredit////////////////////////////////////////////
@@ -13,11 +13,11 @@ var InputHandler = function(){
 
 InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 {
-	
+	this.activePlayer = activePlayer;
 	this.checkMouse(activePlayer);
 	this.checkFacing(activePlayer);
 	this.checkVerticalMove(activePlayer);
-	this.checkHorizontalMove(this.activePlayer, this.layer);
+	this.checkHorizontalMove(activePlayer, layer);
 }
 
 InputHandler.prototype.checkMouse = function(activePlayer)
@@ -57,63 +57,70 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 InputHandler.prototype.handleJump = function()//Greg
 {
 	
-	        if((activePlayer.canJump && this.activePlayer.m_sprite.body.blocked.down)){
+	        if((this.activePlayer.m_canJump && this.activePlayer.m_sprite.body.blocked.down)){
             // applying jump force
             this.activePlayer.m_sprite.body.velocity.y = -400;
 			
-            if(activePlayer.onWall){
+            if(this.activePlayer.m_onWall){
 				// flip horizontally the hero
 				this.activePlayer.m_sprite.body.gravity.y = 0;
             }
             // hero can't jump anymore
 			if(!this.activePlayer.m_sprite.body.blocked.down){
-            activePlayer.canJump = false;
+            this.activePlayer.m_canJump = false;
 			}
             // hero is not on the wall anymore
 			if(!this.activePlayer.m_sprite.body.blocked.right || !this.activePlayer.m_sprite.body.blocked.left)
-            activePlayer.onWall = false;
+            this.activePlayer.m_onWall = false;
         }
-}
+};
 
+InputHandler.prototype.testS = function(activePlayer, layer){
+	//console.log("Checking position");
+	if(activePlayer.m_sprite.body.blocked.down){
+		activePlayer.m_sprite.body.gravity.y = 500;
+		activePlayer.m_canJump=true;
+		activePlayer.m_onWall = false;
+	}
+	if(activePlayer.m_sprite.body.blocked.right && activePlayer.m_sprite.body.blocked.down){  // snail on the ground and touching a wall on the right
+		activePlayer.m_canJump=true;
+	}
+	if(activePlayer.m_sprite.body.blocked.right && !activePlayer.m_sprite.body.blocked.down){ // snail NOT on the ground and touching a wall on the right
+		activePlayer.m_canJump=false;
+		activePlayer.m_onWall = true;
+		activePlayer.m_sprite.body.velocity.y=0;
+	}
+	if(activePlayer.m_sprite.body.blocked.left && activePlayer.m_sprite.body.blocked.down){ // same concept applies to the left
+		activePlayer.m_canJump=true;
+	}
+	if(activePlayer.m_sprite.body.blocked.left && !activePlayer.m_sprite.body.blocked.down){
+		activePlayer.m_canJump=false;
+		activePlayer.m_onWall = true;
+		activePlayer.m_sprite.body.velocity.y=0;
+	}
+};
+		
 InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 {	
 		//game.physics.arcade.collide(this.activePlayer, layer);	
 		
 		//console.log(activePlayer.m_sprite.onWall);//Works
 		//console.log(activePlayer.m_sprite.canJump);//Works
-		//console.log(activePlayer.m_sprite.body.blocked.down);//Works
+		if(activePlayer.m_sprite.body.blocked.down){
+		console.log("Down");//Works
+		}else if (activePlayer.m_sprite.body.blocked.up){
+		console.log("Up");
+		}else if (activePlayer.m_sprite.body.blocked.left){
+		console.log("Left");
+		}else if (activePlayer.m_sprite.body.blocked.right){
+		console.log("Right");	
+		}
 
 		//Gredit////////////////////////////////////////////bug testing starts here
-		game.physics.arcade.collide(this.activePlayer, this.layer, function(activePlayer, layer){
-		console.log("Checking position");
-			if(activePlayer.m_sprite.body.blocked.down){
-			console.log("blocked down");
-				this.activePlayer.m_sprite.body.gravity.y = 500;
-				activePlayer.canJump=true;
-				activePlayer.onWall = false;
-			}
-            if(this.activePlayer.m_sprite.body.blocked.right && this.activePlayer.m_sprite.body.blocked.down){  // snail on the ground and touching a wall on the right
-				activePlayer.canJump=true;
-            }
-            if(this.activePlayer.m_sprite.body.blocked.right && !this.activePlayer.m_sprite.body.blocked.down){ // snail NOT on the ground and touching a wall on the right
-				console.log("blocked right");
-				activePlayer.canJump=false;
-                activePlayer.onWall = true;
-				this.activePlayer.m_sprite.body.velocity.y=0;
-            }
-            if(this.activePlayer.m_sprite.body.blocked.left && this.activePlayer.m_sprite.body.blocked.down){ // same concept applies to the left
-                activePlayer.canJump=true;
-            }
-            if(this.activePlayer.m_sprite.body.blocked.left && !this.activePlayer.m_sprite.body.blocked.down){
-				console.log("blocked left");
-                activePlayer.canJump=false;
-                activePlayer.onWall = true;
-				this.activePlayer.m_sprite.body.velocity.y=0;
-            }
-		}, null, this);
+		game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
 		//Grend/////////////////////////////////////////////
 		//Left right animations and movement
-		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A)) && !activePlayer.onWall)
+		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
 			activePlayer.m_sprite.body.velocity.x = -150;
 
@@ -127,7 +134,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('right');
 			}
 		}
-		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D)) && !activePlayer.onWall)
+		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
 		{
 			activePlayer.m_sprite.body.velocity.x = 150;
 
@@ -141,10 +148,10 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('left');
 			}
 		}
-		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.onWall){
+		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall){
 			activePlayer.m_sprite.body.velocity.y = -150;
 		}
-		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.onWall){
+		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.m_onWall){
 			activePlayer.m_sprite.body.velocity.y = 150;
 		}
 		else
@@ -165,4 +172,4 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				//activePlayer.m_facing = 'idle';
 			}
 		}
-}
+};
