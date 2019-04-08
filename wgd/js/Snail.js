@@ -40,7 +40,7 @@ Snail.prototype.init = function()
 	this.m_sprite.onWall=false;	
 	//Grend////////////////////////////////////////////
 
-	this.m_actionPoints = 100;
+	this.m_actionPoints = 500;
 			
 	//Animations
 	this.m_sprite.animations.add('moveLeft', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
@@ -62,7 +62,6 @@ Snail.prototype.update = function()
 {	
 	this.m_sprite.body.velocity.x = 0;		
 	game.physics.arcade.collide(this.m_sprite, layer01);	
-
 	//Update Weapon...
 	this.m_weapon.update(this);
 };

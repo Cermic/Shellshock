@@ -1,7 +1,7 @@
 var cursors;
 var jumpButton;		
 
-var APCosts = { jump: 10, horizontalMove: .1, verticalMove: .1 }
+var APCosts = { jump: 10, horizontalMove: 1, verticalMove:  1 }
 
 
 var InputHandler = function(){ 
@@ -21,7 +21,15 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 	this.checkFacing(activePlayer);
 	this.checkVerticalMove(activePlayer);
 	this.checkHorizontalMove(activePlayer, layer);
+	this.updateText(this.activePlayer.m_actionPoints, this.activePlayer);
 	//console.log(this.activePlayer.m_actionPoints);
+}
+
+InputHandler.prototype.updateText = function(newText, activePlayer)
+{
+	ap_Text.setText("AP: " + newText);
+	ap_Text.x = activePlayer.m_sprite.x;
+	ap_Text.y = activePlayer.m_sprite.y;
 }
 
 InputHandler.prototype.checkMouse = function(activePlayer)

@@ -20,6 +20,7 @@ var gameOptions = {//Greg
 
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
+	var ap_text;
 	
 
 gameFunc.prototype = {
@@ -83,7 +84,15 @@ gameFunc.prototype = {
 		player.y = 1300;
 		//Grend/////////////////////////////////////////////
 		
-		m_inputHandler = new InputHandler();		
+		m_inputHandler = new InputHandler();	
+
+		ap_Text = game.add.text(player.x, player.y, "", 
+		{
+			font: "32px Arial",
+			fill: "#ff0044",
+			align: "center"
+		});
+		ap_Text.anchor.setTo(0.5, 0.75);		
 	},
 	
 	update: function(){
