@@ -1,13 +1,14 @@
 //Global Member Variables//
 var m_timer;
 var m_facing;
-var m_weapon;
 var m_sprite;
 var m_startPos
 //Gredit////////////////////////////////////////////
 var m_canJump;
 var m_onWall;
 //Grend////////////////////////////////////////////
+var m_weapon;
+var m_weaponsList;
 
 //Contructor//
 function Snail(sprite, startPos)
@@ -22,7 +23,7 @@ Snail.prototype.init = function()
 {
 	//Sprite
 	this.m_sprite = game.add.sprite(32, 32, 'RedSnail');
-	//game.physics.arcade.enable(m_sprite);
+
 	game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
 	this.m_sprite.x = 1000;
 			
@@ -46,7 +47,10 @@ Snail.prototype.init = function()
 	game.camera.follow(this.m_sprite);
 			
 	//Weapon
-	this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
+
+	//this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
+	//this.m_weapon.init();
+	this.m_weapon = createWeapon("beezooka");
 	this.m_weapon.init();
 };
 
@@ -55,7 +59,7 @@ Snail.prototype.update = function()
 {	
 	this.m_sprite.body.velocity.x = 0;		
 	game.physics.arcade.collide(this.m_sprite, layer01);	
-	
+
 	//Update Weapon...
 	this.m_weapon.update(this);
 };

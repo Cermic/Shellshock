@@ -41,7 +41,8 @@ InputHandler.prototype.checkVerticalMove = function(activePlayer)
 
 InputHandler.prototype.checkFacing = function(activePlayer)
 {
-	var wepAngle = activePlayer.m_weapon.weaponSprite.angle;
+
+	var wepAngle = activePlayer.m_weapon.m_weaponSprite.angle;
 	
 	if(wepAngle > -90 && wepAngle <= 90)
 	{
@@ -126,26 +127,29 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 
 			if (activePlayer.m_facing == 'left')
 			{
-				activePlayer.m_sprite.animations.play('left');
+				activePlayer.m_sprite.animations.play('moveLeft');
+
 				//activePlayer.m_facing = 'left';
 			}
 			else
 			{
-				activePlayer.m_sprite.animations.play('right');
+				activePlayer.m_sprite.animations.play('moveRight');
 			}
 		}
 		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
+
 		{
 			activePlayer.m_sprite.body.velocity.x = 150;
 
 			if (activePlayer.m_facing == 'right')
 			{
-				activePlayer.m_sprite.animations.play('right');
+
+				activePlayer.m_sprite.animations.play('moveRight');
 				//activePlayer.m_facing = 'right';
 			}
 			else
 			{
-				activePlayer.m_sprite.animations.play('left');
+				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
 		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall){
@@ -154,6 +158,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.m_onWall){
 			activePlayer.m_sprite.body.velocity.y = 150;
 		}
+
 		else
 		{
 			if (activePlayer.m_facing != 'idle')
@@ -173,3 +178,4 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 			}
 		}
 };
+

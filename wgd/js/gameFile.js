@@ -21,6 +21,7 @@ var gameOptions = {//Greg
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	
+
 gameFunc.prototype = {
 	
 	preload: function(){
@@ -43,9 +44,8 @@ gameFunc.prototype = {
 	
   	create: function(){	
 
-
-		game.physics.startSystem(Phaser.Physics.ARCADE);//
-		game.physics.gravity=0;//
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+		game.physics.gravity=0;
 
 		game.stage.backgroundColor = '#000000';
 
@@ -70,7 +70,6 @@ gameFunc.prototype = {
 		//layer.resizeWorld();
 
 		game.physics.arcade.gravity.y = 800;//This gives the bullets gravity
-
 		
 		cursors = game.input.keyboard.createCursorKeys();
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -84,19 +83,14 @@ gameFunc.prototype = {
 		player.y = 1300;
 		//Grend/////////////////////////////////////////////
 		
-		m_inputHandler = new InputHandler();
-		
+		m_inputHandler = new InputHandler();		
 	},
 	
-	
 	update: function(){
-		
 		player.update();
 		//player.move();
-		m_inputHandler.updateActivePlayer(player, layer01);
-				
+		m_inputHandler.updateActivePlayer(player, layer01);		
 	}
-
 }
 
 

@@ -1,33 +1,33 @@
 //Global Member Variables//
-var projectiles;
-var costAP;		
-var maxAmmo;
-var currentAmmo;	
-var damage;
-var range;
-var fireVelocity;
-var projectileCount;
+var m_projectiles;
+var m_costAP;		
+var m_maxAmmo;
+var m_currentAmmo;	
+var m_damage;
+var m_range;
+var m_fireVelocity;
+var m_projectileCount;
 
-var weaponSprite;
-var projectileSprite;
+var m_weaponSprite;
+var m_projectileSprite;
 
-var fireRate;
+var m_fireRate;
 var nextFire;
 
 //Contructor//
-function Weapon(i_costAP, i_maxAmmo, i_damage, i_range, i_fireVelocity, i_weaponSprite, i_projectileSprite, i_projectileCount, i_fireRate)
+function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
 { 
-	this.costAP 			= i_costAP;
-	this.maxAmmo 			= i_maxAmmo;
-	this.currentAmmo 		= i_maxAmmo;
-	this.damage 			= i_damage;
-	this.range 				= i_range;
-	this.fireVelocity 		= i_fireVelocity;
-	this.fireRate			= i_fireRate
-	this.projectileCount 	= i_projectileCount;
+	this.m_costAP 			= costAP;
+	this.m_maxAmmo 			= maxAmmo;
+	this.m_currentAmmo 		= maxAmmo;
+	this.m_damage 			= damage;
+	this.m_range 			= range;
+	this.m_fireVelocity 	= fireVelocity;
+	this.m_fireRate			= fireRate
+	this.m_projectileCount 	= projectileCount;
 
-	this.weaponSprite 		= i_weaponSprite;
-	this.projectileSprite 	= i_projectileSprite;
+	this.m_weaponSprite 	= weaponSprite;
+	this.m_projectileSprite = projectileSprite;
 };
 
 //Initialisation Function//
@@ -36,51 +36,50 @@ Weapon.prototype.init = function()
 	//Reset cooldown between shots...
 	this.nextFire = 0;
 	
-	this.weaponSprite = game.add.sprite(1000, 100, this.weaponSprite);
-	this.weaponSprite.anchor.set(0.5);
+
+	this.m_weaponSprite = game.add.sprite(1000, 100, this.m_weaponSprite);
+	this.m_weaponSprite.anchor.set(0.5);
 	
 	//Set up weapon projectiles...
-	this.projectiles = game.add.group();
-	this.projectiles.enableBody = true;
-	this.projectiles.physicsBodyType = Phaser.Physics.ARCADE;		
-	this.projectiles.createMultiple(this.projectileCount, this.projectileSprite);
+	this.m_projectiles = game.add.group();
+	this.m_projectiles.enableBody = true;
+	this.m_projectiles.physicsBodyType = Phaser.Physics.ARCADE;		
+	this.m_projectiles.createMultiple(this.m_projectileCount, this.m_projectileSprite);
 	
-	this.projectiles.setAll('checkWorldBounds', true);
-	this.projectiles.setAll('outOfBoundsKill', true);
-
+	this.m_projectiles.setAll('checkWorldBounds', true);
+	this.m_projectiles.setAll('outOfBoundsKill', true);
 }; 	
 	
 //Initialisation Function//	
 Weapon.prototype.update = function(snailObj)
 {
-	this.weaponSprite.rotation = game.physics.arcade.angleToPointer(snailObj.m_sprite);
+	this.m_weaponSprite.rotation = game.physics.arcade.angleToPointer(snailObj.m_sprite);
 	//this.weaponSprite.x = arg.x + 10;
 	//this.weaponSprite.y = arg.y + 24;
 	if(snailObj.m_facing == 'left')
 	{
-		this.weaponSprite.x = snailObj.m_sprite.x + 4;
-		this.weaponSprite.scale.x = -1;
-		this.weaponSprite.scale.y = -1;
+
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
+		this.m_weaponSprite.scale.x = -1;
+		this.m_weaponSprite.scale.y = -1;
 	} else if(snailObj.m_facing == 'right')
 	{
-		this.weaponSprite.x = snailObj.m_sprite.x + 28;
-		this.weaponSprite.scale.x = -1; 
-		this.weaponSprite.scale.y = 1;
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;
+		this.m_weaponSprite.scale.x = -1; 
+		this.m_weaponSprite.scale.y = 1;
 	}
-	this.weaponSprite.y = snailObj.m_sprite.y + 20;
+	this.m_weaponSprite.y = snailObj.m_sprite.y + 20;
 };
 	
 //Fire Weapon Function//
 Weapon.prototype.fire = function()
 {
-    if (game.time.now > this.nextFire && this.projectiles.countDead() > 0)
+
+    if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
-        this.nextFire = game.time.now + this.fireRate;
-        var projectile = this.projectiles.getFirstDead();
-        projectile.reset(this.weaponSprite.x - 8, this.weaponSprite.y - 8);
-        game.physics.arcade.moveToPointer(projectile, this.fireVelocity);
+        this.nextFire = game.time.now + this.m_fireRate;
+        var projectile = this.m_projectiles.getFirstDead();
+        projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
+        game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
 };
-
-
-	
