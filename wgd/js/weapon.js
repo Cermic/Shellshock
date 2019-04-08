@@ -1,48 +1,86 @@
-function Weapon(costAP, maxAmmo, damage, range, i_fireVelocity, wepSprite, bulSprite, i_bulCount)
+//Global Member Variables//
+var m_projectiles;
+var m_costAP;		
+var m_maxAmmo;
+var m_currentAmmo;	
+var m_damage;
+var m_range;
+var m_fireVelocity;
+var m_projectileCount;
+
+var m_weaponSprite;
+var m_projectileSprite;
+
+var m_fireRate;
+var nextFire;
+
+//Contructor//
+function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
 { 
-	this.costAP = costAP;
-	this.maxAmmo = maxAmmo;
-	this.damage = damage;
-	this.range = range;
-	this.fireVelocity = i_fireVelocity;
-	this.wepSprite = wepSprite;
-	this.bulSprite = bulSprite;
-	this.bulCount = i_bulCount;
-	
-	this.currentAmmo = maxAmmo;
+	this.m_costAP 			= costAP;
+	this.m_maxAmmo 			= maxAmmo;
+	this.m_currentAmmo 		= maxAmmo;
+	this.m_damage 			= damage;
+	this.m_range 			= range;
+	this.m_fireVelocity 	= fireVelocity;
+	this.m_fireRate			= fireRate
+	this.m_projectileCount 	= projectileCount;
+
+	this.m_weaponSprite 	= weaponSprite;
+	this.m_projectileSprite = projectileSprite;
 };
 
-var weapon;
-var projectiles;	
-var fireVelocity;
-var bulCount;
-
+//Initialisation Function//
 Weapon.prototype.init = function()
 {
-	fireRate = 100;
-	nextFire = 0;
+	//Reset cooldown between shots...
+	this.nextFire = 0;
 	
-	projectiles = game.add.group();
-	projectiles.enableBody = true;
-	projectiles.physicsBodyType = Phaser.Physics.ARCADE;
-	//bullets.body.allowGravity=false;              why do you not work?
-		
-	projectiles.createMultiple(this.bulCount, 'bullet');
-	projectiles.setAll('checkWorldBounds', true);
-	projectiles.setAll('outOfBoundsKill', true);
 
-}
-  	
+	this.m_weaponSprite = game.add.sprite(1000, 100, this.m_weaponSprite);
+	this.m_weaponSprite.anchor.set(0.5);
+	
+	//Set up weapon projectiles...
+	this.m_projectiles = game.add.group();
+	this.m_projectiles.enableBody = true;
+	this.m_projectiles.physicsBodyType = Phaser.Physics.ARCADE;		
+	this.m_projectiles.createMultiple(this.m_projectileCount, this.m_projectileSprite);
+	
+	this.m_projectiles.setAll('checkWorldBounds', true);
+	this.m_projectiles.setAll('outOfBoundsKill', true);
+}; 	
+	
+//Initialisation Function//	
+Weapon.prototype.update = function(snailObj)
+{
+	this.m_weaponSprite.rotation = game.physics.arcade.angleToPointer(snailObj.m_sprite);
+	//this.weaponSprite.x = arg.x + 10;
+	//this.weaponSprite.y = arg.y + 24;
+	if(snailObj.m_facing == 'left')
+	{
+
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
+		this.m_weaponSprite.scale.x = -1;
+		this.m_weaponSprite.scale.y = -1;
+	} else if(snailObj.m_facing == 'right')
+	{
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;
+		this.m_weaponSprite.scale.x = -1; 
+		this.m_weaponSprite.scale.y = 1;
+	}
+	this.m_weaponSprite.y = snailObj.m_sprite.y + 20;
+};
+	
+//Fire Weapon Function//
 Weapon.prototype.fire = function()
 {
-    if (game.time.now > nextFire && projectiles.countDead() > 0)
+
+    if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
-        nextFire = game.time.now + fireRate;
-        var projectile = projectiles.getFirstDead();
-        projectile.reset(sprite.x - 8, sprite.y - 8);
-        game.physics.arcade.moveToPointer(projectile, this.fireVelocity);
+        this.nextFire = game.time.now + this.m_fireRate;
+        var projectile = this.m_projectiles.getFirstDead();
+		projectile.body.gravity.y = 0;
+        projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
+        game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
-}
-
-
-	
+};
