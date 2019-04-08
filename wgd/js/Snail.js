@@ -1,9 +1,11 @@
 //Global Member Variables//
 var m_timer;
 var m_facing;
-var m_weapon;
 var m_sprite;
 var m_startPos
+
+var m_weapon;
+var m_weaponsList;
 
 //Contructor//
 function Snail(sprite, startPos)
@@ -34,7 +36,9 @@ Snail.prototype.init = function()
 	game.camera.follow(this.m_sprite);
 			
 	//Weapon
-	this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
+	//this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
+	//this.m_weapon.init();
+	this.m_weapon = createWeapon("beezooka");
 	this.m_weapon.init();
 };
 

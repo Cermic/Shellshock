@@ -45,7 +45,7 @@ InputHandler.prototype.checkVerticalMove = function(activePlayer)
 
 InputHandler.prototype.checkFacing = function(activePlayer)
 {
-	var wepAngle = activePlayer.m_weapon.weaponSprite.angle;
+	var wepAngle = activePlayer.m_weapon.m_weaponSprite.angle;
 	
 	if(wepAngle > -90 && wepAngle <= 90)
 	{
@@ -69,12 +69,12 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer)
 
 			if (activePlayer.m_facing == 'left')
 			{
-				activePlayer.m_sprite.animations.play('left');
+				activePlayer.m_sprite.animations.play('moveLeft');
 				//activePlayer.m_facing = 'left';
 			}
 			else
 			{
-				activePlayer.m_sprite.animations.play('right');
+				activePlayer.m_sprite.animations.play('moveRight');
 			}
 		}
 		else if (this.cursors.right.isDown)
@@ -83,12 +83,12 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer)
 
 			if (activePlayer.m_facing == 'right')
 			{
-				activePlayer.m_sprite.animations.play('right');
+				activePlayer.m_sprite.animations.play('moveRight');
 				//activePlayer.m_facing = 'right';
 			}
 			else
 			{
-				activePlayer.m_sprite.animations.play('left');
+				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
 		else
