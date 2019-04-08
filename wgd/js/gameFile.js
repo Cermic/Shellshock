@@ -7,21 +7,13 @@ var gameFunc = function(){
 	var player;
 	var cursors;
 	var jumpButton;	
-	var layer00, layer01;//Greg
+	var layer00, layer01;
 
 };
-
-var gameOptions = {//Greg
-    // player gravity
-    playerGravity: 500,
-	wallGravity: 100,
-	noGravity: 0
-}
 
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	
-
 gameFunc.prototype = {
 	
 	preload: function(){
@@ -67,9 +59,6 @@ gameFunc.prototype = {
 		
 		//  Un-comment this on to see the collision tiles
 		//layer.debug = true;
-		//layer.resizeWorld();
-
-		game.physics.arcade.gravity.y = 800;//This gives the bullets gravity
 		
 		cursors = game.input.keyboard.createCursorKeys();
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -78,17 +67,15 @@ gameFunc.prototype = {
 		player = new Snail('RedSnail', 0);
 		player.init();
 		
-		//Gredit////////////////////////////////////////////
+		//testing position, will be replaced by user team spawning
 		player.x = 600;
 		player.y = 1300;
-		//Grend/////////////////////////////////////////////
 		
 		m_inputHandler = new InputHandler();		
 	},
 	
 	update: function(){
 		player.update();
-		//player.move();
 		m_inputHandler.updateActivePlayer(player, layer01);		
 	}
 }
