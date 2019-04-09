@@ -29,7 +29,7 @@ InputHandler.prototype.updateText = function(newText, activePlayer)
 {
 	ap_Text.setText("AP: " + newText);
 	ap_Text.x = activePlayer.m_sprite.x;
-	ap_Text.y = activePlayer.m_sprite.y;
+	ap_Text.y = activePlayer.m_sprite.y - 50;
 }
 
 InputHandler.prototype.checkMouse = function(activePlayer)

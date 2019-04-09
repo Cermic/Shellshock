@@ -2,7 +2,9 @@
 var m_timer;
 var m_facing;
 var m_sprite;
-var m_startPos
+var m_healthBar;
+var m_apBar;
+var m_startPos;
 //Gredit////////////////////////////////////////////
 var m_canJump;
 var m_onWall;
@@ -25,9 +27,21 @@ Snail.prototype.init = function()
 {
 	//Sprite
 	this.m_sprite = game.add.sprite(32, 32, 'RedSnail');
+	this.m_sprite.anchor.setTo(0.5, 0.5); 
 
 	game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
 	this.m_sprite.x = 1000;
+	
+	// Health Bar
+	this.m_healthBar = game.add.sprite(32, 32, 'Health_Bar');
+	this.m_healthBar.anchor.setTo(0.5, 0.5); 
+	//this.m_healthBar.x = this.m_sprite.x;
+	//this.m_healthBar.y = this.m_sprite.y - 20;
+	// AP Bar
+	this.m_apBar = game.add.sprite(32, 32, 'Health_Bar');
+	this.m_apBar.anchor.setTo(0.5, 0.5); 
+	//this.m_apBar.x = this.m_sprite.x;
+	//this.m_apBar.y = this.m_sprite.y - 30;
 			
 	//Physics
 	this.m_sprite.body.bounce.y = 0.0;
@@ -60,10 +74,17 @@ Snail.prototype.init = function()
 //Update Function//
 Snail.prototype.update = function()
 {	
-	this.m_sprite.body.velocity.x = 0;		
+	this.m_sprite.body.velocity.x = 0;	
+	//Health Bar Position update
+	this.m_healthBar.x = this.m_sprite.x;
+	this.m_healthBar.y = this.m_sprite.y - 25;
+	// AP Bar
+	this.m_apBar.x = this.m_sprite.x;
+	this.m_apBar.y = this.m_sprite.y - 35;
 	game.physics.arcade.collide(this.m_sprite, layer01);	
 	//Update Weapon...
 	this.m_weapon.update(this);
 };
 
+// Update the Scale of the bars when a hit is detected.
 

@@ -27,6 +27,7 @@ gameFunc.prototype = {
 	
 	preload: function(){
 		
+		game.load.image('Health_Bar', 'assets/healthbar.png');
 		game.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
 		game.load.spritesheet('dude', 'assets/starstruck/dude.png', playerSpriteWidth, playerSpriteHeight);
