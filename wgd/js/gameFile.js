@@ -38,8 +38,9 @@ gameFunc.prototype = {
 		game.load.image('arrow', 'assets/sprites/arrow.png');
 		game.load.image('bullet', 'assets/sprites/purple_ball.png');
 		
-		game.load.spritesheet('RedSnail', 'assets/sprites/Red_Snail_Movement.png', 32, 32);
-		game.load.image('Beezooka', 'assets/sprites/Beezooka.png');
+		game.load.spritesheet('RedSnail', 'assets/sprites/snail_red.png', 32, 32);
+		game.load.image('Beezooka', 'assets/sprites/weapon_beezooka.png');
+		game.load.image('Shotgun', 'assets/sprites/weapon_slug-gun.png');
 
 	},
 	
