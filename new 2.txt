@@ -1,0 +1,69 @@
+	/*
+
+	InputHandler.prototype.testS = function(activePlayer, layer){
+	//console.log("Checking position");
+	if(activePlayer.m_sprite.body.blocked.down){
+		activePlayer.m_sprite.body.gravity.y = 800;
+		activePlayer.m_canJump=true;
+		activePlayer.m_onWall = false;
+	}
+	//else if(activePlayer.m_sprite.body.blocked.right && activePlayer.m_sprite.body.blocked.down){  // snail on the ground and touching a wall on the right
+	//	activePlayer.m_canJump=true;
+	//}
+	//else if(activePlayer.m_sprite.body.blocked.right && !activePlayer.m_sprite.body.blocked.down){ // snail NOT on the ground and touching a wall on the right
+	//	activePlayer.m_canJump=false;
+	//	activePlayer.m_onWall = true;
+	//	activePlayer.m_sprite.body.velocity.y=0;
+	//	activePlayer.m_sprite.body.gravity.y=0;
+	//}
+	//else if(activePlayer.m_sprite.body.blocked.left && activePlayer.m_sprite.body.blocked.down){ // same concept applies to the left
+	//	activePlayer.m_canJump=true;
+	//}
+	//else if(activePlayer.m_sprite.body.blocked.left && !activePlayer.m_sprite.body.blocked.down){
+	//	activePlayer.m_canJump=false;
+	//	activePlayer.m_onWall = true;
+	//	activePlayer.m_sprite.body.velocity.y=0;
+	//	activePlayer.m_sprite.body.gravity.y=0;
+	//}
+	else if(activePlayer.m_sprite.body.blocked.right){
+		activePlayer.m_canJump=false;
+		activePlayer.m_onWall = true;
+	}
+	else if(activePlayer.m_sprite.body.blocked.left){
+		activePlayer.m_canJump=false;
+		activePlayer.m_onWall = true;
+	}
+	else if(activePlayer.m_sprite.body.blocked.up){
+		activePlayer.m_canJump=false;
+		activePlayer.m_onCeiling = true;
+	}
+
+	//////////////////Wall climbing settings
+
+	if activePlayer.m_onWall{
+		int saveY = activePlayer.m_sprite.body.position.y;
+		
+		if(activePlayer.m_sprite.body.position.y != saveY){	
+			activePlayer.m_onWall= false;
+			
+			if(!activePlayer.m_onCeiling){				
+				activePlayer.m_sprite.body.gravity.y = worldGravity;
+			}			
+		}
+	}
+	
+	if() activePlayer.m_onCeiling{
+		int saveX = activePlayer.m_sprite.body.position.x;
+		
+		if(activePlayer.m_sprite.body.position.x != saveX){
+			activePlayer.m_onCeiling= false;
+			if(!activePlayer.m_onWall){				
+				activePlayer.m_sprite.body.gravity.y = worldGravity;
+			}
+		}
+	}
+	////////////////////////////////////////
+};
+		
+		
+		*/
