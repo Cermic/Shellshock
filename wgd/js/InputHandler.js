@@ -35,8 +35,13 @@ InputHandler.prototype.updateText = function(newText, activePlayer)
 InputHandler.prototype.checkMouse = function(activePlayer)
 {
 		//Weapon Fire
-		if(game.input.activePointer.isDown){
-			activePlayer.m_weapon.fire(activePlayer.m_sprite);
+		if(game.input.activePointer.isDown)
+		{
+			if(activePlayer.m_actionPoints >= activePlayer.m_weapon.m_costAP)
+			{
+				activePlayer.m_weapon.fire(activePlayer);
+			}
+			
 		}
 	
 }
@@ -144,7 +149,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		//Left right animations and movement
 		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
-			//Player AP check...
+			//Ap Calculation...
 			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
 			{
 				activePlayer.m_actionPoints -= APCosts.horizontalMove;
@@ -164,6 +169,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		}
 		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
 		{
+			//Ap Calculation...
 			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
 			{
 				activePlayer.m_actionPoints -= APCosts.horizontalMove;
@@ -191,6 +197,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		}
 		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.m_onWall)
 		{
+			//Ap Calculation...
 			if(this.activePlayer.m_actionPoints >= APCosts.verticalMove)
 			{
 				activePlayer.m_actionPoints -= APCosts.verticalMove;

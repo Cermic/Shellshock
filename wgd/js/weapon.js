@@ -72,11 +72,11 @@ Weapon.prototype.update = function(snailObj)
 };
 	
 //Fire Weapon Function//
-Weapon.prototype.fire = function()
+Weapon.prototype.fire = function(snailObj)
 {
-
     if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
+		snailObj.m_actionPoints -= this.m_costAP;
         this.nextFire = game.time.now + this.m_fireRate;
         var projectile = this.m_projectiles.getFirstDead();
 		projectile.body.gravity.y = 0;

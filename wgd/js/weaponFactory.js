@@ -4,7 +4,7 @@ createWeapon = function(weaponType)
 {
 	//function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
 	if(weaponType == "pea_shooter")
-		return new Weapon(3, "Inf", 15, 20, 400,'PeaShooter', 'bullet', 1, 30);
+		return new Weapon(3, "Inf", 15, 20, 400,'Shotgun', 'bullet', 1, 30);
 	
 	else if(weaponType == "blade_of_grass")
 		return new Weapon(3, "Inf", 1, 40, 400,'BladeOfGrass', 'bullet', 1, 30);

@@ -67,7 +67,7 @@ Snail.prototype.init = function()
 
 	//this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
 	//this.m_weapon.init();
-	this.m_weapon = createWeapon("beezooka");
+	this.m_weapon = createWeapon("pea_shooter");
 	this.m_weapon.init();
 };
 
