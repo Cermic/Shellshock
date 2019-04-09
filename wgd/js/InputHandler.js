@@ -5,6 +5,7 @@ var saveY;
 
 var worldGravity = 800;
 var noGravity = 0;	
+var ceilingGravity = -10;
 
 var InputHandler = function(){ 
 	
@@ -97,7 +98,7 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		activePlayer.m_canJump 		= false;
 		activePlayer.m_onCeiling 	= true;
 		activePlayer.m_sprite.body.velocity.y=0;
-		activePlayer.m_sprite.body.gravity.y=noGravity
+		activePlayer.m_sprite.body.gravity.y=ceilingGravity
 		activePlayer.m_sprite.angle = 180;
 	}
 	
