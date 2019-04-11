@@ -85,6 +85,22 @@ Snail.prototype.update = function()
 			{
 				this.m_sprite.animations.play('moveRight');
 			}
+			
+			if (this.m_facing != 'idle')
+			{
+				this.m_sprite.animations.stop();
+
+				if (this.m_facing == 'left')
+				{
+					this.m_sprite.frame = 0;
+				}
+				else
+				{
+					this.m_sprite.frame = 8;
+				}
+
+				//activePlayer.m_facing = 'idle';
+			}
 	
 	
 	
