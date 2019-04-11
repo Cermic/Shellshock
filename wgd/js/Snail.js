@@ -57,23 +57,47 @@ Snail.prototype.init = function()
 Snail.prototype.update = function()
 {	
 	this.m_sprite.body.velocity.x = 0;		
-			
-			
+						
 	 PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01);	
 
 	//Update Weapon...
 	this.m_weapon.update(this);
 	
+	///////
+	if (this.m_facing == 'left')
+			{
+				this.m_sprite.animations.play('moveLeft');
+
+				//activePlayer.m_facing = 'left';
+			}
+			else
+			{
+				this.m_sprite.animations.play('moveRight');
+			}
+			
+	if (this.m_facing == 'right')
+			{
+				this.m_sprite.animations.play('moveRight');
+
+				//activePlayer.m_facing = 'left';
+			}
+			else
+			{
+				this.m_sprite.animations.play('moveRight');
+			}
+	
+	
 	
 	var keys = {
 			x: this.m_sprite.position.x,
 			y: this.m_sprite.position.y,
-			animationPlaying : 'RedSnail' || null,
+			facing : m_facing || null,
 			// playerColor : this.mainSpriteColor || null//,
 			playerName : PhaserMMORPG.MyMyltiplayerId
 	};
 
-	console.log(keys);
+	//console.log(keys);
+	console.log("Facing: " + this.m_facing);
 	PhaserMMORPG.eurecaServer.handleKeys(keys);
   
 

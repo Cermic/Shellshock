@@ -38,7 +38,13 @@ PhaserMMORPG.eurecaClientSetup = function() {
 		if (id == PhaserMMORPG.MyMyltiplayerId) return; //this is me
 		
 		console.log('Spawning another player with name ' + ip);
-		var plr = new PhaserMMORPG.Avatar(PhaserMMORPG.game, ip, x, y, color);
+		
+		//var plr = new PhaserMMORPG.Avatar(PhaserMMORPG.game, ip, x, y, color);
+		var plr = new Snail('RedSnail', 0);
+		plr.init();
+		plr.x = x;
+		plr.y = y;
+		
 		PhaserMMORPG.playerList[id] = plr;
 	}
 	
@@ -47,22 +53,28 @@ PhaserMMORPG.eurecaClientSetup = function() {
 		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  {
 
 			//PhaserMMORPG.playerList[id].cursor = state;
-			PhaserMMORPG.playerList[id].setX(state.x);
-			PhaserMMORPG.playerList[id].setY(state.y);
+			//PhaserMMORPG.playerList[id].setX(state.x);
+			//PhaserMMORPG.playerList[id].setY(state.y);
+			PhaserMMORPG.playerList[id].m_sprite.position.x = state.x;
+			PhaserMMORPG.playerList[id].m_sprite.position.y = state.y;
+			
 			console.log("ffor player "+id+" the y is :"+state.y);
-			if (state.animationPlaying) {
-				PhaserMMORPG.playerList[id].playAnimation(state.animationPlaying);
-			} else {
-				PhaserMMORPG.playerList[id].stopAnimations();
-			}
+			if (state.facing) {
+				//PhaserMMORPG.playerList[id].playAnimation(state.animationPlaying);
+				PhaserMMORPG.playerList[id].m_facing = state.facing;
+				//PhaserMMORPG.playerList[id].m_sprite.animations.play('moveLeft');
+				
+			} //else {
+				//PhaserMMORPG.playerList[id].m_facing = 'right';
+			//}
 
-			if (PhaserMMORPG.playerList[id].playerColor !== state.playerColor) {
-				PhaserMMORPG.playerList[id].setColor(state.playerColor);
-			}
+			//if (PhaserMMORPG.playerList[id].playerColor !== state.playerColor) {
+			//	PhaserMMORPG.playerList[id].setColor(state.playerColor);
+			//}
 
-			if (PhaserMMORPG.playerList[id].name !== state.playerName) {
-				PhaserMMORPG.playerList[id].setName(state.playerName);
-			}
+			//if (PhaserMMORPG.playerList[id].name !== state.playerName) {
+			//	PhaserMMORPG.playerList[id].setName(state.playerName);
+			//}
 
 		}
 	}
