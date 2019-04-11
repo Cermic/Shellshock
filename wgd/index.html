@@ -1,20 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <script type="text/javascript" src="js/phaser.min.js"></script>
-    <script type="text/javascript" src="js/gameFile.js"></script>
-	<script type="text/javascript" src="js/Snail.js"></script>
-	<script type="text/javascript" src="js/Weapon.js"></script>
-	<script type="text/javascript" src="js/InputHandler.js"></script>
 
-	<script type="text/javascript" src="js/WeaponFactory.js"></script>
-	<script>
-		var game = new Phaser.Game(1000, 600, Phaser.AUTO, "gameDiv");
-		game.state.add("gameState",gameFunc);
-		game.state.start("gameState");
-	</script>
-</head>
-<body>
-    <div style="text-align:center;border:1px solid white" id="gameDiv"></div>
-</body>
+	<head>
+		<script type="text/javascript" src="js/lib/phaser.min.js"></script>
+		<script type="text/javascript" src="/eureca.js"></script>
+
+		<script type="text/javascript" src="js/MultiplayerClient.js"></script>
+		<script type="text/javascript" src="js/Classes.js"></script>
+				<script type="text/javascript" src="js/Boot.js"></script>	
+	
+		<script type="text/javascript" src="js/Preload.js"></script>	
+		<script type="text/javascript" src="js/MainMenu.js"></script> 
+		
+				
+		<script type="text/javascript" src="js/Snail.js"></script>
+		<script type="text/javascript" src="js/weapon.js"></script>
+		<script type="text/javascript" src="js/weaponFactory.js"></script>
+		<script type="text/javascript" src="js/InputHandler.js"></script>
+			
+		<script type="text/javascript" src="js/Game.js"></script>
+		
+		<style>	
+		</style>
+	</head>
+	<body>  
+		<!-- include the main game file -->
+		<script 
+					src="js/main.js">
+		</script>
+		
+	</body>
 </html>

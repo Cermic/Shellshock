@@ -3,8 +3,8 @@ var jumpButton;
 
 var InputHandler = function(){ 
 	
-	this.cursors = game.input.keyboard.createCursorKeys();
-	this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	this.cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
+	this.jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	//Gredit////////////////////////////////////////////
 	jumpButton.onDown.add(this.handleJump, this);
 	//Grend////////////////////////////////////////////
@@ -23,7 +23,7 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 InputHandler.prototype.checkMouse = function(activePlayer)
 {
 		//Weapon Fire
-		if(game.input.activePointer.isDown){
+		if(PhaserMMORPG.game.input.activePointer.isDown){
 			activePlayer.m_weapon.fire(activePlayer.m_sprite);
 		}
 	
@@ -32,10 +32,10 @@ InputHandler.prototype.checkMouse = function(activePlayer)
 InputHandler.prototype.checkVerticalMove = function(activePlayer)
 {
 		//Jump
-		/*if (this.jumpButton.isDown && activePlayer.m_sprite.body.onFloor() && game.time.now > activePlayer.m_timer)
+		/*if (this.jumpButton.isDown && activePlayer.m_sprite.body.onFloor() && PhaserMMORPG.game.time.now > activePlayer.m_timer)
 		{
 			activePlayer.m_sprite.body.velocity.y = -250;
-			activePlayer.m_timer = game.time.now + 750;
+			activePlayer.m_timer = PhaserMMORPG.game.time.now + 750;
 		}*/
 }
 
@@ -118,10 +118,10 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		}
 
 		//Gredit////////////////////////////////////////////bug testing starts here
-		game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
+		PhaserMMORPG.game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
 		//Grend/////////////////////////////////////////////
 		//Left right animations and movement
-		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
+		if ((this.cursors.left.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
 			activePlayer.m_sprite.body.velocity.x = -150;
 
@@ -136,7 +136,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('moveRight');
 			}
 		}
-		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
+		else if ((this.cursors.right.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
 
 		{
 			activePlayer.m_sprite.body.velocity.x = 150;
@@ -152,10 +152,10 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
-		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall){
+		else if((this.cursors.up.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall){
 			activePlayer.m_sprite.body.velocity.y = -150;
 		}
-		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.m_onWall){
+		else if((this.cursors.down.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.S)) && activePlayer.m_onWall){
 			activePlayer.m_sprite.body.velocity.y = 150;
 		}
 

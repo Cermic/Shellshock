@@ -22,9 +22,9 @@ function Snail(sprite, startPos)
 Snail.prototype.init = function()
 {
 	//Sprite
-	this.m_sprite = game.add.sprite(32, 32, 'RedSnail');
+	this.m_sprite = PhaserMMORPG.game.add.sprite(32, 32, 'RedSnail');
 
-	game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
+	PhaserMMORPG.game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
 	this.m_sprite.x = 1000;
 			
 	//Physics
@@ -43,8 +43,7 @@ Snail.prototype.init = function()
 	this.m_sprite.animations.add('moveLeft', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
 	this.m_sprite.animations.add('moveRight',[8, 9, 10, 11, 12, 13, 14, 15], 10, true);
 			
-	//Camera
-	game.camera.follow(this.m_sprite);
+	
 			
 	//Weapon
 
@@ -58,10 +57,27 @@ Snail.prototype.init = function()
 Snail.prototype.update = function()
 {	
 	this.m_sprite.body.velocity.x = 0;		
-	game.physics.arcade.collide(this.m_sprite, layer01);	
+			
+			
+	 PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01);	
 
 	//Update Weapon...
 	this.m_weapon.update(this);
+	
+	
+	var keys = {
+			x: this.m_sprite.position.x,
+			y: this.m_sprite.position.y,
+			animationPlaying : 'RedSnail' || null,
+			// playerColor : this.mainSpriteColor || null//,
+			playerName : PhaserMMORPG.MyMyltiplayerId
+	};
+
+	console.log(keys);
+	PhaserMMORPG.eurecaServer.handleKeys(keys);
+  
+
+  
 };
 
 

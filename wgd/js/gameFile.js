@@ -1,3 +1,6 @@
+
+
+
 var gameFunc = function(){ 
 
 	var map;
@@ -82,6 +85,8 @@ gameFunc.prototype = {
 		player.x = 600;
 		player.y = 1300;
 		//Grend/////////////////////////////////////////////
+		
+		gameFunc.eurecaServer.spawnOtherPlayers();
 		
 		m_inputHandler = new InputHandler();		
 	},

@@ -37,11 +37,11 @@ Weapon.prototype.init = function()
 	this.nextFire = 0;
 	
 
-	this.m_weaponSprite = game.add.sprite(1000, 100, this.m_weaponSprite);
+	this.m_weaponSprite = PhaserMMORPG.game.add.sprite(1000, 100, this.m_weaponSprite);
 	this.m_weaponSprite.anchor.set(0.5);
 	
 	//Set up weapon projectiles...
-	this.m_projectiles = game.add.group();
+	this.m_projectiles = PhaserMMORPG.game.add.group();
 	this.m_projectiles.enableBody = true;
 	this.m_projectiles.physicsBodyType = Phaser.Physics.ARCADE;		
 	this.m_projectiles.createMultiple(this.m_projectileCount, this.m_projectileSprite);
@@ -53,7 +53,7 @@ Weapon.prototype.init = function()
 //Initialisation Function//	
 Weapon.prototype.update = function(snailObj)
 {
-	this.m_weaponSprite.rotation = game.physics.arcade.angleToPointer(snailObj.m_sprite);
+	this.m_weaponSprite.rotation = PhaserMMORPG.game.physics.arcade.angleToPointer(snailObj.m_sprite);
 	//this.weaponSprite.x = arg.x + 10;
 	//this.weaponSprite.y = arg.y + 24;
 	if(snailObj.m_facing == 'left')
@@ -75,11 +75,11 @@ Weapon.prototype.update = function(snailObj)
 Weapon.prototype.fire = function()
 {
 
-    if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
+    if (PhaserMMORPG.game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
-        this.nextFire = game.time.now + this.m_fireRate;
+        this.nextFire = PhaserMMORPG.game.time.now + this.m_fireRate;
         var projectile = this.m_projectiles.getFirstDead();
         projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
-        game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
+        PhaserMMORPG.game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
 };
