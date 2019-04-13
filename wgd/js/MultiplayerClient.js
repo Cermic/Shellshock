@@ -50,25 +50,29 @@ PhaserMMORPG.eurecaClientSetup = function() {
 	
 	eurecaClient.exports.updateState = function(id, state)
 	{
+		
+			
 		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  {
 
+			//Do scene collision check
+			PhaserMMORPG.game.physics.arcade.collide(PhaserMMORPG.playerList[id].m_sprite, layer01);	 
 
+			//Update player orientation
 			PhaserMMORPG.playerList[id].m_sprite.position.x = state.x;
 			PhaserMMORPG.playerList[id].m_sprite.position.y = state.y;
 			
-			PhaserMMORPG.playerList[id].m_facing = state.facingDir;
-
+			//Update weapon orientation
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.x = state.wepx;	
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.y = state.wepy;
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.rotation  = state.wepAng;
 			
 			
-			m_inputHandler.updateActivePlayer(PhaserMMORPG.playerList[id], layer01);	
-			//PhaserMMORPG.playerList[id].m_weapon.update(PhaserMMORPG.playerList[id]);
 			
-			//m_inputHandler.checkFacing(PhaserMMORPG.playerList[id]);	
-			
-		
+			//Update the character
+			PhaserMMORPG.playerList[id].m_sprite.body.velocity.x = 0;		
+			PhaserMMORPG.game.physics.arcade.collide(PhaserMMORPG.playerList[id].m_sprite, layer01);	
+			PhaserMMORPG.playerList[id].m_weapon.updateOnline(PhaserMMORPG.playerList[id]);
+			m_inputHandler.updateActivePlayer(PhaserMMORPG.playerList[id], layer01);
 
 		}	
 	}

@@ -98,20 +98,14 @@ PhaserMMORPG.Game.prototype = {
 		player.y = 1300;
 		//Grend/////////////////////////////////////////////
 		//Camera
-		 PhaserMMORPG.game.camera.follow(player.m_sprite);
+		PhaserMMORPG.game.camera.follow(player.m_sprite);
 	
 		
 		m_inputHandler = new InputHandler();	
     
 
-   // this.player = new PhaserMMORPG.Avatar(this.game, 'You');
-
-   // PhaserMMORPG.myAvatar = this.player;
-
-    //spawn other players
-    PhaserMMORPG.eurecaServer.spawnOtherPlayers();
-
-	
+		//spawn other players
+		PhaserMMORPG.eurecaServer.spawnOtherPlayers();
   
   },
   
@@ -124,10 +118,7 @@ PhaserMMORPG.Game.prototype = {
 	 
 		//m_inputHandler.updateActivePlayer(player, layer01);	
 		player.update();	
-		m_inputHandler.updateActivePlayer(player, layer01);	
-		
-
-	
+		m_inputHandler.updateActivePlayer(player, layer01);		
   }
   
 };

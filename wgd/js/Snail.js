@@ -64,14 +64,6 @@ Snail.prototype.update = function()
 	//Update Weapon...
 	this.m_weapon.update(this);
 	
-	if (this.m_facing == 'left'){
-		
-		this.m_sprite.animations.play('moveLeft');			
-	}
-	else
-	{
-		this.m_sprite.animations.play('moveRight');
-	}
 	
 	
 	//Send data to server
