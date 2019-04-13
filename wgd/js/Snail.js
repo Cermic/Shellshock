@@ -57,67 +57,39 @@ Snail.prototype.init = function()
 Snail.prototype.update = function()
 {	
 	this.m_sprite.body.velocity.x = 0;		
-						
-	 PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01);	
+		
+	//Do scene collision check
+	PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01);	
 
 	//Update Weapon...
 	this.m_weapon.update(this);
 	
-	///////
-	if (this.m_facing == 'left')
-			{
-				this.m_sprite.animations.play('moveLeft');
-
-				//activePlayer.m_facing = 'left';
-			}
-			else
-			{
-				this.m_sprite.animations.play('moveRight');
-			}
-			
-	if (this.m_facing == 'right')
-			{
-				this.m_sprite.animations.play('moveRight');
-
-				//activePlayer.m_facing = 'left';
-			}
-			else
-			{
-				this.m_sprite.animations.play('moveRight');
-			}
-			
-			if (this.m_facing != 'idle')
-			{
-				this.m_sprite.animations.stop();
-
-				if (this.m_facing == 'left')
-				{
-					this.m_sprite.frame = 0;
-				}
-				else
-				{
-					this.m_sprite.frame = 8;
-				}
-
-				//activePlayer.m_facing = 'idle';
-			}
+	if (this.m_facing == 'left'){
+		
+		this.m_sprite.animations.play('moveLeft');			
+	}
+	else
+	{
+		this.m_sprite.animations.play('moveRight');
+	}
 	
 	
-	
+	//Send data to server
 	var keys = {
-			x: this.m_sprite.position.x,
-			y: this.m_sprite.position.y,
-			facing : m_facing || null,
-			// playerColor : this.mainSpriteColor || null//,
+			x: this.m_sprite.position.x|| null,
+			y: this.m_sprite.position.y|| null,
+			wepx: this.m_weapon.m_weaponSprite.x || null,
+			wepy: this.m_weapon.m_weaponSprite.y || null,
+			facingDir : m_facing || null,
+			wepAng :this.m_weapon.m_weaponSprite.rotation ,
+			/// playerColor : this.mainSpriteColor || null//,
 			playerName : PhaserMMORPG.MyMyltiplayerId
 	};
 
-	//console.log(keys);
+	///console.log(keys);
 	console.log("Facing: " + this.m_facing);
 	PhaserMMORPG.eurecaServer.handleKeys(keys);
-  
-
-  
+	 
 };
 
 

@@ -52,30 +52,24 @@ PhaserMMORPG.eurecaClientSetup = function() {
 	{
 		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  {
 
-			//PhaserMMORPG.playerList[id].cursor = state;
-			//PhaserMMORPG.playerList[id].setX(state.x);
-			//PhaserMMORPG.playerList[id].setY(state.y);
+
 			PhaserMMORPG.playerList[id].m_sprite.position.x = state.x;
 			PhaserMMORPG.playerList[id].m_sprite.position.y = state.y;
 			
-			console.log("ffor player "+id+" the y is :"+state.y);
-			if (state.facing) {
-				//PhaserMMORPG.playerList[id].playAnimation(state.animationPlaying);
-				PhaserMMORPG.playerList[id].m_facing = state.facing;
-				//PhaserMMORPG.playerList[id].m_sprite.animations.play('moveLeft');
-				
-			} //else {
-				//PhaserMMORPG.playerList[id].m_facing = 'right';
-			//}
+			PhaserMMORPG.playerList[id].m_facing = state.facingDir;
 
-			//if (PhaserMMORPG.playerList[id].playerColor !== state.playerColor) {
-			//	PhaserMMORPG.playerList[id].setColor(state.playerColor);
-			//}
+			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.x = state.wepx;	
+			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.y = state.wepy;
+			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.rotation  = state.wepAng;
+			
+			
+			m_inputHandler.updateActivePlayer(PhaserMMORPG.playerList[id], layer01);	
+			//PhaserMMORPG.playerList[id].m_weapon.update(PhaserMMORPG.playerList[id]);
+			
+			//m_inputHandler.checkFacing(PhaserMMORPG.playerList[id]);	
+			
+		
 
-			//if (PhaserMMORPG.playerList[id].name !== state.playerName) {
-			//	PhaserMMORPG.playerList[id].setName(state.playerName);
-			//}
-
-		}
+		}	
 	}
 }

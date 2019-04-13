@@ -62,6 +62,7 @@ Weapon.prototype.update = function(snailObj)
 		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
 		this.m_weaponSprite.scale.x = -1;
 		this.m_weaponSprite.scale.y = -1;
+		
 	} else if(snailObj.m_facing == 'right')
 	{
 		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;

@@ -122,11 +122,12 @@ PhaserMMORPG.Game.prototype = {
 
  update: function() {
 	 
-		player.update();
-		//player.move();
+		//m_inputHandler.updateActivePlayer(player, layer01);	
+		player.update();	
 		m_inputHandler.updateActivePlayer(player, layer01);	
+		
 
-				
+	
   }
   
 };
