@@ -40,7 +40,7 @@ Snail.prototype.init = function()
 
 			
 	//Animations
-	this.m_sprite.animations.add('moveLeft', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+	this.m_sprite.animations.add('moveLeft' , [0, 1, 2, 3, 4, 5, 6, 7]     , 10, true);
 	this.m_sprite.animations.add('moveRight',[8, 9, 10, 11, 12, 13, 14, 15], 10, true);
 			
 	
@@ -72,14 +72,14 @@ Snail.prototype.update = function()
 			y: this.m_sprite.position.y|| null,
 			wepx: this.m_weapon.m_weaponSprite.x || null,
 			wepy: this.m_weapon.m_weaponSprite.y || null,
-			facingDir : m_facing || null,
+			facingDir : this.m_facing || null,
 			wepAng :this.m_weapon.m_weaponSprite.rotation ,
 			/// playerColor : this.mainSpriteColor || null//,
 			playerName : PhaserMMORPG.MyMyltiplayerId
 	};
 
 	///console.log(keys);
-	console.log("Facing: " + this.m_facing);
+	console.log("Snail: Facing: " + this.m_facing);
 	PhaserMMORPG.eurecaServer.handleKeys(keys);
 	 
 };

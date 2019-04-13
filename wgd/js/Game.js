@@ -80,8 +80,8 @@ PhaserMMORPG.Game.prototype = {
 	
 		
 		if(this.game.isRunning )
-		this.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	//CHLOE: This caused the players on the server to fall
-																					//		 Constantly when their window wasnt active. 
+		this.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
+	
 		if(!this.game.isRunning)
 		this.game.physics.arcade.gravity.y = 0;																			//		 Bullets now without gravity
 																					

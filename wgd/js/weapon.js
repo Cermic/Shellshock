@@ -88,6 +88,7 @@ Weapon.prototype.updateOnline = function(snailObj)
 		this.m_weaponSprite.scale.x = -1; 
 		this.m_weaponSprite.scale.y = 1;
 	}
+	
 	this.m_weaponSprite.y = snailObj.m_sprite.y + 20;
 };
 	
