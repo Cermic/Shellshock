@@ -8,7 +8,10 @@ var gameFunc = function(){
 	var cursors;
 	var jumpButton;	
 	var layer00, layer01;//Greg
-
+	var weapon_slot_box;
+	var weapon_info_box;
+	var team_health_box;
+	var time_box;
 };
 
 var gameOptions = {//Greg
@@ -21,13 +24,17 @@ var gameOptions = {//Greg
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	var ap_text;
-	
+
 
 gameFunc.prototype = {
 	
 	preload: function(){
 		
 		game.load.image('Health_Bar', 'assets/healthbar.png');
+		game.load.image('Info_Box', 'assets/ui_infobox.png');
+		game.load.image('Tall_Box', 'assets/ui_tallbox.png');
+		game.load.image('Weapon_Box', 'assets/ui_weaponbox.png');
+		
 		game.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
 		game.load.spritesheet('dude', 'assets/starstruck/dude.png', playerSpriteWidth, playerSpriteHeight);
@@ -94,7 +101,20 @@ gameFunc.prototype = {
 			fill: "#ff0044",
 			align: "center"
 		});
-		ap_Text.anchor.setTo(0.5, 0.75);		
+		ap_Text.anchor.setTo(0.5, 0.75);	
+		
+		// Stick UI to Camera space
+		weapon_slot_box = game.add.image(10, 10 , 'Tall_Box');
+		weapon_slot_box.fixedToCamera = true;
+		
+		weapon_info_box = game.add.image(weapon_slot_box.x + 10, weapon_slot_box.y, 'Weapon_Box');
+		weapon_info_box.fixedToCamera = true;
+		
+		team_health_box = game.add.image(time_box.x - 20, time_box.y , 'Weapon_Box');
+		team_health_box.fixedToCamera = true;
+		
+		time_box = game.add.image(window.innerWidth - 20, window.innerHeight - 20 , 'Tall_Box');
+		time_box.fixedToCamera = true;
 	},
 	
 	update: function(){
