@@ -14,6 +14,8 @@ var m_projectileSprite;
 var m_fireRate;
 var nextFire;
 
+var m_projectile;
+
 //Contructor//
 function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
 { 
@@ -48,6 +50,9 @@ Weapon.prototype.init = function()
 	
 	this.m_projectiles.setAll('checkWorldBounds', true);
 	this.m_projectiles.setAll('outOfBoundsKill', true);
+	
+	this.m_projectile = new Projectile(0,0,this.m_projectileSprite);
+	//this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
 }; 	
 	
 //Initialisation Function//	
@@ -74,7 +79,33 @@ Weapon.prototype.update = function(snailObj)
 //Fire Weapon Function//
 Weapon.prototype.fire = function()
 {
-
+	if (this.m_projectile.isAlive == false)
+    {
+		//console.log("NewProj");
+		//this.m_projectile.destroy();
+		this.m_projectile = new Projectile(0,0,0,this.m_projectileSprite);
+		//this.m_projectile.init(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
+		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
+		//console.log(this.m_weaponSprite);
+		//game.physics.arcade.moveToPointer(this.m_projectile.m_sprite.body, this.m_fireVelocity);
+		
+		var Xvector = (game.input.activePointer.x - this.m_weaponSprite.position.x/2);
+		var Yvector = (game.input.activePointer.y - this.m_weaponSprite.position.y);
+		
+		//console.log("pointer x: " + game.input.activePointer.x + ", weap pos x: " + this.m_weaponSprite.position.x /*+ Xvector*/ );
+		
+		console.log("vecX: " + Xvector + " / vecY: " + Yvector);
+		
+		var dir = Math.sqrt((Xvector * Xvector) + (Yvector * Yvector));
+		
+		console.log(dir);
+		
+		this.m_projectile.m_sprite.body.velocity.x = Xvector/dir * 1000;
+		this.m_projectile.m_sprite.body.velocity.y = Yvector/dir * 1000;
+		this.m_projectile.m_sprite.body.gravity.y = 500;
+	}
+	
+	/*
     if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
         this.nextFire = game.time.now + this.m_fireRate;
@@ -82,4 +113,5 @@ Weapon.prototype.fire = function()
         projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
         game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
+	*/
 };
