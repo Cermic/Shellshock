@@ -51,7 +51,7 @@ Weapon.prototype.init = function()
 	this.m_projectiles.setAll('checkWorldBounds', true);
 	this.m_projectiles.setAll('outOfBoundsKill', true);
 	
-	this.m_projectile = new Projectile(0,0,this.m_projectileSprite);
+	this.m_projectile = new Projectile(0,0,0,this.m_projectileSprite);
 	//this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
 }; 	
 	
@@ -81,27 +81,21 @@ Weapon.prototype.fire = function()
 {
 	if (this.m_projectile.isAlive == false)
     {
-		//console.log("NewProj");
-		//this.m_projectile.destroy();
-		this.m_projectile = new Projectile(0,0,0,this.m_projectileSprite);
-		//this.m_projectile.init(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
 		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
-		//console.log(this.m_weaponSprite);
-		//game.physics.arcade.moveToPointer(this.m_projectile.m_sprite.body, this.m_fireVelocity);
 		
 		var Xvector = (game.input.activePointer.x - this.m_weaponSprite.position.x/2);
 		var Yvector = (game.input.activePointer.y - this.m_weaponSprite.position.y);
 		
 		//console.log("pointer x: " + game.input.activePointer.x + ", weap pos x: " + this.m_weaponSprite.position.x /*+ Xvector*/ );
 		
-		console.log("vecX: " + Xvector + " / vecY: " + Yvector);
+		//console.log("vecX: " + Xvector + " / vecY: " + Yvector);
 		
-		var dir = Math.sqrt((Xvector * Xvector) + (Yvector * Yvector));
+		var mag = Math.sqrt((Xvector * Xvector) + (Yvector * Yvector));
 		
-		console.log(dir);
+		//console.log(mag);
 		
-		this.m_projectile.m_sprite.body.velocity.x = Xvector/dir * 1000;
-		this.m_projectile.m_sprite.body.velocity.y = Yvector/dir * 1000;
+		this.m_projectile.m_sprite.body.velocity.x = Xvector/mag * 1000;
+		this.m_projectile.m_sprite.body.velocity.y = Yvector/mag * 1000;
 		this.m_projectile.m_sprite.body.gravity.y = 500;
 	}
 	

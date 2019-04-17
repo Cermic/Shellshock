@@ -7,7 +7,7 @@ var m_sprite;
 var isAlive;
 
 //Contructor//
-function Projectile(damage, hitRadius, fireVelocity, projectileSprite)
+function Projectile(damage, hitRadius, projectileSprite)
 { 
 	this.m_damage 			= damage;
 	this.m_hitRadius		= hitRadius;
