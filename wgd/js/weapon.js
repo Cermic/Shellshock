@@ -80,6 +80,8 @@ Weapon.prototype.fire = function()
         this.nextFire = game.time.now + this.m_fireRate;
         var projectile = this.m_projectiles.getFirstDead();
         projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
+		console.log("test");
+		console.log(projectile);
         game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
 };
