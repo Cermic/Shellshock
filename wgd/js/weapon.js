@@ -35,7 +35,6 @@ Weapon.prototype.init = function()
 {
 	//Reset cooldown between shots...
 	this.nextFire = 0;
-	
 
 	this.m_weaponSprite = game.add.sprite(1000, 100, this.m_weaponSprite);
 	this.m_weaponSprite.anchor.set(0.5);
@@ -59,29 +58,28 @@ Weapon.prototype.update = function(snailObj)
 	if(snailObj.m_facing == 'left')
 	{
 
-		this.m_weaponSprite.x = snailObj.m_sprite.x - 10;
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
 		this.m_weaponSprite.scale.x = -1;
 		this.m_weaponSprite.scale.y = -1;
 	} else if(snailObj.m_facing == 'right')
 	{
-		this.m_weaponSprite.x = snailObj.m_sprite.x + 10;
+		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;
 		this.m_weaponSprite.scale.x = -1; 
 		this.m_weaponSprite.scale.y = 1;
 	}
-	this.m_weaponSprite.y = snailObj.m_sprite.y + 12;
+	this.m_weaponSprite.y = snailObj.m_sprite.y + 20;
 };
 	
 //Fire Weapon Function//
-Weapon.prototype.fire = function()
+Weapon.prototype.fire = function(snailObj)
 {
-
     if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
+		snailObj.m_actionPoints -= this.m_costAP;
         this.nextFire = game.time.now + this.m_fireRate;
         var projectile = this.m_projectiles.getFirstDead();
+		projectile.body.gravity.y = 0;
         projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
-		console.log("test");
-		console.log(projectile);
         game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
 };

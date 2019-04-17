@@ -6,6 +6,10 @@ var saveY;
 var worldGravity = 800;
 var noGravity = 0;	
 var ceilingGravity = -10;
+var jumpButton;		
+
+var APCosts = { jump: 10, horizontalMove: 1, verticalMove:  1 }
+
 
 var InputHandler = function(){ 
 	
@@ -24,6 +28,15 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 	this.checkFacing(activePlayer);
 	this.checkVerticalMove(activePlayer);
 	this.checkHorizontalMove(activePlayer, layer);
+	this.updateText(this.activePlayer.m_actionPoints, this.activePlayer);
+	//console.log(this.activePlayer.m_actionPoints);
+}
+
+InputHandler.prototype.updateText = function(newText, activePlayer)
+{
+	ap_Text.setText("AP: " + newText);
+	ap_Text.x = activePlayer.m_sprite.x;
+	ap_Text.y = activePlayer.m_sprite.y - 50;
 }
 
 InputHandler.prototype.checkMouse = function(activePlayer)
@@ -31,6 +44,12 @@ InputHandler.prototype.checkMouse = function(activePlayer)
 		//Weapon Fire
 		if(game.input.activePointer.isDown){
 			activePlayer.m_weapon.fire(activePlayer.m_sprite);
+		if(game.input.activePointer.isDown)
+		{
+			if(activePlayer.m_actionPoints >= activePlayer.m_weapon.m_costAP)
+			{
+				activePlayer.m_weapon.fire(activePlayer);
+			}
 		}
 	
 }
@@ -60,7 +79,6 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 	}
 	
 };
-
 
 InputHandler.prototype.handleJump = function()//Greg
 {
@@ -125,55 +143,83 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		
 InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 {	
-		//console.log("Wall " + activePlayer.m_onWall);
-		//console.log(activePlayer.m_sprite.m_canJump);		
-		//console.log("Ceiling " + activePlayer.m_onCeiling);
-		//if (activePlayer.m_sprite.body.blocked.down)	{console.log("Down");}
-		//if (activePlayer.m_sprite.body.blocked.up)		{console.log("Up");}
-		//if (activePlayer.m_sprite.body.blocked.left)	{console.log("Left");}
-		//if (activePlayer.m_sprite.body.blocked.right)	{console.log("Right");}
+		//game.physics.arcade.collide(this.activePlayer, layer);	
 		
-		
+		//console.log(activePlayer.m_sprite.onWall);//Works
+		//console.log(activePlayer.m_sprite.canJump);//Works
+		//if(activePlayer.m_sprite.body.blocked.down){
+		//console.log("Down");//Works
+		//}else if (activePlayer.m_sprite.body.blocked.up){
+		//console.log("Up");
+		//}else if (activePlayer.m_sprite.body.blocked.left){
+		//console.log("Left");
+		//}else if (activePlayer.m_sprite.body.blocked.right){
+		//console.log("Right");	
+		//}
+
+		//Gredit////////////////////////////////////////////bug testing starts here
+		//Non-Greg-Edit////////////////////
 		game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
+		//Grend/////////////////////////////////////////////
 		//Left right animations and movement
-		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A)))
+		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
-			activePlayer.m_sprite.body.velocity.x = -150;
-
-			if (activePlayer.m_facing == 'left')
+			//Ap Calculation...
+			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
 			{
-				activePlayer.m_sprite.animations.play('moveLeft');
+				activePlayer.m_actionPoints -= APCosts.horizontalMove;
+				activePlayer.m_sprite.body.velocity.x = -150;
+
+				if (activePlayer.m_facing == 'left')
+				{
+					activePlayer.m_sprite.animations.play('moveLeft');
+
+					//activePlayer.m_facing = 'left';
+				}
 			}
 			else
 			{
 				activePlayer.m_sprite.animations.play('moveRight');
 			}
 		}
-		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D)))
-
+		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
 		{
-			activePlayer.m_sprite.body.velocity.x = 150;
-			
-
-			if (activePlayer.m_facing == 'right')
+			//Ap Calculation...
+			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
 			{
-				activePlayer.m_sprite.animations.play('moveRight');
+				activePlayer.m_actionPoints -= APCosts.horizontalMove;
+				activePlayer.m_sprite.body.velocity.x = 150;
+
+				if (activePlayer.m_facing == 'right')
+				{
+
+					activePlayer.m_sprite.animations.play('moveRight');
+					//activePlayer.m_facing = 'right';
+				}
 			}
 			else
 			{
 				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
-		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall && !activePlayer.m_onCeiling){
-			activePlayer.m_sprite.body.velocity.y = -150;
-			activePlayer.m_sprite.body.gravity.y = worldGravity;
-
-			
+		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall && !activePlayer.m_onCeiling)
+		{
+			if(this.activePlayer.m_actionPoints >= APCosts.verticalMove)
+			{
+				activePlayer.m_actionPoints -= APCosts.verticalMove;
+				activePlayer.m_sprite.body.velocity.y = -150;
+				activePlayer.m_sprite.body.gravity.y = worldGravity;
+			}
 		}
-		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && (activePlayer.m_onWall || activePlayer.m_onCeiling)){
-			
-			activePlayer.m_sprite.body.gravity.y = worldGravity;
-
+		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && (activePlayer.m_onWall || activePlayer.m_onCeiling))
+		{
+			//Ap Calculation...
+			if(this.activePlayer.m_actionPoints >= APCosts.verticalMove)
+			{
+				activePlayer.m_actionPoints -= APCosts.verticalMove;
+				activePlayer.m_sprite.body.velocity.y = 150;
+				activePlayer.m_sprite.body.gravity.y = worldGravity;
+			}
 		}
 
 		else
