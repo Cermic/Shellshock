@@ -11,13 +11,6 @@ var m_weaponsList;
 
 var m_healthBar;
 var m_apBar;
-var m_startPos;
-//Gredit////////////////////////////////////////////
-var m_canJump;
-var m_onWall;
-//Grend////////////////////////////////////////////
-var m_weapon;
-var m_weaponsList;
 
 var m_actionPoints;
 
@@ -58,7 +51,7 @@ Snail.prototype.init = function()
 	this.m_sprite.m_onCeiling	= false;
 	//Gredit////////////////////////////////////////////
     this.m_sprite.body.gravity.y = 500;
-	this.m_sprite.canJump=true;
+	this.m_sprite.m_canJump=true;
 	//Grend////////////////////////////////////////////
 
 	this.m_actionPoints = 500;

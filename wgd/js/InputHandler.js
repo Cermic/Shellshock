@@ -6,7 +6,6 @@ var saveY;
 var worldGravity = 800;
 var noGravity = 0;	
 var ceilingGravity = -10;
-var jumpButton;		
 
 var APCosts = { jump: 10, horizontalMove: 1, verticalMove:  1 }
 
@@ -144,7 +143,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		//game.physics.arcade.collide(this.activePlayer, layer);	
 		
 		//console.log(activePlayer.m_sprite.onWall);//Works
-		//console.log(activePlayer.m_sprite.canJump);//Works
+		console.log(activePlayer.m_sprite.m_canJump);//Works
 		//if(activePlayer.m_sprite.body.blocked.down){
 		//console.log("Down");//Works
 		//}else if (activePlayer.m_sprite.body.blocked.up){

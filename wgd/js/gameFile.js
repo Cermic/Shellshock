@@ -8,7 +8,6 @@ var gameFunc = function(){
 	var cursors;
 	var jumpButton;	
 	var layer00, layer01;
-
 };
 
 	var m_inputHandler;
@@ -20,14 +19,6 @@ var gameFunc = function(){
 	var team_health_box;
 	var time_box;
 
-var gameOptions = {//Greg
-    // player gravity
-    playerGravity: 500,
-	wallGravity: 100,
-	noGravity: 0
-}
-
-	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	var ap_text;
 
@@ -93,13 +84,7 @@ gameFunc.prototype = {
 		player.y = 1300;
 		
 		m_inputHandler = new InputHandler();		
-		//Gredit////////////////////////////////////////////
-		player.x = 600;
-		player.y = 1300;
-		//Grend/////////////////////////////////////////////
 		
-		m_inputHandler = new InputHandler();	
-
 		ap_Text = game.add.text(player.x, player.y, "", 
 		{
 			font: "32px Arial",
