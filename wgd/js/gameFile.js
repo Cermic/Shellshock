@@ -19,7 +19,6 @@ var gameFunc = function(){
 	var weapon_info_box;
 	var team_health_box;
 	var time_box;
-};
 
 var gameOptions = {//Greg
     // player gravity

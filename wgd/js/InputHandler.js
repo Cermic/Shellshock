@@ -42,8 +42,6 @@ InputHandler.prototype.updateText = function(newText, activePlayer)
 InputHandler.prototype.checkMouse = function(activePlayer)
 {
 		//Weapon Fire
-		if(game.input.activePointer.isDown){
-			activePlayer.m_weapon.fire(activePlayer.m_sprite);
 		if(game.input.activePointer.isDown)
 		{
 			if(activePlayer.m_actionPoints >= activePlayer.m_weapon.m_costAP)
@@ -241,4 +239,3 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 			}
 		}
 };
-
