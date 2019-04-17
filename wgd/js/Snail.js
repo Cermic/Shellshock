@@ -5,9 +5,11 @@ var m_sprite;
 var m_startPos
 var m_canJump;
 var m_onCeiling;
-var m_onWall;
+var m_onWallLeft;
+var m_onWallRight;
 var m_weapon;
 var m_weaponsList;
+var m_moving;
 
 var m_healthBar;
 var m_apBar;
@@ -47,12 +49,12 @@ Snail.prototype.init = function()
 	this.m_sprite.body.collideWorldBounds = true;
 	this.m_sprite.body.setSize(32, 32, 5, 1);
 	
-	this.m_sprite.m_onWall		= false;	
-	this.m_sprite.m_onCeiling	= false;
-	//Gredit////////////////////////////////////////////
     this.m_sprite.body.gravity.y = 500;
-	this.m_sprite.m_canJump=true;
-	//Grend////////////////////////////////////////////
+	this.m_sprite.m_canJump		= true;
+	this.m_sprite.m_onWallLeft	= false;
+	this.m_sprite.m_onWallRight	= false;
+	this.m_sprite.m_onCeiling	= false;
+	this.m_sprite.m_moving		= false;
 
 	this.m_actionPoints = 500;
 			
