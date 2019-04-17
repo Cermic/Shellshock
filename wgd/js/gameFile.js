@@ -104,17 +104,12 @@ gameFunc.prototype = {
 		ap_Text.anchor.setTo(0.5, 0.75);	
 		
 		// Stick UI to Camera space
-		weapon_slot_box = game.add.image(10, 10 , 'Tall_Box');
+		weapon_slot_box = game.add.image(600, 525 , 'Tall_Box');
+		weapon_slot_box.angle = 90;
 		weapon_slot_box.fixedToCamera = true;
 		
-		weapon_info_box = game.add.image(weapon_slot_box.x + 10, weapon_slot_box.y, 'Weapon_Box');
+		weapon_info_box = game.add.image(weapon_slot_box.x - 585, weapon_slot_box.y - 60 , 'Info_Box');
 		weapon_info_box.fixedToCamera = true;
-		
-		team_health_box = game.add.image(time_box.x - 20, time_box.y , 'Weapon_Box');
-		team_health_box.fixedToCamera = true;
-		
-		time_box = game.add.image(window.innerWidth - 20, window.innerHeight - 20 , 'Tall_Box');
-		time_box.fixedToCamera = true;
 	},
 	
 	update: function(){
