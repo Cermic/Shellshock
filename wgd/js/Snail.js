@@ -10,6 +10,10 @@ var m_onWall;
 var m_weapon;
 var m_weaponsList;
 
+//Get Mouse Position
+	var	px;
+	var	py;
+
 //Contructor//
 function Snail(sprite, startPos)
 { 
@@ -37,18 +41,12 @@ Snail.prototype.init = function()
 	this.m_sprite.canJump=true;
 	this.m_sprite.onWall=false;	
 	//Grend////////////////////////////////////////////
-
-			
+		
 	//Animations
 	this.m_sprite.animations.add('moveLeft' , [0, 1, 2, 3, 4, 5, 6, 7]     , 10, true);
 	this.m_sprite.animations.add('moveRight',[8, 9, 10, 11, 12, 13, 14, 15], 10, true);
-			
-	
-			
+					
 	//Weapon
-
-	//this.m_weapon = new Weapon(0,0,0,0,800,'Beezooka','bullet',5, 100);
-	//this.m_weapon.init();
 	this.m_weapon = createWeapon("beezooka");
 	this.m_weapon.init();
 };
@@ -63,10 +61,27 @@ Snail.prototype.update = function()
 
 	//Update Weapon...
 	this.m_weapon.update(this);
+
+
+	var projX;
+	var projY;
+	var isactive = this.m_weapon.m_projectile.isAlive;
+	
+	console.log('projx: ' + projX);
+	console.log('projy: ' + projY);
+	console.log('isActiveProj: ' + isactive);
+	
+	if(this.m_weapon.m_projectile.isAlive)
+	{
+		projX = this.m_weapon.m_projectile.m_sprite.position.x;
+		projY = this.m_weapon.m_projectile.m_sprite.position.y;
+	}
+	else{
+		projX = null;
+		projY = null;	
+	}
 	
 	
-	
-	//Send data to server
 	var keys = {
 			x: this.m_sprite.position.x|| null,
 			y: this.m_sprite.position.y|| null,
@@ -74,14 +89,22 @@ Snail.prototype.update = function()
 			wepy: this.m_weapon.m_weaponSprite.y || null,
 			facingDir : this.m_facing || null,
 			wepAng :this.m_weapon.m_weaponSprite.rotation ,
-			/// playerColor : this.mainSpriteColor || null//,
+			anim :this.m_sprite.animations.name || null,
+			projx : projX || null,
+			projy : projY || null,
+			activeProj : isactive || null,
 			playerName : PhaserMMORPG.MyMyltiplayerId
 	};
 
-	///console.log(keys);
-	console.log("Snail: Facing: " + this.m_facing);
 	PhaserMMORPG.eurecaServer.handleKeys(keys);
+	
+	
 	 
+};
+
+Snail.prototype.kill = function()
+{
+		this.destroy();
 };
 
 

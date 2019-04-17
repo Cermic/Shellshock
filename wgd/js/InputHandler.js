@@ -108,7 +108,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		//console.log(activePlayer.m_sprite.onWall);//Works
 		//console.log(activePlayer.m_sprite.canJump);//Works
 		if(activePlayer.m_sprite.body.blocked.down){
-		console.log("Down");//Works
+		//console.log("Down");//Works
 		}else if (activePlayer.m_sprite.body.blocked.up){
 		console.log("Up");
 		}else if (activePlayer.m_sprite.body.blocked.left){

@@ -5,6 +5,7 @@ PhaserMMORPG.MultiplayerServerReady = false;
 PhaserMMORPG.playerList = PhaserMMORPG.playerList || {};
 PhaserMMORPG.MyMyltiplayerId = 0;
 
+
 //this function will handle client communication with the server
 PhaserMMORPG.eurecaClientSetup = function() {
 	//create an instance of eureca.io client
@@ -48,14 +49,12 @@ PhaserMMORPG.eurecaClientSetup = function() {
 		PhaserMMORPG.playerList[id] = plr;
 	}
 	
+	
+	
 	eurecaClient.exports.updateState = function(id, state)
 	{
-		
-			
+				
 		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  {
-
-			//Do scene collision check
-			///PhaserMMORPG.game.physics.arcade.collide(PhaserMMORPG.playerList[id].m_sprite, layer01);	 
 
 			//Update player orientation
 			PhaserMMORPG.playerList[id].m_sprite.position.x = state.x;
@@ -63,13 +62,57 @@ PhaserMMORPG.eurecaClientSetup = function() {
 			
 			PhaserMMORPG.playerList[id].m_facing = state.facingDir;
 			
+			
 			//Update weapon orientation
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.x = state.wepx;	
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.y = state.wepy;
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.rotation  = state.wepAng;
 					
+										
+			//Animation Bug		
+			///if(PhaserMMORPG.playerList[id].m_sprite.animations.name ==state.anim)
+			///{
+				///PhaserMMORPG.playerList[id].m_sprite.animations.stop();
+			///}
+			///else{
+				///if(PhaserMMORPG.playerList[id].m_sprite.animations.name != null)
+				///PhaserMMORPG.playerList[id].m_sprite.animations.play(state.anim);	
+			///}
+					
+			
+			
+			if(state.activeProj)
+			{
+				if(PhaserMMORPG.playerList[id].m_weapon.m_projectile.isAlive)
+				{
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.x = state.projx;
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.y = state.projy;
+				}
+				else
+				{
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile = new Projectile(0,0,0,PhaserMMORPG.playerList[id].m_weapon.m_projectileSprite);
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile.init(PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.x, PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.y);
+					
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.x = state.projx;
+					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.y = state.projy;
+				}
+			}
+			
+			
+			//if(state.hasFired == 1)
+			//{
+			//	PhaserMMORPG.playerList[id].m_weapon.fireOnline(state.velx, state.vely);		
+			//	PhaserMMORPG.playerList[id].m_weapon.hasFired = 0;
+						
+			//}
+			
+			
+			
 			//Update the character			
-			PhaserMMORPG.playerList[id].update();			
+			PhaserMMORPG.playerList[id].update();	
+					
+			
+				
 		}	
 	}
 }

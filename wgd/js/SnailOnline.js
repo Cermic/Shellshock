@@ -33,27 +33,13 @@ SnailOnline.prototype.init = function()
 
 //Update Function//
 SnailOnline.prototype.update = function()
-{	
-	//Update Weapon and animation
-	if(this.m_facing == 'left')
-	{
-		this.m_weapon.m_weaponSprite.x = this.m_sprite.x + 4;
-		this.m_weapon.m_weaponSprite.scale.x = -1;
-		this.m_weapon.m_weaponSprite.scale.y = -1;
-		
-		this.m_sprite.animations.play('moveLeft');
-		
-	} else if(this.m_facing == 'right')
-	{
-		this.m_weapon.m_weaponSprite.x = this.m_sprite.x + 28;
-		this.m_weapon.m_weaponSprite.scale.x = -1; 
-		this.m_weapon.m_weaponSprite.scale.y = 1;
-		
-		this.m_sprite.animations.play('moveRight');
-	}
-	
-	this.m_weaponSprite.y = this.m_sprite.y + 20;
-	
+{			
+	this.m_weapon.updateOnline(this);	
 };
 
+
+SnailOnline.prototype.kill = function()
+{
+		this.destroy();
+};
 

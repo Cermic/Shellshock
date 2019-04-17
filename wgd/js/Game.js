@@ -79,11 +79,11 @@ PhaserMMORPG.Game.prototype = {
 
 	
 		
-		if(this.game.isRunning )
+		//if(this.game.isRunning )
 		this.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
 	
-		if(!this.game.isRunning)
-		this.game.physics.arcade.gravity.y = 0;																			//		 Bullets now without gravity
+		//if(!this.game.isRunning)
+		//this.game.physics.arcade.gravity.y = 800;																			//		 Bullets now without gravity
 																					
 		
 		cursors = this.game.input.keyboard.createCursorKeys();
