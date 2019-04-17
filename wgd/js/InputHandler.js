@@ -7,6 +7,7 @@ var worldGravity = 800;
 var noGravity = 0;	
 var ceilingGravity = -1;
 
+
 var InputHandler = function(){ 
 	
 	this.cursors = game.input.keyboard.createCursorKeys();
@@ -72,6 +73,7 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 
 InputHandler.prototype.handleJump = function()//Greg
 {
+
 	
 	if((this.activePlayer.m_canJump)){
     //applying jump force
@@ -82,6 +84,9 @@ InputHandler.prototype.handleJump = function()//Greg
 };
 
 InputHandler.prototype.testS = function(activePlayer, layer){
+	
+	console.log(this.activePlayer.m_sprite.body.gravity.y);
+	
 	if(activePlayer.m_sprite.body.blocked.down){//if on ground
 		activePlayer.m_sprite.body.gravity.y = worldGravity;
 		activePlayer.m_canJump		= true;
@@ -90,6 +95,7 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		activePlayer.m_onCeiling	= false;
 		activePlayer.m_sprite.angle = 0;
 	}
+
 	else if(activePlayer.m_sprite.body.blocked.up){//If on ceiling
 		activePlayer.m_canJump 		= true;
 		activePlayer.m_onCeiling 	= true;
@@ -115,7 +121,6 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		activePlayer.m_sprite.body.gravity.y=noGravity;
 		activePlayer.m_sprite.angle = 90;
 	}
-
 	
 	if (activePlayer.m_onCeiling){//Ceiling climbing
 		
@@ -147,7 +152,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		//console.log("Left Wall " + activePlayer.m_onWallLeft);
 		console.log("Right Wall " + activePlayer.m_onWallRight);
 		//console.log(activePlayer.m_sprite.m_canJump);		
-		//console.log("Ceiling " + activePlayer.m_onCeiling);
+		console.log("Ceiling " + activePlayer.m_onCeiling);
 		//if (activePlayer.m_sprite.body.blocked.down)	{console.log("Down");}
 		//if (activePlayer.m_sprite.body.blocked.up)		{console.log("Up");}
 		//if (activePlayer.m_sprite.body.blocked.left)	{console.log("Left");}
@@ -187,7 +192,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
-		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && (activePlayer.m_onWallLeft || activePlayer.m_onWallRight) && !activePlayer.m_onCeiling){
+		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && (activePlayer.m_onWallLeft || activePlayer.m_onWallRight)){
 			activePlayer.m_sprite.body.velocity.y = -150;
 			if(activePlayer.m_onWallLeft){
 			activePlayer.m_sprite.body.velocity.x = -150;
