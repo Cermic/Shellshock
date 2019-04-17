@@ -1,8 +1,10 @@
+var eplayer;
+
 var gameFunc = function(){ 
 
 	var map;
-	var tileset;
-	var layer;
+	//var tileset;
+	//var layer;
 	var bg;
 	var player;
 	var cursors;
@@ -74,6 +76,14 @@ gameFunc.prototype = {
 		cursors = game.input.keyboard.createCursorKeys();
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
+			eplayer = new Snail('RedSnail', 0);
+		eplayer.init();
+		
+		//Gredit////////////////////////////////////////////
+		eplayer.x = 800;
+		eplayer.y = 1300;
+		//Grend/////////////////////////////////////////////
+		
 		
 		player = new Snail('RedSnail', 0);
 		player.init();
@@ -83,15 +93,18 @@ gameFunc.prototype = {
 		player.y = 1300;
 		//Grend/////////////////////////////////////////////
 		
+	
+		
 		m_inputHandler = new InputHandler();		
 	},
 	
 	update: function(){
 		player.update();
+		eplayer.update();
 		//player.move();
 		m_inputHandler.updateActivePlayer(player, layer01);		
+		//m_inputHandler.updateActivePlayer(eplayer, layer01);		
 	}
 }
-
 
 
