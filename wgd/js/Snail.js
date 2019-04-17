@@ -5,9 +5,11 @@ var m_sprite;
 var m_startPos
 var m_canJump;
 var m_onCeiling;
-var m_onWall;
+var m_onWallLeft;
+var m_onWallRight;
 var m_weapon;
 var m_weaponsList;
+var m_moving;
 
 //Contructor//
 function Snail(sprite, startPos)
@@ -34,8 +36,10 @@ Snail.prototype.init = function()
 	
     this.m_sprite.body.gravity.y = 500;
 	this.m_sprite.m_canJump		= true;
-	this.m_sprite.m_onWall		= false;	
+	this.m_sprite.m_onWallLeft	= false;
+	this.m_sprite.m_onWallRight	= false;
 	this.m_sprite.m_onCeiling	= false;
+	this.m_sprite.m_moving		= false;
 			
 	//Animations
 	this.m_sprite.animations.add('moveLeft', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);

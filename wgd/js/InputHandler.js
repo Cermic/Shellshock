@@ -5,7 +5,7 @@ var saveY;
 
 var worldGravity = 800;
 var noGravity = 0;	
-var ceilingGravity = -10;
+var ceilingGravity = -1;
 
 var InputHandler = function(){ 
 	
@@ -76,23 +76,10 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 	if(activePlayer.m_sprite.body.blocked.down){//if on ground
 		activePlayer.m_sprite.body.gravity.y = worldGravity;
 		activePlayer.m_canJump		= true;
-		activePlayer.m_onWall 		= false;
+		activePlayer.m_onWallLeft 	= false;
+		activePlayer.m_onWallRight 	= false;
 		activePlayer.m_onCeiling	= false;
 		activePlayer.m_sprite.angle = 0;
-	}
-	else if(activePlayer.m_sprite.body.blocked.right){//If wall on right
-		activePlayer.m_canJump		= false;
-		activePlayer.m_onWall 		= true;
-		activePlayer.m_sprite.body.velocity.y=0;
-		activePlayer.m_sprite.body.gravity.y=noGravity;
-		activePlayer.m_sprite.angle = -90;
-	}
-	else if(activePlayer.m_sprite.body.blocked.left){//If wall on right
-		activePlayer.m_canJump		= false;
-		activePlayer.m_onWall 		= true;
-		activePlayer.m_sprite.body.velocity.y=0;
-		activePlayer.m_sprite.body.gravity.y=noGravity;
-		activePlayer.m_sprite.angle = 90;
 	}
 	else if(activePlayer.m_sprite.body.blocked.up){//If on ceiling
 		activePlayer.m_canJump 		= false;
@@ -101,43 +88,69 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		activePlayer.m_sprite.body.gravity.y=ceilingGravity
 		activePlayer.m_sprite.angle = 180;
 	}
+	else if(activePlayer.m_sprite.body.blocked.right){//If wall on right
+		activePlayer.m_canJump		= false;
+		activePlayer.m_onWallLeft	= false;
+		activePlayer.m_onWallRight	= true;
+		activePlayer.m_onCeiling	= false;
+		activePlayer.m_sprite.body.velocity.y=0;
+		activePlayer.m_sprite.body.gravity.y=noGravity;
+		activePlayer.m_sprite.angle = -90;
+	}
+	else if(activePlayer.m_sprite.body.blocked.left){//If wall on right
+		activePlayer.m_canJump		= false;
+		activePlayer.m_onWallLeft	= true;
+		activePlayer.m_onWallRight	= false;
+		activePlayer.m_onCeiling	= false;
+		activePlayer.m_sprite.body.velocity.y=0;
+		activePlayer.m_sprite.body.gravity.y=noGravity;
+		activePlayer.m_sprite.angle = 90;
+	}
+
 	
-	if (activePlayer.m_onWall){//Wall climbling
+	if (activePlayer.m_onCeiling){//Ceiling climbing
+		
+		if(activePlayer.m_sprite.body.position.y != saveY){
+			activePlayer.m_onCeiling	= false;
+			if(!activePlayer.m_onWallLeft || !activePlayer.m_onWallRight){				
+				activePlayer.m_sprite.body.gravity.y = worldGravity;
+			}
+		}
+		saveY = activePlayer.m_sprite.body.position.y;
+	}
+	
+	if (activePlayer.m_onWallLeft || activePlayer.m_onWallRight){//Wall climbling
 		if(activePlayer.m_sprite.body.position.x != saveX){
-			activePlayer.m_onWall	= false;
+			activePlayer.m_onWallLeft	= false;
+			activePlayer.m_onWallRight	= false;
 			if(!activePlayer.m_onCeiling){				
 				activePlayer.m_sprite.body.gravity.y = worldGravity;
 			}			
 		}
 		saveX = activePlayer.m_sprite.body.position.x;
 	}
-	if (activePlayer.m_onCeiling){//Ceiling climbing
-		
-		if(activePlayer.m_sprite.body.position.y != saveY){
-			activePlayer.m_onCeiling	= false;
-			if(!activePlayer.m_onWall){				
-				activePlayer.m_sprite.body.gravity.y = worldGravity;
-			}
-		}
-		saveY = activePlayer.m_sprite.body.position.y;
-	}
+	//console.log("Ceiling: " + activePlayer.m_onCeiling);
+	//console.log("Wall: " + activePlayer.m_onWall);
 };
 		
 InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 {	
-		//console.log("Wall " + activePlayer.m_onWall);
+		//console.log("Left Wall " + activePlayer.m_onWallLeft);
+		console.log("Right Wall " + activePlayer.m_onWallRight);
 		//console.log(activePlayer.m_sprite.m_canJump);		
 		//console.log("Ceiling " + activePlayer.m_onCeiling);
 		//if (activePlayer.m_sprite.body.blocked.down)	{console.log("Down");}
 		//if (activePlayer.m_sprite.body.blocked.up)		{console.log("Up");}
 		//if (activePlayer.m_sprite.body.blocked.left)	{console.log("Left");}
 		//if (activePlayer.m_sprite.body.blocked.right)	{console.log("Right");}
-		
+		//console.log(activePlayer.m_sprite.m_moving);
 		
 		game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
 		//Left right animations and movement
 		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A)))
 		{
+			
+			activePlayer.m_sprite.m_moving = true;
 			activePlayer.m_sprite.body.velocity.x = -150;
 
 			if (activePlayer.m_facing == 'left')
@@ -152,6 +165,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		else if ((this.cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D)))
 
 		{
+			activePlayer.m_sprite.m_moving = true;
 			activePlayer.m_sprite.body.velocity.x = 150;
 			
 
@@ -164,20 +178,26 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.animations.play('moveLeft');
 			}
 		}
-		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && activePlayer.m_onWall && !activePlayer.m_onCeiling){
+		else if((this.cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)) && (activePlayer.m_onWallLeft || activePlayer.m_onWallRight) && !activePlayer.m_onCeiling){
 			activePlayer.m_sprite.body.velocity.y = -150;
+			if(activePlayer.m_onWallLeft){
+			activePlayer.m_sprite.body.velocity.x = -150;
+			}else if(activePlayer.m_onWallRight){
+			activePlayer.m_sprite.body.velocity.x = 150;
+			}
 			activePlayer.m_sprite.body.gravity.y = worldGravity;
-
+			activePlayer.m_sprite.m_moving = true;
 			
 		}
-		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && (activePlayer.m_onWall || activePlayer.m_onCeiling)){
+		else if((this.cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)) && ((activePlayer.m_onWallLeft || activePlayer.m_onWallRight) || activePlayer.m_onCeiling)){
 			
 			activePlayer.m_sprite.body.gravity.y = worldGravity;
-
+			activePlayer.m_sprite.m_moving = true;
 		}
 
 		else
 		{
+			activePlayer.m_sprite.m_moving = false;
 			if (activePlayer.m_facing != 'idle')
 			{
 				activePlayer.m_sprite.animations.stop();
