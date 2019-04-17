@@ -11,6 +11,10 @@ PhaserMMORPG.Game = function(){};
 	var cursors;
 	var jumpButton;	
 	var layer00, layer01;//Greg
+	
+	var m_inputHandler;
+	//var collisionhandler;
+	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 
 
 
@@ -21,8 +25,7 @@ var gameOptions = {//Greg
 	noGravity: 0
 }
 
-	var m_inputHandler;
-	var playerSpriteWidth = 32, playerSpriteHeight = 32;
+
 	
 	
 
@@ -34,6 +37,10 @@ PhaserMMORPG.Game.prototype = {
  
  
  	preload: function(){
+		this.load.image('Health_Bar', 'assets/healthbar.png');
+		this.load.image('Info_Box', 'assets/ui_infobox.png');
+		this.load.image('Tall_Box', 'assets/ui_tallbox.png');
+		this.load.image('Weapon_Box', 'assets/ui_weaponbox.png');
 		
 		this.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
 		this.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
@@ -48,6 +55,9 @@ PhaserMMORPG.Game.prototype = {
 		
 		this.load.spritesheet('RedSnail', 'assets/sprites/Red_Snail_Movement.png', 32, 32);
 		this.load.image('Beezooka', 'assets/sprites/Beezooka.png');
+		this.load.spritesheet('RedSnail', 'assets/sprites/snail_red.png', 32, 32);
+		this.load.image('Beezooka', 'assets/sprites/weapon_beezooka.png');
+		this.load.image('Shotgun', 'assets/sprites/weapon_slug-gun.png');
 
 	},
 	
@@ -77,17 +87,17 @@ PhaserMMORPG.Game.prototype = {
 		//layer.debug = true;
 		//layer.resizeWorld();
 
-	
+		cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
+		jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
-		//if(this.game.isRunning )
-		this.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
+		
+		PhaserMMORPG.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
 	
-		//if(!this.game.isRunning)
-		//this.game.physics.arcade.gravity.y = 800;																			//		 Bullets now without gravity
+																	//		 Bullets now without gravity
 																					
 		
-		cursors = this.game.input.keyboard.createCursorKeys();
-		jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
+		jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
 		
 		player = new Snail('RedSnail', 0);
@@ -100,8 +110,30 @@ PhaserMMORPG.Game.prototype = {
 		//Camera
 		PhaserMMORPG.game.camera.follow(player.m_sprite);
 	
+	
+	//HUD
+		ap_Text = PhaserMMORPG.game.add.text(player.x, player.y, "", 
+		{
+			font: "32px Arial",
+			fill: "#ff0044",
+			align: "center"
+		});
+		ap_Text.anchor.setTo(0.5, 0.75);	
+		
+		// Stick UI to Camera space
+		weapon_slot_box = PhaserMMORPG.game.add.image(600, 525 , 'Tall_Box');
+		weapon_slot_box.angle = 90;
+		weapon_slot_box.fixedToCamera = true;
+		
+		weapon_info_box = PhaserMMORPG.game.add.image(weapon_slot_box.x - 585, weapon_slot_box.y - 60 , 'Info_Box');
+		weapon_info_box.fixedToCamera = true;
+	
+	
+	
+	
 		
 		m_inputHandler = new InputHandler();	
+		//collisionhandler = new CollisionHandler();		
     
 
 		//spawn other players

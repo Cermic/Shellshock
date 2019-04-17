@@ -48,7 +48,6 @@ Weapon.prototype.init = function()
 {
 	//Reset cooldown between shots...
 	this.nextFire = 0;
-	
 
 	this.m_weaponSprite = PhaserMMORPG.game.add.sprite(1000, 100, this.m_weaponSprite);
 	this.m_weaponSprite.anchor.set(0.5);
@@ -109,8 +108,9 @@ Weapon.prototype.updateOnline = function(snailObj)
 };
 	
 //Fire Weapon Function//
-Weapon.prototype.fire = function()
+Weapon.prototype.fire = function(snailObj)
 {
+
 	if (this.m_projectile.isAlive == false)
     {
 		//console.log("NewProj");
@@ -146,10 +146,14 @@ Weapon.prototype.fire = function()
 	}
 	
 	/*
+=======
+>>>>>>> 4bb01b7f86c11636626e65939c7f729512d73ac0
     if (game.time.now > this.nextFire && this.m_projectiles.countDead() > 0)
     {
+		snailObj.m_actionPoints -= this.m_costAP;
         this.nextFire = game.time.now + this.m_fireRate;
         var projectile = this.m_projectiles.getFirstDead();
+		projectile.body.gravity.y = 0;
         projectile.reset(this.m_weaponSprite.x - 16, this.m_weaponSprite.y - 16);
         game.physics.arcade.moveToPointer(projectile, this.m_fireVelocity);
 	}
