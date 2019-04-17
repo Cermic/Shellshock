@@ -52,11 +52,19 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 	
 	if(wepAngle > -90 && wepAngle <= 90)
 	{
-		activePlayer.m_facing = 'right';
+		if(activePlayer.m_onCeiling){
+			activePlayer.m_facing = 'left';
+		}else{
+			activePlayer.m_facing = 'right';
+		}
 	}
 	else
 	{
-		activePlayer.m_facing = 'left';
+		if(activePlayer.m_onCeiling){
+			activePlayer.m_facing = 'right';
+		}else{
+			activePlayer.m_facing = 'left';
+		}
 	}
 	
 };
@@ -67,6 +75,7 @@ InputHandler.prototype.handleJump = function()//Greg
 	
 	if((this.activePlayer.m_canJump)){
     //applying jump force
+		this.activePlayer.m_onCeiling	= false;
         this.activePlayer.m_sprite.body.velocity.y = -400;	
 		this.activePlayer.m_canJump = false;
     }
@@ -82,7 +91,7 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		activePlayer.m_sprite.angle = 0;
 	}
 	else if(activePlayer.m_sprite.body.blocked.up){//If on ceiling
-		activePlayer.m_canJump 		= false;
+		activePlayer.m_canJump 		= true;
 		activePlayer.m_onCeiling 	= true;
 		activePlayer.m_sprite.body.velocity.y=0;
 		activePlayer.m_sprite.body.gravity.y=ceilingGravity
