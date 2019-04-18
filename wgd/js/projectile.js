@@ -80,8 +80,8 @@ Projectile.prototype.onCollision = function()
 	//for loop for every snail
 	
 	var dist = Phaser.Math.distance(this.m_sprite.x, this.m_sprite.y, eplayer.m_sprite.x, eplayer.m_sprite.y);
-	console.log(dist);
-	console.log(this.m_hitRadius);
+	//console.log(dist);
+	//console.log(this.m_hitRadius);
 	
 	if(dist <= this.m_hitRadius)
 	{

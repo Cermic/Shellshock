@@ -1,37 +1,10 @@
-/*
-//Legacy Member Variables//
-var m_projectiles;	
-var m_maxAmmo;
-var m_currentAmmo;	
-var m_fireVelocity;
-var m_projectileCount;
-var m_fireRate;
-var nextFire;
-
-//Legacy Contructor//
-
-function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
-{ 
-	this.m_costAP 			= costAP;
-	this.m_maxAmmo 			= maxAmmo;
-	this.m_currentAmmo 		= maxAmmo;
-	this.m_damage 			= damage;
-	this.m_range 			= range;
-	this.m_fireVelocity 	= fireVelocity;
-	this.m_fireRate			= fireRate
-	this.m_projectileCount 	= projectileCount;
-
-	this.m_weaponSprite 	= weaponSprite;
-	this.m_projectileSprite = projectileSprite;
-};
-*/
 
 //Global Member Variables//
 var m_costAP;					//The AP cost to fire the weapon.
 var m_damage;					//The damage dealt by the weapon.
 var m_hitRadius;				//The radius in which damage is dealt.
-var m_range;					//The effective range of the weapon (used as a lifetime for projectile).			//1000 default
-var m_mass;						//The mass of the weapons projectiles (effects gravity applied to projectile).		//500 default
+var m_range;					//The effective range of the weapon (used as a lifetime for projectile).			
+var m_mass;						//The mass of the weapons projectiles (effects gravity applied to projectile).		
 var m_forceModifier;			//Modifier applied to default launch force for projectile.
 
 var m_weaponSprite;				//Sprite used for the weapon.
@@ -55,20 +28,8 @@ function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSpr
 //Initialisation Function//
 Weapon.prototype.init = function()
 {
-	//Reset cooldown between shots...
-	//this.nextFire = 0;
-
 	this.m_weaponSprite = game.add.sprite(0, 0, this.m_weaponSprite);
-	this.m_weaponSprite.anchor.set(0.5);
-	
-	//Set up weapon projectiles...
-	//this.m_projectiles = game.add.group();
-	//this.m_projectiles.enableBody = true;
-	//this.m_projectiles.physicsBodyType = Phaser.Physics.ARCADE;		
-	//this.m_projectiles.createMultiple(this.m_projectileCount, this.m_projectileSprite);
-	//this.m_projectiles.setAll('checkWorldBounds', true);
-	//this.m_projectiles.setAll('outOfBoundsKill', true);
-	
+	this.m_weaponSprite.anchor.set(0.75, 0.25);
 	this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite);
 }; 	
 	
@@ -79,17 +40,17 @@ Weapon.prototype.update = function(snailObj)
 
 	if(snailObj.m_facing == 'left')
 	{
-		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
+		this.m_weaponSprite.x = snailObj.m_sprite.x;
 		this.m_weaponSprite.scale.x = -1;
 		this.m_weaponSprite.scale.y = -1;
 	} 
 	else if(snailObj.m_facing == 'right')
 	{
-		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;
+		this.m_weaponSprite.x = snailObj.m_sprite.x;
 		this.m_weaponSprite.scale.x = -1; 
 		this.m_weaponSprite.scale.y = 1;
 	}
-	this.m_weaponSprite.y = snailObj.m_sprite.y + 20;
+	this.m_weaponSprite.y = snailObj.m_sprite.y;
 	
 	this.m_projectile.update();
 };
@@ -97,7 +58,7 @@ Weapon.prototype.update = function(snailObj)
 //Fire Weapon Function//
 Weapon.prototype.fire = function(snailObj)
 {
-	if (this.m_projectile.isAlive == false)
+	if (this.m_projectile.isAlive == false && snailObj.m_actionPoints >= this.m_costAP)
     {
 		this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite);
 		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
@@ -106,14 +67,18 @@ Weapon.prototype.fire = function(snailObj)
 		var vecY = (game.input.activePointer.worldY - this.m_weaponSprite.position.y);
 		var magnitude = Math.sqrt((vecX * vecX) + (vecY * vecY));
 		
+		/*
 		console.log("pointer x: " + game.input.activePointer.worldX + ", weap pos x: " + this.m_weaponSprite.position.x);
 		console.log("pointer y: " + game.input.activePointer.worldY + ", weap pos y: " + this.m_weaponSprite.position.y);
 		console.log(magnitude);
 		console.log(this.m_forceModifier);
 		console.log(this.m_mass);
+		*/
 		
 		this.m_projectile.m_sprite.body.velocity.x = (vecX/magnitude) * this.m_forceModifier;
 		this.m_projectile.m_sprite.body.velocity.y = (vecY/magnitude) * this.m_forceModifier;
 		this.m_projectile.m_sprite.body.gravity.y = this.m_mass;
+		
+		snailObj.m_actionPoints -= this.m_costAP;
 	}
 };

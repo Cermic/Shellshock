@@ -8,7 +8,7 @@ var noGravity = 0;
 var ceilingGravity = -1;
 
 
-var APCosts = { jump: 10, horizontalMove: 1, verticalMove:  1 }
+var APCosts = { jump: 0, horizontalMove: 0, verticalMove:  0 }
 
 
 var InputHandler = function(){ 
@@ -100,7 +100,7 @@ InputHandler.prototype.handleJump = function()//Greg
 
 InputHandler.prototype.testS = function(activePlayer, layer){
 	
-	console.log(this.activePlayer.m_sprite.body.gravity.y);
+	//console.log(this.activePlayer.m_sprite.body.gravity.y);
 	
 	if(activePlayer.m_sprite.body.blocked.down){//if on ground
 		activePlayer.m_sprite.body.gravity.y = worldGravity;
