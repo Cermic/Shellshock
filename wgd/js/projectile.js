@@ -79,14 +79,12 @@ Projectile.prototype.onCollision = function()
     //Check for collisions within the hitradius, apply damage...
 	//for loop for every snail
 	
-	var dist = Phaser.Math.distance(this.m_sprite.x + 16, this.m_sprite.y + 16, eplayer.m_sprite.x + 16, eplayer.m_sprite.y + 16);
+	var dist = Phaser.Math.distance(this.m_sprite.x, this.m_sprite.y, eplayer.m_sprite.x, eplayer.m_sprite.y);
 	console.log(dist);
 	console.log(this.m_hitRadius);
 	
 	if(dist <= this.m_hitRadius)
 	{
-		var percentageYield = 100 - ((dist / this.m_hitRadius) * 100);
-		console.log(percentageYield);
 		console.log("Kablam!!!");
 	}
 	this.destroy();
