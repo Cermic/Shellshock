@@ -35,6 +35,7 @@ Snail.prototype.init = function()
 {
 	//Sprite
 	this.m_sprite = PhaserMMORPG.game.add.sprite(32, 32, 'RedSnail');
+	this.m_sprite.anchor.setTo(0.5,0.5);
 	PhaserMMORPG.game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
 	this.m_sprite.x = 1000;
 	

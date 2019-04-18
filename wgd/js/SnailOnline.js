@@ -37,7 +37,8 @@ SnailOnline.prototype.init = function()
 	//Sprite
 	this.m_sprite = PhaserMMORPG.game.add.sprite(32, 32, 'RedSnail');
 	this.m_sprite.x = 1000;
-	
+	this.m_sprite.anchor.setTo(0.5,0.5);
+
 	// Health Bar
 	this.m_healthBar = PhaserMMORPG.game.add.sprite(32, 32, 'Health_Bar');
 	this.m_healthBar.anchor.setTo(0.5, 0.5);

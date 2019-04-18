@@ -43,9 +43,9 @@ InputHandler.prototype.checkMouse = function(activePlayer)
 {
 		//Weapon Fire
 //<<<<<<< HEAD
-		if(PhaserMMORPG.game.input.activePointer.isDown){
-			activePlayer.m_weapon.fire(activePlayer.m_sprite);
-		}
+		//if(PhaserMMORPG.game.input.activePointer.isDown){
+		//	activePlayer.m_weapon.fire(activePlayer.m_sprite);
+		//}
 //=======
 		if(PhaserMMORPG.game.input.activePointer.isDown)
 		{
@@ -174,15 +174,15 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		
 		//console.log(activePlayer.m_sprite.onWall);//Works
 		//console.log(activePlayer.m_sprite.canJump);//Works
-		if(activePlayer.m_sprite.body.blocked.down){
+		//if(activePlayer.m_sprite.body.blocked.down){
 		//console.log("Down");//Works
-		}else if (activePlayer.m_sprite.body.blocked.up){
-		console.log("Up");
-		}else if (activePlayer.m_sprite.body.blocked.left){
-		console.log("Left");
-		}else if (activePlayer.m_sprite.body.blocked.right){
-		console.log("Right");	
-		}
+		//}else if (activePlayer.m_sprite.body.blocked.up){
+		//console.log("Up");
+		//}else if (activePlayer.m_sprite.body.blocked.left){
+		//console.log("Left");
+		//}else if (activePlayer.m_sprite.body.blocked.right){
+		//console.log("Right");	
+		//}
 
 		//Gredit////////////////////////////////////////////bug testing starts here
 		PhaserMMORPG.game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);

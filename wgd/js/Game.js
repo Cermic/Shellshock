@@ -91,7 +91,7 @@ PhaserMMORPG.Game.prototype = {
 		jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
 		
-		PhaserMMORPG.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
+		//PhaserMMORPG.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
 	
 																	//		 Bullets now without gravity
 																					
