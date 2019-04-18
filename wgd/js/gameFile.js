@@ -1,8 +1,10 @@
+var eplayer;
+
 var gameFunc = function(){ 
 
 	var map;
-	var tileset;
-	var layer;
+	//var tileset;
+	//var layer;
 	var bg;
 	var player;
 	var cursors;
@@ -75,6 +77,14 @@ gameFunc.prototype = {
 		cursors = game.input.keyboard.createCursorKeys();
 		jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
+			eplayer = new Snail('RedSnail', 0);
+		eplayer.init();
+		
+		//Gredit////////////////////////////////////////////
+		eplayer.x = 800;
+		eplayer.y = 1300;
+		//Grend/////////////////////////////////////////////
+		
 		
 		player = new Snail('RedSnail', 0);
 		player.init();
@@ -82,6 +92,8 @@ gameFunc.prototype = {
 		//testing position, will be replaced by user team spawning
 		player.x = 600;
 		player.y = 1300;
+		
+	
 		
 		m_inputHandler = new InputHandler();		
 		
@@ -104,9 +116,11 @@ gameFunc.prototype = {
 	
 	update: function(){
 		player.update();
+		eplayer.update();
+		//player.move();
 		m_inputHandler.updateActivePlayer(player, layer01);		
+		//m_inputHandler.updateActivePlayer(eplayer, layer01);		
 	}
 }
-
 
 

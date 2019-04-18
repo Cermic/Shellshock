@@ -164,7 +164,6 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 		
 InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 {	
-
 		game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
 		//Left right animations and movement
 		if ((this.cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
