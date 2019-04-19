@@ -6,19 +6,18 @@ var saveY;
 var worldGravity = 800;
 var noGravity = 0;	
 var ceilingGravity = -1;
+var slotOffset = 67;
+var yOffset = 6
 
-
-var APCosts = { jump: 10, horizontalMove: 1, verticalMove:  1 }
+var APCosts = { jump: 0, horizontalMove: 0, verticalMove:  0 }
 
 
 var InputHandler = function(){ 
 	
 	this.cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
 	this.jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	//Gredit////////////////////////////////////////////
-	jumpButton.onDown.add(this.handleJump, this);
-	//Grend////////////////////////////////////////////
 
+	jumpButton.onDown.add(this.handleJump, this);
 };
 
 InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
@@ -29,7 +28,7 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 	this.checkVerticalMove(activePlayer);
 	this.checkHorizontalMove(activePlayer, layer);
 	this.updateText(this.activePlayer.m_actionPoints, this.activePlayer);
-	//console.log(this.activePlayer.m_actionPoints);
+	this.switchWeapon(this.activePlayer, ui_weapon_box);
 }
 
 InputHandler.prototype.updateText = function(newText, activePlayer)
@@ -39,21 +38,56 @@ InputHandler.prototype.updateText = function(newText, activePlayer)
 	ap_Text.y = activePlayer.m_sprite.y - 50;
 }
 
+InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
+{
+	// Update which weapon is initiliased based on key press.
+	if (activePlayer.m_weaponKeys[0].isDown)
+    {
+		activePlayer.m_weapon.destroy();
+        activePlayer.m_weapon = activePlayer.m_weaponsList[0]; // Pea Shooter
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 353;
+    }
+	
+	if(activePlayer.m_weaponKeys[1].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[1]; // A-Salt-Rifle
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 417;
+	}
+	if(activePlayer.m_weaponKeys[2].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[2]; // Slug-Gun
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 481;
+	}
+	if(activePlayer.m_weaponKeys[3].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[3]; // Bee-Zooka
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 545;
+	}
+	if(activePlayer.m_weaponKeys[4].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[4]; // Snrailgun
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 609;
+	}
+}
+
 InputHandler.prototype.checkMouse = function(activePlayer)
 {
 		//Weapon Fire
-//<<<<<<< HEAD
-		//if(PhaserMMORPG.game.input.activePointer.isDown){
-		//	activePlayer.m_weapon.fire(activePlayer.m_sprite);
-		//}
-//=======
 		if(PhaserMMORPG.game.input.activePointer.isDown)
 		{
 			if(activePlayer.m_actionPoints >= activePlayer.m_weapon.m_costAP)
 			{
 				activePlayer.m_weapon.fire(activePlayer);
 			}
-//>>>>>>> 4bb01b7f86c11636626e65939c7f729512d73ac0
 		}
 	
 }
@@ -92,7 +126,7 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 	
 };
 
-InputHandler.prototype.handleJump = function()//Greg
+InputHandler.prototype.handleJump = function()
 {
 
 	
@@ -105,8 +139,6 @@ InputHandler.prototype.handleJump = function()//Greg
 };
 
 InputHandler.prototype.testS = function(activePlayer, layer){
-	
-	console.log(this.activePlayer.m_sprite.body.gravity.y);
 	
 	if(activePlayer.m_sprite.body.blocked.down){//if on ground
 		activePlayer.m_sprite.body.gravity.y = worldGravity;
@@ -170,6 +202,7 @@ InputHandler.prototype.testS = function(activePlayer, layer){
 InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 {	
 //<<<<<<< HEAD
+//<<<<<<< HEAD
 		//game.physics.arcade.collide(this.activePlayer, layer);	
 		
 		//console.log(activePlayer.m_sprite.onWall);//Works
@@ -185,10 +218,13 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		//}
 
 		//Gredit////////////////////////////////////////////bug testing starts here
-		PhaserMMORPG.game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
+		//PhaserMMORPG.game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
 		//Grend/////////////////////////////////////////////
 
 		
+//=======
+		PhaserMMORPG.game.physics.arcade.collide(activePlayer, this.layer, this.testS(activePlayer, this.layer), null, this);
+//>>>>>>> 329926c653f55cf00551a84e996f4d69f3632eaf
 		//Left right animations and movement
 		if ((this.cursors.left.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
@@ -259,7 +295,6 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.body.velocity.y = 150;
 				activePlayer.m_sprite.body.gravity.y = worldGravity;
 				activePlayer.m_sprite.m_moving = true;
-
 			}
 		}
 		else

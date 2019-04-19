@@ -16,7 +16,7 @@ PhaserMMORPG.Game = function(){};
 	//var collisionhandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 
-
+var ap_text;
 
 var gameOptions = {//Greg
     // player gravity
@@ -31,110 +31,128 @@ var gameOptions = {//Greg
 
 
 PhaserMMORPG.Game.prototype = {
-	
-	
- 
- 
- 
+	 
  	preload: function(){
-		this.load.image('Health_Bar', 'assets/healthbar.png');
-		this.load.image('Info_Box', 'assets/ui_infobox.png');
-		this.load.image('Tall_Box', 'assets/ui_tallbox.png');
-		this.load.image('Weapon_Box', 'assets/ui_weaponbox.png');
 		
-		this.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
+		//UI//
+		this.load.image('Health_Bar', 'assets/sprites/ui/healthbar.png');
+		this.load.image('AP_Bar', 'assets/sprites/ui/apbar.png');
+		this.load.image('UI_Wide_Box', 'assets/sprites/ui/ui_widebox.png');
+		this.load.image('UI_Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
+		this.load.image('UI_Pea_Shooter', 'assets/sprites/ui/ui_peashooter_icon.png');
+		this.load.image('UI_A_Salt_Rifle', 'assets/sprites/ui/ui_a-salt-rifle_icon.png');
+		this.load.image('UI_Slug_Gun', 'assets/sprites/ui/ui_slug-gun_icon.png');
+		this.load.image('UI_Beezooka', 'assets/sprites/ui/ui_beezooka_icon.png');
+		this.load.image('UI_Snrailgun', 'assets/sprites/ui/ui_snrailgun_icon.png');
+		
+		//Level//
+		this.load.tilemap('PLANTER2', 'assets/PLANTER2.json', null, Phaser.Tilemap.TILED_JSON);
 		this.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
-		this.load.spritesheet('dude', 'assets/starstruck/dude.png', playerSpriteWidth, playerSpriteHeight);
-		this.load.spritesheet('droid', 'assets/starstruck/droid.png', 32, 32);
-		this.load.image('starSmall', 'assets/starstruck/star.png');
-		this.load.image('starBig', 'assets/starstruck/star2.png');
-		this.load.image('background', 'assets/starstruck/background2.png');
+		this.load.image('Scenery', 'assets/Scenery.png');
 		
-		this.load.image('arrow', 'assets/sprites/arrow.png');
-		this.load.image('bullet', 'assets/sprites/purple_ball.png');
+		//Weapons//
+		this.load.image('Pea_Shooter', 'assets/sprites/weapons/weapon_peashooter.png');
+		this.load.image('A_Salt_Rifle', 'assets/sprites/weapons/weapon_a-salt-rifle.png');
+		this.load.image('Slug_Gun', 'assets/sprites/weapons/weapon_slug-gun.png');
+		this.load.image('Beezooka', 'assets/sprites/weapons/weapon_beezooka.png');
+		this.load.image('Snrailgun', 'assets/sprites/weapons/weapon_snrailgun.png');
 		
-		this.load.spritesheet('RedSnail', 'assets/sprites/Red_Snail_Movement.png', 32, 32);
-		this.load.image('Beezooka', 'assets/sprites/Beezooka.png');
-		this.load.spritesheet('RedSnail', 'assets/sprites/snail_red.png', 32, 32);
-		this.load.image('Beezooka', 'assets/sprites/weapon_beezooka.png');
-		this.load.image('Shotgun', 'assets/sprites/weapon_slug-gun.png');
+		//Projectiles//
+		this.load.image('Pea_Pellet', 'assets/sprites/projectiles/projectile_pea-pellet.png');
+		this.load.image('Salt_Pellet', 'assets/sprites/projectiles/projectile_salt-pellet.png');
+		this.load.image('Slug_Shot', 'assets/sprites/projectiles/projectile_slug-ball.png');
+		this.load.image('Bee_Rocket', 'assets/sprites/projectiles/projectile_bee-shot.png');
+		this.load.image('Snrailgun_Laser', 'assets/sprites/projectiles/projectile_snrailgun-laserball.png');
+		
+		this.load.image('bullet', 'assets/sprites/projectiles/purple_ball.png');	//legacy, to remove
+		
+		//Particles//
+		this.load.image('Pea_Shard', 'assets/sprites/projectiles/particles/particle_peashard.png');
+		this.load.image('Salt_Shard', 'assets/sprites/projectiles/particles/particle_saltshard.png');
+		this.load.image('Slug_Splat', 'assets/sprites/projectiles/particles/particle_slugsplat.png');
+		this.load.image('Slug_Trail', 'assets/sprites/projectiles/particles/particle_slugtrail.png');
+		this.load.image('Honey_Splat', 'assets/sprites/projectiles/particles/particle_honeysplat.png');
+		this.load.image('Smoke_Trail', 'assets/sprites/projectiles/particles/particle_smokelaunch.png');
+		this.load.image('Laser_Splash', 'assets/sprites/projectiles/particles/particle_lasersplash.png');
+		this.load.image('Laser_Trail', 'assets/sprites/projectiles/particles/particle_lasertrail.png');
+		
+		//Snails n Spritesheets//
+		this.load.spritesheet('RedSnail', 'assets/sprites/spritesheets/snail_red.png', 32, 32);
+		
+	
 
 	},
 	
   create: function() {
-	this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	
+		this.game.physics.startSystem(Phaser.Physics.ARCADE);	
 		this.physics.gravity=0;
 
 		this.game.stage.backgroundColor = '#000000';
 
-		bg = this.game.add.tileSprite(0, 0, 800, 600, 'background');
+		bg = this.game.add.tileSprite(0, 0, 800, 600, 'Scenery');
 		bg.fixedToCamera = true;
 
-		map = this.game.add.tilemap('PLANTER');
+		map = this.game.add.tilemap('PLANTER2');
 		map.addTilesetImage('2_Tone_Textures');
 
-		map.setCollisionByExclusion([4]);//tileset not map location
+		map.setCollisionByExclusion([2,4,7]);//tileset not map location
 
-		//layer = map.createLayer('Background');
-		//layer = map.createLayer('Foreground');
-		
-		layer00 = map.createLayer('Background');//Greg
-		layer01 = map.createLayer('Foreground');//Greg
-		layer01.debug = true;//Greg
-		layer01.resizeWorld();//Greg
-		
-		//  Un-comment this on to see the collision tiles
-		//layer.debug = true;
-		//layer.resizeWorld();
+		layer00 = map.createLayer('Background');
+		layer01 = map.createLayer('Foreground');
+		layer02 = map.createLayer('Water');
+		layer01.debug = false;
+		layer01.resizeWorld();
 
 		cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
 		jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		
-		
-		//PhaserMMORPG.game.physics.arcade.gravity.y = 800;//This gives the bullets gravity	
-	
-																	//		 Bullets now without gravity
-																					
-		
+																										
 		cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
 		jumpButton = PhaserMMORPG.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
-		
+		//Player Creation//
 		player = new Snail('RedSnail', 0);
 		player.init();
-		
-		//Gredit////////////////////////////////////////////
 		player.x = 600;
 		player.y = 1300;
-		//Grend/////////////////////////////////////////////
+		
 		//Camera
 		PhaserMMORPG.game.camera.follow(player.m_sprite);
+		
+		//Input//
+		m_inputHandler = new InputHandler();	
 	
-	
-	//HUD
+
+		//HUD
 		ap_Text = PhaserMMORPG.game.add.text(player.x, player.y, "", 
 		{
 			font: "32px Arial",
 			fill: "#ff0044",
 			align: "center"
 		});
-		ap_Text.anchor.setTo(0.5, 0.75);	
+		ap_Text.anchor.setTo(0.5, 0.75);
 		
 		// Stick UI to Camera space
-		weapon_slot_box = PhaserMMORPG.game.add.image(600, 525 , 'Tall_Box');
-		weapon_slot_box.angle = 90;
+		weapon_slot_box = PhaserMMORPG.game.add.image(350, 520 , 'UI_Wide_Box');
 		weapon_slot_box.fixedToCamera = true;
 		
-		weapon_info_box = PhaserMMORPG.game.add.image(weapon_slot_box.x - 585, weapon_slot_box.y - 60 , 'Info_Box');
-		weapon_info_box.fixedToCamera = true;
-	
-	
-	
-	
+		var wepOffset = 64, xOffset = 6, yOffset = 6; 
 		
-		m_inputHandler = new InputHandler();	
-		//collisionhandler = new CollisionHandler();		
-    
+		//Generate weapon icons for bar
+		ui_weapon1 = PhaserMMORPG.game.add.image(weapon_slot_box.x + xOffset, weapon_slot_box.y + yOffset, 'UI_Pea_Shooter');
+		ui_weapon1.fixedToCamera = true;
+		ui_weapon2 = PhaserMMORPG.game.add.image(weapon_slot_box.x + wepOffset + xOffset, weapon_slot_box.y + yOffset, 'UI_A_Salt_Rifle');
+		ui_weapon2.fixedToCamera = true;
+		ui_weapon3 = PhaserMMORPG.game.add.image(weapon_slot_box.x + (wepOffset*2) + xOffset, weapon_slot_box.y + yOffset , 'UI_Slug_Gun');
+		ui_weapon3.fixedToCamera = true;
+		ui_weapon4 = PhaserMMORPG.game.add.image(weapon_slot_box.x + (wepOffset*3) + xOffset, weapon_slot_box.y + yOffset, 'UI_Beezooka');
+		ui_weapon4.fixedToCamera = true;
+		ui_weapon5 = PhaserMMORPG.game.add.image(weapon_slot_box.x + (wepOffset*4) + xOffset, weapon_slot_box.y + yOffset, 'UI_Snrailgun');
+		ui_weapon5.fixedToCamera = true;
+		
+		// Create weapon selected UI
+		ui_weapon_box = PhaserMMORPG.game.add.sprite(weapon_slot_box.x + (xOffset/2), weapon_slot_box.y + (yOffset/2), 'UI_Weapon_Box');
+		ui_weapon_box.fixedToCamera = true;
 
 		//spawn other players
 		PhaserMMORPG.eurecaServer.spawnOtherPlayers();

@@ -2,23 +2,20 @@
 //Initialisation Function//
 createWeapon = function(weaponType)
 {
-	//function Weapon(costAP, maxAmmo, damage, range, fireVelocity, weaponSprite, projectileSprite, projectileCount, fireRate)
+	//function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSprite, projectileSprite, explosionCount, explosionParticleKey, trailParticleKey)//
 	if(weaponType == "pea_shooter")
-		return new Weapon(3, "Inf", 15, 20, 400,'PeaShooter', 'bullet', 1, 30);
-	
-	else if(weaponType == "blade_of_grass")
-		return new Weapon(3, "Inf", 1, 40, 400,'BladeOfGrass', 'bullet', 1, 30);
-	
+		return new Weapon(0, 5, 100, 60, 1000, 1000, 'Pea_Shooter', 'Pea_Pellet', 5, 'Pea_Shard', 'Pea_Shard');
 	else if(weaponType == "a_salt_rifle")
-		return new Weapon(2, 3, 10, 1, 200, 'ASaltRifle', 'bullet', 20, 1);
-	
+		return new Weapon(25, 10, 100, 120, 500, 1000, 'A_Salt_Rifle', 'Salt_Pellet', 5, 'Salt_Shard', 'Salt_Shard');	
+	else if(weaponType == "slug_gun")
+		return new Weapon(25, 25, 100, 10, 0, 1000, 'Slug_Gun', 'Slug_Shot', 10, 'Slug_Splat', 'Slug_Trail');
 	else if(weaponType == "beezooka")
-		return new Weapon(9,1,1,1,800,'Beezooka', 'bullet', 1, 1);
-	
+		return new Weapon(75, 75, 150, 90, 2000, 1000, 'Beezooka', 'Bee_Rocket', 20, 'Honey_Splat', 'Smoke_Trail');
+	else if(weaponType == "snrailgun")
+		return new Weapon(100, 95, 100, 120, 0, 1000, 'Snrailgun', 'Snrailgun_Laser', 20, 'Laser_Splash', 'Laser_Trail');
 	else
 		print("Invalid Weapon");
 }; 	
-	
 
 
 	

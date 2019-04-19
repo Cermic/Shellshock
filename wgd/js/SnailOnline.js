@@ -19,8 +19,8 @@ var m_apBar;
 var m_actionPoints;
 
 //Get Mouse Position
-	var	px;
-	var	py;
+var	px;
+var	py;
 
 
 //Contructor//
@@ -79,7 +79,6 @@ SnailOnline.prototype.kill = function()
 		this.m_sprite.destroy();
 		this.m_weapon.m_weaponSprite.destroy();
 		this.m_healthBar.destroy();
-		this.m_apBar.destroy();
-		
+		this.m_apBar.destroy();		
 };
 
