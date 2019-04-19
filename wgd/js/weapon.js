@@ -7,6 +7,8 @@ var m_range;					//The effective range of the weapon (used as a lifetime for pro
 var m_mass;						//The mass of the weapons projectiles (effects gravity applied to projectile).		
 var m_forceModifier;			//Modifier applied to default launch force for projectile.
 
+var m_weaponSpriteKey;			//Sprite Key used for the weapon.
+
 var m_weaponSprite;				//Sprite used for the weapon.
 var m_projectileSprite;			//Sprite used for the projectile.
 
@@ -21,18 +23,22 @@ function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSpr
 	this.m_range 			= range;
 	this.m_mass				= mass;
 	this.m_forceModifier 	= forceModifier;	
-	this.m_weaponSprite 	= weaponSprite;
+	this.m_weaponSpriteKey 	= weaponSprite;
 	this.m_projectileSprite = projectileSprite;
 };
 
 //Initialisation Function//
 Weapon.prototype.init = function()
 {
-	this.m_weaponSprite = game.add.sprite(0, 0, this.m_weaponSprite);
+	this.m_weaponSprite = game.add.sprite(0, 0, this.m_weaponSpriteKey);
 	this.m_weaponSprite.anchor.set(0.75, 0.25);
 	this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite);
 }; 	
-	
+
+Weapon.prototype.destroy = function()
+{
+	this.m_weaponSprite.destroy();
+}
 //Initialisation Function//	
 Weapon.prototype.update = function(snailObj)
 {

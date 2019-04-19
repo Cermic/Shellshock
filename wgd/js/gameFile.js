@@ -16,8 +16,10 @@ var gameFunc = function(){
 	var layer00, layer01;
 	var weapon_slot_box;
 	var weapon_info_box;
+	var ui_weapon_box;
 
 	var ui_weapon1, ui_weapon2, ui_weapon3, ui_weapon4, ui_weapon5;
+	var ui_weapon_selected;
 	
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	var ap_text;
@@ -32,7 +34,7 @@ gameFunc.prototype = {
 		game.load.image('Info_Box', 'assets/sprites/ui/ui_infobox.png');
 		game.load.image('Tall_Box', 'assets/sprites/ui/ui_tallbox.png');
 		game.load.image('Wide_Box', 'assets/sprites/ui/ui_widebox.png');
-		game.load.image('Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
+		game.load.image('UI_Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
 		game.load.image('UI_Pea_Shooter', 'assets/sprites/ui/ui_peashooter_icon.png');
 		game.load.image('UI_A_Salt_Rifle', 'assets/sprites/ui/ui_a-salt-rifle_icon.png');
 		game.load.image('UI_Slug_Gun', 'assets/sprites/ui/ui_slug-gun_icon.png');
@@ -62,8 +64,6 @@ gameFunc.prototype = {
 		
 		//Snails n Spritesheets//
 		game.load.spritesheet('RedSnail', 'assets/sprites/spritesheets/snail_red.png', 32, 32);
-
-
 	},
 	
   	create: function(){	
@@ -102,8 +102,6 @@ gameFunc.prototype = {
 		player.x = 600;
 		player.y = 1300;
 		
-	
-		
 		m_inputHandler = new InputHandler();		
 		
 		ap_Text = game.add.text(player.x, player.y, "", 
@@ -132,6 +130,10 @@ gameFunc.prototype = {
 		ui_weapon5 = game.add.image(weapon_slot_box.x + (wepOffset*4) + xOffset, weapon_slot_box.y + yOffset, 'UI_Snrailgun');
 		ui_weapon5.fixedToCamera = true;
 		
+		// Create weapon selected UI
+		ui_weapon_box = game.add.sprite(weapon_slot_box.x + (xOffset/2), weapon_slot_box.y + (yOffset/2), 'UI_Weapon_Box');
+		ui_weapon_box.fixedToCamera = true;
+		
 		weapon_info_box = game.add.image(16, weapon_slot_box.y - 64 , 'Info_Box');
 		weapon_info_box.fixedToCamera = true;
 	},
@@ -140,7 +142,7 @@ gameFunc.prototype = {
 	{
 		player.update();
 		eplayer.update();
-		m_inputHandler.updateActivePlayer(player, layer01);				
+		m_inputHandler.updateActivePlayer(player, layer01);		
 	}
 }
 

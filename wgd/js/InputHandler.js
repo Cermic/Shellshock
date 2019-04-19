@@ -6,7 +6,8 @@ var saveY;
 var worldGravity = 800;
 var noGravity = 0;	
 var ceilingGravity = -1;
-
+var slotOffset = 67;
+var yOffset = 6
 
 var APCosts = { jump: 0, horizontalMove: 0, verticalMove:  0 }
 
@@ -29,7 +30,7 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 	this.checkVerticalMove(activePlayer);
 	this.checkHorizontalMove(activePlayer, layer);
 	this.updateText(this.activePlayer.m_actionPoints, this.activePlayer);
-	//console.log(this.activePlayer.m_actionPoints);
+	this.switchWeapon(this.activePlayer, ui_weapon_box);
 }
 
 InputHandler.prototype.updateText = function(newText, activePlayer)
@@ -37,6 +38,47 @@ InputHandler.prototype.updateText = function(newText, activePlayer)
 	ap_Text.setText("AP: " + newText);
 	ap_Text.x = activePlayer.m_sprite.x;
 	ap_Text.y = activePlayer.m_sprite.y - 50;
+}
+
+InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
+{
+	// Update which weapon is initiliased based on key press.
+	if (activePlayer.m_weaponKeys[0].isDown)
+    {
+		activePlayer.m_weapon.destroy();
+        activePlayer.m_weapon = activePlayer.m_weaponsList[0]; // Pea Shooter
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 353;
+    }
+	
+	if(activePlayer.m_weaponKeys[1].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[1]; // A-Salt-Rifle
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 417;
+	}
+	if(activePlayer.m_weaponKeys[2].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[2]; // Slug-Gun
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 481;
+	}
+	if(activePlayer.m_weaponKeys[3].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[3]; // Bee-Zooka
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 545;
+	}
+	if(activePlayer.m_weaponKeys[4].isDown)
+	{
+		activePlayer.m_weapon.destroy();
+		activePlayer.m_weapon = activePlayer.m_weaponsList[4]; // Snrailgun
+		activePlayer.m_weapon.init();
+		ui_weapon_box.cameraOffset.x = 609;
+	}
 }
 
 InputHandler.prototype.checkMouse = function(activePlayer)
@@ -86,7 +128,7 @@ InputHandler.prototype.checkFacing = function(activePlayer)
 	
 };
 
-InputHandler.prototype.handleJump = function()//Greg
+InputHandler.prototype.handleJump = function()
 {
 
 	
@@ -99,8 +141,6 @@ InputHandler.prototype.handleJump = function()//Greg
 };
 
 InputHandler.prototype.testS = function(activePlayer, layer){
-	
-	//console.log(this.activePlayer.m_sprite.body.gravity.y);
 	
 	if(activePlayer.m_sprite.body.blocked.down){//if on ground
 		activePlayer.m_sprite.body.gravity.y = worldGravity;
@@ -235,11 +275,8 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 				activePlayer.m_sprite.body.velocity.y = 150;
 				activePlayer.m_sprite.body.gravity.y = worldGravity;
 				activePlayer.m_sprite.m_moving = true;
-
 			}
-
 		}
-
 		else
 		{
 			activePlayer.m_sprite.m_moving = false;
