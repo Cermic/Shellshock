@@ -8,7 +8,8 @@ var m_sprite;
 var isAlive;
 var currentLifetime;
 
-var emitter;
+var explosionEmitter;
+var trailEmitter;
 
 //Contructor//
 function Projectile(damage, hitRadius, lifespan, projectileSprite)
@@ -31,13 +32,18 @@ Projectile.prototype.init = function(x, y)
 	this.m_sprite = game.add.sprite(x, y, this.m_sprite);
 	this.m_sprite.anchor.set(0.5);
 	game.physics.enable(this.m_sprite, Phaser.Physics.ARCADE);
+	this.m_sprite.body.setCircle(4);
 	
 	//this.emitter = new Phaser.Emitter(game, x, y, 50);
-	this.emitter = game.add.emitter(x, y, 50);
-    this.emitter.makeParticles('bullet');
-    this.emitter.gravity = 50;
+	this.explosionEmitter = game.add.emitter(x, y, 50);
+    this.explosionEmitter.makeParticles('Pea_Pellet');
+    this.explosionEmitter.gravity = 100;
 	
-	console.log(this.emitter);
+	this.trailEmitter = game.add.emitter(x, y, 50);
+    this.trailEmitter.makeParticles('Salt_Pellet');
+    this.trailEmitter.gravity = 50;
+	
+	this.trailEmitter.start(false, 500, 0.2, 10);
 }; 	
 
 //Initialisation Function//
@@ -53,6 +59,7 @@ Projectile.prototype.update = function()
 {
 	if(this.isAlive == true)
 	{
+		this.particleTrail(this.m_sprite.x, this.m_sprite.y);
 		//Check if projectile has went out of range...
 		if(this.currentLifetime > this.m_lifespan)
 		{
@@ -75,7 +82,6 @@ Projectile.prototype.update = function()
 		{
 			console.log("Collided with world.");
 			this.onCollision();
-			
 		}
 		
 		//Rotate the sprite to match direction of movement...
@@ -93,9 +99,9 @@ Projectile.prototype.onCollision = function()
 	
 	this.particleBurst(this.m_sprite.x, this.m_sprite.y);
 	
-	var dist = Phaser.Math.distance(this.m_sprite.x, this.m_sprite.y, eplayer.m_sprite.x, eplayer.m_sprite.y);
-	//console.log(dist);
-	//console.log(this.m_hitRadius);
+	var dist = Phaser.Math.distance(this.m_sprite.body.center.x, this.m_sprite.body.center.y, eplayer.m_sprite.body.center.x, eplayer.m_sprite.body.center.y);
+	console.log(dist);
+	console.log(this.m_hitRadius);
 	
 	if(dist <= this.m_hitRadius)
 	{
@@ -109,16 +115,25 @@ Projectile.prototype.onCollision = function()
 
 Projectile.prototype.particleBurst = function(x, y)
 {
-	console.log(this.emitter);
+	//console.log(this.explosionEmitter);
 	
-    //  Position the emitter where the projectile is
-    this.emitter.x = x;
-    this.emitter.y = y;
+    //Position the emitter where the projectile is
+    this.explosionEmitter.x = x;
+    this.explosionEmitter.y = y;
 
     //  The first parameter sets the effect to "explode" which means all particles are emitted at once
     //  The second gives each particle a 2000ms lifespan
     //  The third is ignored when using burst/explode mode
-    //  The final parameter (10) is how many particles will be emitted in this single burst
-    this.emitter.start(true, 2000, null, 50);
+    // Explode, 
+    this.explosionEmitter.start(true, 1000, null, 20);
 
+};
+
+Projectile.prototype.particleTrail = function(x, y)
+{
+	console.log(x + " " + y);
+	
+    //  Position the emitter where the projectile is
+    this.trailEmitter.x = x;
+    this.trailEmitter.y = y;
 };
