@@ -54,11 +54,21 @@ gameFunc.prototype = {
 		//Projectiles//
 		game.load.image('Pea_Pellet', 'assets/sprites/projectiles/projectile_pea-pellet.png');
 		game.load.image('Salt_Pellet', 'assets/sprites/projectiles/projectile_salt-pellet.png');
-		game.load.image('Slug_Shot', 'assets/sprites/projectiles/projectile_slug-shot.png');
-		game.load.image('Bee_Rocket', 'assets/sprites/projectiles/projectile_bee-rocket.png');
-		game.load.image('Snrailgun_Laser', 'assets/sprites/projectiles/projectile_snrailgun-laser.png');
+		game.load.image('Slug_Shot', 'assets/sprites/projectiles/projectile_slug-ball.png');
+		game.load.image('Bee_Rocket', 'assets/sprites/projectiles/projectile_bee-shot.png');
+		game.load.image('Snrailgun_Laser', 'assets/sprites/projectiles/projectile_snrailgun-laserball.png');
 		
 		game.load.image('bullet', 'assets/sprites/projectiles/purple_ball.png');	//legacy, to remove
+		
+		//Particles//
+		game.load.image('Pea_Shard', 'assets/sprites/projectiles/particles/particle_peashard.png');
+		game.load.image('Salt_Shard', 'assets/sprites/projectiles/particles/particle_saltshard.png');
+		game.load.image('Slug_Splat', 'assets/sprites/projectiles/particles/particle_slugsplat.png');
+		game.load.image('Slug_Trail', 'assets/sprites/projectiles/particles/particle_slugtrail.png');
+		game.load.image('Honey_Splat', 'assets/sprites/projectiles/particles/particle_honeysplat.png');
+		game.load.image('Smoke_Trail', 'assets/sprites/projectiles/particles/particle_smokelaunch.png');
+		game.load.image('Laser_Splash', 'assets/sprites/projectiles/particles/particle_lasersplash.png');
+		game.load.image('Laser_Trail', 'assets/sprites/projectiles/particles/particle_lasertrail.png');
 		
 		//Snails n Spritesheets//
 		game.load.spritesheet('RedSnail', 'assets/sprites/spritesheets/snail_red.png', 32, 32);
