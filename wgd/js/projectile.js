@@ -11,14 +11,20 @@ var currentLifetime;
 var explosionEmitter;
 var trailEmitter;
 
+var m_explosionCount;
+var m_explosionParticleKey;
+var m_trailParticleKey;
+
 //Contructor//
-function Projectile(damage, hitRadius, lifespan, projectileSprite)
+function Projectile(damage, hitRadius, lifespan, projectileSprite, explosionCount, explosionParticleKey, trailParticleKey)
 { 
-	this.m_damage 		= damage;
-	this.m_hitRadius	= hitRadius;
-	this.m_lifespan		= lifespan;
-	
-	this.m_sprite 		= projectileSprite;
+	this.m_damage 					= damage;
+	this.m_hitRadius				= hitRadius;
+	this.m_lifespan					= lifespan;
+	this.m_sprite 					= projectileSprite;
+	this.m_explosionCount			= explosionCount;
+	this.m_explosionParticleKey		= explosionParticleKey;
+	this.m_trailParticleKey			= trailParticleKey;
 	
 	this.isAlive = false;
 };
@@ -36,14 +42,16 @@ Projectile.prototype.init = function(x, y)
 	
 	//this.emitter = new Phaser.Emitter(game, x, y, 50);
 	this.explosionEmitter = game.add.emitter(x, y, 50);
-    this.explosionEmitter.makeParticles('Pea_Pellet');
+    this.explosionEmitter.makeParticles(this.m_explosionParticleKey);
     this.explosionEmitter.gravity = 100;
 	
 	this.trailEmitter = game.add.emitter(x, y, 50);
-    this.trailEmitter.makeParticles('Salt_Pellet');
+    this.trailEmitter.makeParticles(this.m_trailParticleKey);
     this.trailEmitter.gravity = 50;
 	
 	this.trailEmitter.start(false, 500, 0.2, 10);
+	
+	console.log(this.m_explosionParticleKey + " " + this.m_trailParticleKey);
 }; 	
 
 //Initialisation Function//
@@ -115,25 +123,13 @@ Projectile.prototype.onCollision = function()
 
 Projectile.prototype.particleBurst = function(x, y)
 {
-	//console.log(this.explosionEmitter);
-	
-    //Position the emitter where the projectile is
     this.explosionEmitter.x = x;
     this.explosionEmitter.y = y;
-
-    //  The first parameter sets the effect to "explode" which means all particles are emitted at once
-    //  The second gives each particle a 2000ms lifespan
-    //  The third is ignored when using burst/explode mode
-    // Explode, 
-    this.explosionEmitter.start(true, 1000, null, 20);
-
+    this.explosionEmitter.start(true, 1000, null, this.m_explosionCount);
 };
 
 Projectile.prototype.particleTrail = function(x, y)
 {
-	console.log(x + " " + y);
-	
-    //  Position the emitter where the projectile is
     this.trailEmitter.x = x;
     this.trailEmitter.y = y;
 };

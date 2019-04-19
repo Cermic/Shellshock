@@ -12,8 +12,12 @@ var m_projectileSprite;			//Sprite used for the projectile.
 
 var m_projectile;				//The projectile fired by the weapon.
 
+var m_explosionCount;
+var m_explosionParticleKey;
+var m_trailParticleKey;
+
 //Contructor//
-function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSprite, projectileSprite)
+function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSprite, projectileSprite, explosionCount, explosionParticleKey, trailParticleKey)
 { 
 	this.m_costAP 			= costAP;
 	this.m_damage 			= damage;
@@ -23,6 +27,9 @@ function Weapon(costAP, damage, hitRadius, range, mass, forceModifier, weaponSpr
 	this.m_forceModifier 	= forceModifier;	
 	this.m_weaponSprite 	= weaponSprite;
 	this.m_projectileSprite = projectileSprite;
+	this.m_explosionCount			= explosionCount;
+	this.m_explosionParticleKey		= explosionParticleKey;
+	this.m_trailParticleKey			= trailParticleKey;
 };
 
 //Initialisation Function//
@@ -30,7 +37,7 @@ Weapon.prototype.init = function()
 {
 	this.m_weaponSprite = game.add.sprite(0, 0, this.m_weaponSprite);
 	this.m_weaponSprite.anchor.set(0.75, 0.25);
-	this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite);
+	this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite, this.m_explosionCount, this.m_explosionParticleKey, this.m_trailParticleKey);
 }; 	
 	
 //Initialisation Function//	
@@ -60,7 +67,7 @@ Weapon.prototype.fire = function(snailObj)
 {
 	if (this.m_projectile.isAlive == false && snailObj.m_actionPoints >= this.m_costAP)
     {
-		this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite);
+		this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite, this.m_explosionCount, this.m_explosionParticleKey, this.m_trailParticleKey);
 		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
 		
 		var vecX = (game.input.activePointer.worldX - this.m_weaponSprite.position.x);
