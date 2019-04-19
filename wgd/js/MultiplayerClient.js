@@ -27,10 +27,13 @@ PhaserMMORPG.eurecaClientSetup = function() {
 	
 	eurecaClient.exports.kill = function(id)
 	{	
-		if (PhaserMMORPG.playerList[id]) {
+	
+		if (PhaserMMORPG.playerList[id]) 
+		{
 			PhaserMMORPG.playerList[id].kill();
 			console.log('killing ', id, PhaserMMORPG.playerList[id]);
 		}
+		
 	}	
 	
 	eurecaClient.exports.spawnAnotherPlayer = function(id, x, y, color, ip)

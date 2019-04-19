@@ -9,7 +9,8 @@ PhaserMMORPG.MainMenu.prototype = {
    },
   create: function() {
   	//show the space tile, repeated
-    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
+	
+    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'MenuGrahic');
     
     //give it speed in x
     this.background.autoScroll(-20, 20);

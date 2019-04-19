@@ -76,6 +76,10 @@ SnailOnline.prototype.update = function()
 
 SnailOnline.prototype.kill = function()
 {
-		this.destroy();
+		this.m_sprite.destroy();
+		this.m_weapon.m_weaponSprite.destroy();
+		this.m_healthBar.destroy();
+		this.m_apBar.destroy();
+		
 };
 

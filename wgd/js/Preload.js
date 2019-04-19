@@ -5,7 +5,10 @@ PhaserMMORPG.Preload = function(){};
 
 PhaserMMORPG.Preload.prototype = {
   preload: function() {
-  /*  //show loading screen
+   
+	this.load.image('MenuGrahic', 'assets/starstruck/background2.png');
+   
+    //show loading screen
     this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloadbar');
     this.preloadBar.anchor.setTo(0.5);
 
@@ -16,20 +19,21 @@ PhaserMMORPG.Preload.prototype = {
     var style = { font: "13px Open Sans", fill: "#aaa", align: "center" };
     this.loadingTextNode = this.game.add.text(this.game.width/2, this.game.height/2 + 30, text, style);
     this.loadingTextNode.anchor.set(0.5);
-
+	
+	/* 
     //load game assets
     
     //tilemaps
-//    this.load.tilemap('desert', '/assets/tilemaps/desert/desert.json', null, Phaser.Tilemap.TILED_JSON);
+	//this.load.tilemap('desert', '/assets/tilemaps/desert/desert.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap('level1', '/assets/statbuck.json', null, Phaser.Tilemap.TILED_JSON);
-//    this.load.tilemap('desertmaze', '/assets/tilemaps/desert/desertmaze.json', null, Phaser.Tilemap.TILED_JSON);
-//    this.load.tilemap('uno', '/assets/tilemaps/desert/uno.json', null, Phaser.Tilemap.TILED_JSON);
+	//this.load.tilemap('desertmaze', '/assets/tilemaps/desert/desertmaze.json', null, Phaser.Tilemap.TILED_JSON);
+	//this.load.tilemap('uno', '/assets/tilemaps/desert/uno.json', null, Phaser.Tilemap.TILED_JSON);
 
-//	this.load.tilemap('level1', 'assets/statbuck.json', null, Phaser.Tilemap.TILED_JSON);
+	//this.load.tilemap('level1', 'assets/statbuck.json', null, Phaser.Tilemap.TILED_JSON);
 	this.load.image('gameTiles', '/assets/tiles-1.png');
 
 
-//    this.load.image('gameTiles', '/assets/tilemaps/desert/tmw_desert_spacing.png');
+	//this.load.image('gameTiles', '/assets/tilemaps/desert/tmw_desert_spacing.png');
 
     this.load.image('space', '/assets/images/space.png');
     this.load.image('greencup', '/assets/images/greencup.png');
@@ -48,7 +52,9 @@ PhaserMMORPG.Preload.prototype = {
 
     
     this.game.load.onFileComplete.add(this.onFileCompleteCallback, this);
-*/
+	*/
+
+	
   },
   create: function() {
    // this.state.start('MainMenu');
