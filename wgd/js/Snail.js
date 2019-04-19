@@ -80,7 +80,7 @@ Snail.prototype.init = function()
 	*/
 	//Equipped Weapon
 	//this.m_weapon = m_weaponsList[0];
-	this.m_weapon = createWeapon("snrailgun");
+	this.m_weapon = createWeapon("beezooka");
 	this.m_weapon.init();
 };
 
