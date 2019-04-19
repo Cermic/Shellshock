@@ -9,6 +9,7 @@ var m_onWallLeft;
 var m_onWallRight;
 var m_weapon;
 var m_weaponsList;
+var m_weaponKeys;
 var m_moving;
 
 var m_healthBar;
@@ -18,12 +19,13 @@ var m_health;
 var m_actionPoints;
 var maxHealth = 100;
 var maxActionPoints = 100;
+var numOfWeapons = 5;
 
 //Contructor//
 function Snail(sprite, startPos)
 { 
-	this.m_sprite = sprite
-	this.m_startPos = startPos
+	this.m_sprite = sprite;
+	this.m_startPos = startPos;
 	this.m_timer = 0;
 };
 
@@ -69,18 +71,24 @@ Snail.prototype.init = function()
 			
 	//Camera
 	game.camera.follow(this.m_sprite);
-	/*
-	//Weapon List
-	this.m_weaponsList = new Array(5);
-	this.m_weaponsList[0] = createWeapon("pea_shooter");		
-	this.m_weaponsList[1] = createWeapon("a_salt_rifle");
-	this.m_weaponsList[2] = createWeapon("slug_gun");
-	this.m_weaponsList[3] = createWeapon("beezooka");
+	
+	//Weapon List Creation
+	this.m_weaponsList = new Array(numOfWeapons);
 	this.m_weaponsList[4] = createWeapon("snrailgun");
-	*/
-	//Equipped Weapon
-	//this.m_weapon = m_weaponsList[0];
-	this.m_weapon = createWeapon("snrailgun");
+	this.m_weaponsList[3] = createWeapon("beezooka");
+	this.m_weaponsList[2] = createWeapon("slug_gun");
+	this.m_weaponsList[1] = createWeapon("a_salt_rifle");
+	this.m_weaponsList[0] = createWeapon("pea_shooter");		
+	
+	this.m_weaponKeys = new Array(numOfWeapons);
+	this.m_weaponKeys[0] = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+	this.m_weaponKeys[1] = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+	this.m_weaponKeys[2] = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+	this.m_weaponKeys[3] = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+	this.m_weaponKeys[4] = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+	
+	//Equip Deafult Weapon
+	this.m_weapon = this.m_weaponsList[0];
 	this.m_weapon.init();
 };
 
@@ -97,7 +105,7 @@ Snail.prototype.update = function()
 	game.physics.arcade.collide(this.m_sprite, layer01);
 	
 	//Update Weapon...
-	this.m_weapon.update(this);
+	this.m_weapon.update(this); // Current weapon
 	
 	//Update Hud Bars...
 	this.m_healthBar.scale.x = this.m_health * 0.01;

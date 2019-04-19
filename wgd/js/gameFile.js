@@ -16,8 +16,10 @@ var gameFunc = function(){
 	var layer00, layer01, layer02;
 	var weapon_slot_box;
 	var weapon_info_box;
+	var ui_weapon_box;
 
 	var ui_weapon1, ui_weapon2, ui_weapon3, ui_weapon4, ui_weapon5;
+	var ui_weapon_selected;
 	
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	var ap_text;
@@ -29,10 +31,8 @@ gameFunc.prototype = {
 		//UI//
 		game.load.image('Health_Bar', 'assets/sprites/ui/healthbar.png');
 		game.load.image('AP_Bar', 'assets/sprites/ui/apbar.png');
-		game.load.image('Info_Box', 'assets/sprites/ui/ui_infobox.png');
-		game.load.image('Tall_Box', 'assets/sprites/ui/ui_tallbox.png');
-		game.load.image('Wide_Box', 'assets/sprites/ui/ui_widebox.png');
-		game.load.image('Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
+		game.load.image('UI_Wide_Box', 'assets/sprites/ui/ui_widebox.png');
+		game.load.image('UI_Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
 		game.load.image('UI_Pea_Shooter', 'assets/sprites/ui/ui_peashooter_icon.png');
 		game.load.image('UI_A_Salt_Rifle', 'assets/sprites/ui/ui_a-salt-rifle_icon.png');
 		game.load.image('UI_Slug_Gun', 'assets/sprites/ui/ui_slug-gun_icon.png');
@@ -54,16 +54,24 @@ gameFunc.prototype = {
 		//Projectiles//
 		game.load.image('Pea_Pellet', 'assets/sprites/projectiles/projectile_pea-pellet.png');
 		game.load.image('Salt_Pellet', 'assets/sprites/projectiles/projectile_salt-pellet.png');
-		game.load.image('Slug_Shot', 'assets/sprites/projectiles/projectile_slug-shot.png');
-		game.load.image('Bee_Rocket', 'assets/sprites/projectiles/projectile_bee-rocket.png');
-		game.load.image('Snrailgun_Laser', 'assets/sprites/projectiles/projectile_snrailgun-laser.png');
+		game.load.image('Slug_Shot', 'assets/sprites/projectiles/projectile_slug-ball.png');
+		game.load.image('Bee_Rocket', 'assets/sprites/projectiles/projectile_bee-shot.png');
+		game.load.image('Snrailgun_Laser', 'assets/sprites/projectiles/projectile_snrailgun-laserball.png');
 		
 		game.load.image('bullet', 'assets/sprites/projectiles/purple_ball.png');	//legacy, to remove
 		
+		//Particles//
+		game.load.image('Pea_Shard', 'assets/sprites/projectiles/particles/particle_peashard.png');
+		game.load.image('Salt_Shard', 'assets/sprites/projectiles/particles/particle_saltshard.png');
+		game.load.image('Slug_Splat', 'assets/sprites/projectiles/particles/particle_slugsplat.png');
+		game.load.image('Slug_Trail', 'assets/sprites/projectiles/particles/particle_slugtrail.png');
+		game.load.image('Honey_Splat', 'assets/sprites/projectiles/particles/particle_honeysplat.png');
+		game.load.image('Smoke_Trail', 'assets/sprites/projectiles/particles/particle_smokelaunch.png');
+		game.load.image('Laser_Splash', 'assets/sprites/projectiles/particles/particle_lasersplash.png');
+		game.load.image('Laser_Trail', 'assets/sprites/projectiles/particles/particle_lasertrail.png');
+		
 		//Snails n Spritesheets//
 		game.load.spritesheet('RedSnail', 'assets/sprites/spritesheets/snail_red.png', 32, 32);
-
-
 	},
 	
   	create: function(){	
@@ -114,12 +122,12 @@ gameFunc.prototype = {
 		ap_Text.anchor.setTo(0.5, 0.75);	
 		
 		// Stick UI to Camera space
-
-		weapon_slot_box = game.add.image(350, 520 , 'Wide_Box');
+		weapon_slot_box = game.add.image(350, 520 , 'UI_Wide_Box');
 		weapon_slot_box.fixedToCamera = true;
 		
 		var wepOffset = 64, xOffset = 6, yOffset = 6; 
 		
+		//Generate weapon icons for bar
 		ui_weapon1 = game.add.image(weapon_slot_box.x + xOffset, weapon_slot_box.y + yOffset, 'UI_Pea_Shooter');
 		ui_weapon1.fixedToCamera = true;
 		ui_weapon2 = game.add.image(weapon_slot_box.x + wepOffset + xOffset, weapon_slot_box.y + yOffset, 'UI_A_Salt_Rifle');
@@ -131,15 +139,16 @@ gameFunc.prototype = {
 		ui_weapon5 = game.add.image(weapon_slot_box.x + (wepOffset*4) + xOffset, weapon_slot_box.y + yOffset, 'UI_Snrailgun');
 		ui_weapon5.fixedToCamera = true;
 		
-		weapon_info_box = game.add.image(16, weapon_slot_box.y - 64 , 'Info_Box');
-		weapon_info_box.fixedToCamera = true;
+		// Create weapon selected UI
+		ui_weapon_box = game.add.sprite(weapon_slot_box.x + (xOffset/2), weapon_slot_box.y + (yOffset/2), 'UI_Weapon_Box');
+		ui_weapon_box.fixedToCamera = true;
 	},
 	
 	update: function()
 	{
 		player.update();
 		eplayer.update();
-		m_inputHandler.updateActivePlayer(player, layer01);				
+		m_inputHandler.updateActivePlayer(player, layer01);		
 	}
 }
 
