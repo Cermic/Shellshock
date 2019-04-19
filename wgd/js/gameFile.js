@@ -7,13 +7,13 @@ var gameFunc = function(){
 	var player;
 	var cursors;
 	var jumpButton;	
-	var layer00, layer01;
+	var layer00, layer01, layer02;
 };
 
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 	
-	var layer00, layer01;
+	var layer00, layer01, layer02;
 	var weapon_slot_box;
 	var weapon_info_box;
 
@@ -40,9 +40,9 @@ gameFunc.prototype = {
 		game.load.image('UI_Snrailgun', 'assets/sprites/ui/ui_snrailgun_icon.png');
 		
 		//Level//
-		game.load.tilemap('PLANTER', 'assets/PLANTER.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('PLANTER2', 'assets/PLANTER2.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('2_Tone_Textures', 'assets/2_Tone_Textures.png');
-		game.load.image('background', 'assets/starstruck/background2.png');
+		game.load.image('Scenery', 'assets/Scenery.png');
 		
 		//Weapons//
 		game.load.image('Pea_Shooter', 'assets/sprites/weapons/weapon_peashooter.png');
@@ -73,17 +73,18 @@ gameFunc.prototype = {
 
 		game.stage.backgroundColor = '#000000';
 
-		bg = game.add.tileSprite(0, 0, 800, 600, 'background');
-		bg.fixedToCamera = true;
+		bg = game.add.tileSprite(0, 0, 1440, 960, 'Scenery');
+		bg.fixedToCamera = false;
 
-		map = game.add.tilemap('PLANTER');
+		map = game.add.tilemap('PLANTER2');
 		map.addTilesetImage('2_Tone_Textures');
 
-		map.setCollisionByExclusion([4]);//tileset not map location
+		map.setCollisionByExclusion([2,4,7]);//tileset not map location
 
 		layer00 = map.createLayer('Background');
 		layer01 = map.createLayer('Foreground');
-		layer01.debug = true;
+		layer02 = map.createLayer('Water');
+		layer01.debug = false;
 		layer01.resizeWorld();
 		
 		cursors = game.input.keyboard.createCursorKeys();
@@ -101,8 +102,6 @@ gameFunc.prototype = {
 		//testing position, will be replaced by user team spawning
 		player.x = 600;
 		player.y = 1300;
-		
-	
 		
 		m_inputHandler = new InputHandler();		
 		

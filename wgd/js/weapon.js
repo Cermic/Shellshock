@@ -67,6 +67,7 @@ Weapon.prototype.fire = function(snailObj)
 		var vecY = (game.input.activePointer.worldY - this.m_weaponSprite.position.y);
 		var magnitude = Math.sqrt((vecX * vecX) + (vecY * vecY));
 		
+		console.log(vecX + " " + vecY);
 		/*
 		console.log("pointer x: " + game.input.activePointer.worldX + ", weap pos x: " + this.m_weaponSprite.position.x);
 		console.log("pointer y: " + game.input.activePointer.worldY + ", weap pos y: " + this.m_weaponSprite.position.y);
