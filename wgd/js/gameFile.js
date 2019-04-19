@@ -31,9 +31,7 @@ gameFunc.prototype = {
 		//UI//
 		game.load.image('Health_Bar', 'assets/sprites/ui/healthbar.png');
 		game.load.image('AP_Bar', 'assets/sprites/ui/apbar.png');
-		game.load.image('Info_Box', 'assets/sprites/ui/ui_infobox.png');
-		game.load.image('Tall_Box', 'assets/sprites/ui/ui_tallbox.png');
-		game.load.image('Wide_Box', 'assets/sprites/ui/ui_widebox.png');
+		game.load.image('UI_Wide_Box', 'assets/sprites/ui/ui_widebox.png');
 		game.load.image('UI_Weapon_Box', 'assets/sprites/ui/ui_weaponbox.png');
 		game.load.image('UI_Pea_Shooter', 'assets/sprites/ui/ui_peashooter_icon.png');
 		game.load.image('UI_A_Salt_Rifle', 'assets/sprites/ui/ui_a-salt-rifle_icon.png');
@@ -113,12 +111,12 @@ gameFunc.prototype = {
 		ap_Text.anchor.setTo(0.5, 0.75);	
 		
 		// Stick UI to Camera space
-
-		weapon_slot_box = game.add.image(350, 520 , 'Wide_Box');
+		weapon_slot_box = game.add.image(350, 520 , 'UI_Wide_Box');
 		weapon_slot_box.fixedToCamera = true;
 		
 		var wepOffset = 64, xOffset = 6, yOffset = 6; 
 		
+		//Generate weapon icons for bar
 		ui_weapon1 = game.add.image(weapon_slot_box.x + xOffset, weapon_slot_box.y + yOffset, 'UI_Pea_Shooter');
 		ui_weapon1.fixedToCamera = true;
 		ui_weapon2 = game.add.image(weapon_slot_box.x + wepOffset + xOffset, weapon_slot_box.y + yOffset, 'UI_A_Salt_Rifle');
@@ -133,9 +131,6 @@ gameFunc.prototype = {
 		// Create weapon selected UI
 		ui_weapon_box = game.add.sprite(weapon_slot_box.x + (xOffset/2), weapon_slot_box.y + (yOffset/2), 'UI_Weapon_Box');
 		ui_weapon_box.fixedToCamera = true;
-		
-		weapon_info_box = game.add.image(16, weapon_slot_box.y - 64 , 'Info_Box');
-		weapon_info_box.fixedToCamera = true;
 	},
 	
 	update: function()
