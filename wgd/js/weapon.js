@@ -69,16 +69,18 @@ Weapon.prototype.update = function(snailObj)
 	if(snailObj.m_facing == 'left')
 	{
 
-		this.m_weaponSprite.x = snailObj.m_sprite.x + 4;
+		this.m_weaponSprite.x = snailObj.m_sprite.x;// + 4;
 		this.m_weaponSprite.scale.x = -1;
 		this.m_weaponSprite.scale.y = -1;
 	} else if(snailObj.m_facing == 'right')
 	{
-		this.m_weaponSprite.x = snailObj.m_sprite.x + 28;
+		this.m_weaponSprite.x = snailObj.m_sprite.x;// + 28;
 		this.m_weaponSprite.scale.x = -1; 
 		this.m_weaponSprite.scale.y = 1;
 	}
 	this.m_weaponSprite.y = snailObj.m_sprite.y ;
+	
+	this.m_projectile.update();
 };
 
 //Initialisation Function//	
@@ -104,7 +106,8 @@ Weapon.prototype.updateOnline = function(snailObj)
 //Fire Weapon Function//
 Weapon.prototype.fire = function(snailObj)
 {
-	if (this.m_projectile.isAlive == false && snailObj.m_actionPoints >= this.m_costAP)
+		console.log("isAlive: " + this.m_projectile.isAlive);
+	if (this.m_projectile.isAlive == false && (snailObj.m_actionPoints >= this.m_costAP))
     {
 		this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite, this.m_explosionCount, this.m_explosionParticleKey, this.m_trailParticleKey);
 		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
@@ -130,17 +133,13 @@ Weapon.prototype.fire = function(snailObj)
 
 //Fire Weapon Function//
 Weapon.prototype.fireOnline = function(velx, vely)
-{
-	if (this.m_projectile.isAlive == false)
-    {
-		
-		this.m_projectile = new Projectile(0,0,0,this.m_projectileSprite);
+{		
+		this.m_projectile = new Projectile(this.m_damage, this.m_hitRadius, this.m_range, this.m_projectileSprite, this.m_explosionCount, this.m_explosionParticleKey, this.m_trailParticleKey);
 		this.m_projectile.init(this.m_weaponSprite.x, this.m_weaponSprite.y);
 		
 		this.m_projectile.m_sprite.body.velocity.x = velx;
 		this.m_projectile.m_sprite.body.velocity.y = vely;
-		this.m_projectile.m_sprite.body.gravity.y = 500;
-	}
+		this.m_projectile.m_sprite.body.gravity.y = this.m_mass;
 };
 
 

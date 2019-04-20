@@ -47,6 +47,8 @@ InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
         activePlayer.m_weapon = activePlayer.m_weaponsList[0]; // Pea Shooter
 		activePlayer.m_weapon.init();
 		ui_weapon_box.cameraOffset.x = 353;
+		
+		activePlayer.currWeaponIndex = 0;
     }
 	
 	if(activePlayer.m_weaponKeys[1].isDown)
@@ -55,6 +57,8 @@ InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
 		activePlayer.m_weapon = activePlayer.m_weaponsList[1]; // A-Salt-Rifle
 		activePlayer.m_weapon.init();
 		ui_weapon_box.cameraOffset.x = 417;
+		
+		activePlayer.currWeaponIndex = 1;
 	}
 	if(activePlayer.m_weaponKeys[2].isDown)
 	{
@@ -62,6 +66,8 @@ InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
 		activePlayer.m_weapon = activePlayer.m_weaponsList[2]; // Slug-Gun
 		activePlayer.m_weapon.init();
 		ui_weapon_box.cameraOffset.x = 481;
+		
+		activePlayer.currWeaponIndex = 2;
 	}
 	if(activePlayer.m_weaponKeys[3].isDown)
 	{
@@ -69,6 +75,8 @@ InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
 		activePlayer.m_weapon = activePlayer.m_weaponsList[3]; // Bee-Zooka
 		activePlayer.m_weapon.init();
 		ui_weapon_box.cameraOffset.x = 545;
+		
+		activePlayer.currWeaponIndex = 3;
 	}
 	if(activePlayer.m_weaponKeys[4].isDown)
 	{
@@ -76,6 +84,8 @@ InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
 		activePlayer.m_weapon = activePlayer.m_weaponsList[4]; // Snrailgun
 		activePlayer.m_weapon.init();
 		ui_weapon_box.cameraOffset.x = 609;
+		
+		activePlayer.currWeaponIndex = 4;
 	}
 }
 
@@ -89,6 +99,8 @@ InputHandler.prototype.checkMouse = function(activePlayer)
 				activePlayer.m_weapon.fire(activePlayer);
 			}
 		}
+		
+	
 	
 }
 

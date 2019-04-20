@@ -90,8 +90,8 @@ PhaserMMORPG.Game.prototype = {
 
 		this.game.stage.backgroundColor = '#000000';
 
-		bg = this.game.add.tileSprite(0, 0, 800, 600, 'Scenery');
-		bg.fixedToCamera = true;
+		bg = this.game.add.tileSprite(0, 0, 1440, 960, 'Scenery');
+		bg.fixedToCamera = false;
 
 		map = this.game.add.tilemap('PLANTER2');
 		map.addTilesetImage('2_Tone_Textures');

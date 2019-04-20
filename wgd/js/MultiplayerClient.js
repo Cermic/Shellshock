@@ -35,6 +35,7 @@ PhaserMMORPG.eurecaClientSetup = function() {
 		}
 		
 	}	
+
 	
 	eurecaClient.exports.spawnAnotherPlayer = function(id, x, y, color, ip)
 	{
@@ -56,23 +57,32 @@ PhaserMMORPG.eurecaClientSetup = function() {
 	
 	eurecaClient.exports.updateState = function(id, state)
 	{
+		if(state.hitPlayers == PhaserMMORPG.MyMyltiplayerId)
+		{
+				player.m_health -= state.damageDealt;
 				
-		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  {
-
+				if(player.m_health <= 0)
+					this.kill(PhaserMMORPG.MyMyltiplayerId);
+		}
+			
+			
+		if (PhaserMMORPG.playerList[id] && PhaserMMORPG.MyMyltiplayerId  !== id)  
+		{
+			
+	
+				
+			
 			//Update player orientation
 			PhaserMMORPG.playerList[id].m_sprite.position.x = state.x;
-			PhaserMMORPG.playerList[id].m_sprite.position.y = state.y;
-			
+			PhaserMMORPG.playerList[id].m_sprite.position.y = state.y;		
 			PhaserMMORPG.playerList[id].m_facing = state.facingDir;
-			
-			
+						
 			//Update weapon orientation
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.x = state.wepx;	
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.y = state.wepy;
 			PhaserMMORPG.playerList[id].m_weapon.m_weaponSprite.rotation  = state.wepAng;
-					
-										
-			//Animation Bug		
+															
+			//Animation Bug -  Animations wont play in inactive window - not sure its fixable
 			///if(PhaserMMORPG.playerList[id].m_sprite.animations.name ==state.anim)
 			///{
 				///PhaserMMORPG.playerList[id].m_sprite.animations.stop();
@@ -81,9 +91,13 @@ PhaserMMORPG.eurecaClientSetup = function() {
 				///if(PhaserMMORPG.playerList[id].m_sprite.animations.name != null)
 				///PhaserMMORPG.playerList[id].m_sprite.animations.play(state.anim);	
 			///}
-					
 			
+			//Update weapon being used and update AP/Health
+			PhaserMMORPG.playerList[id].switchweapon(state.wepIndex);
+			PhaserMMORPG.playerList[id].m_health = state.health;
+			PhaserMMORPG.playerList[id].m_actionPoints = state.ap;
 			
+			//Update projectile position. If there isnt a projectile, initilise one first.
 			if(state.activeProj)
 			{
 				if(PhaserMMORPG.playerList[id].m_weapon.m_projectile.isAlive)
@@ -99,23 +113,11 @@ PhaserMMORPG.eurecaClientSetup = function() {
 					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.x = state.projx;
 					PhaserMMORPG.playerList[id].m_weapon.m_projectile.m_sprite.position.y = state.projy;
 				}
-			}
-			
-			
-			//if(state.hasFired == 1)
-			//{
-			//	PhaserMMORPG.playerList[id].m_weapon.fireOnline(state.velx, state.vely);		
-			//	PhaserMMORPG.playerList[id].m_weapon.hasFired = 0;
-						
-			//}
-			
-			
-			
-			//Update the character			
-			PhaserMMORPG.playerList[id].update();	
-					
-			
+			}							
 				
+			//Update the snail object			
+			PhaserMMORPG.playerList[id].update();	
+									
 		}	
 	}
 }

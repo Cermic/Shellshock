@@ -22,6 +22,7 @@ var m_actionPoints;
 var maxHealth = 100;
 var maxActionPoints = 100;
 var numOfWeapons = 5;
+var currWeaponIndex; // chloe multiplayer
 
 //Get Mouse Position
 var	px;
@@ -98,21 +99,25 @@ Snail.prototype.init = function()
 	
 	//Equip Deafult Weapon
 	this.m_weapon = this.m_weaponsList[0];
+	this.currWeaponIndex = 0;
 
 	this.m_weapon.init();
+	
+	
+	
 };
 
 //Update Function//
 Snail.prototype.update = function()
 {	
-
 	this.m_sprite.body.velocity.x = 0;	
+	
 	//Health Bar Position update
 	this.m_healthBar.x = this.m_sprite.x;
 	this.m_healthBar.y = this.m_sprite.y - 35;
+	
 	// AP Bar Position update
 	this.m_apBar.x = this.m_sprite.x;
-
 	this.m_apBar.y = this.m_sprite.y - 25;
 	PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01);	
 	
@@ -123,18 +128,19 @@ Snail.prototype.update = function()
 	this.m_healthBar.scale.x = this.m_health * 0.01;
 	this.m_apBar.scale.x = this.m_actionPoints * 0.01;
 	
-	if(this.m_actionPoints < maxActionPoints)
+	if(this.m_health <= 0)
 	{
-		this.m_actionPoints += 1;
+		this.kill();
+		//PhaserMMORPG.eurecaServer.kill(PhaserMMORPG.MyMyltiplayerId);
+		
 	}
-
+	
+	
+	//Send multiplayer data
 	var projX;
 	var projY;
 	var isactive = this.m_weapon.m_projectile.isAlive;
-	
-	console.log('projx: ' + projX);
-	console.log('projy: ' + projY);
-	console.log('isActiveProj: ' + isactive);
+	///console.log('isActiveProj: ' + isactive);
 	
 	if(this.m_weapon.m_projectile.isAlive)
 	{
@@ -154,14 +160,30 @@ Snail.prototype.update = function()
 			wepy: this.m_weapon.m_weaponSprite.y || null,
 			facingDir : this.m_facing || null,
 			wepAng :this.m_weapon.m_weaponSprite.rotation ,
+			wepIndex: this.currWeaponIndex,
 			anim :this.m_sprite.animations.name || null,
 			projx : projX || null,
 			projy : projY || null,
 			activeProj : isactive || null,
+			health : this.m_health,
+			ap : this.m_actionPoints,
+			damageDealt: this.m_weapon.m_projectile.damagedone,
+			hitPlayers : this.m_weapon.m_projectile.snailhit,
 			playerName : PhaserMMORPG.MyMyltiplayerId
+		
 	};
 
 	PhaserMMORPG.eurecaServer.handleKeys(keys);	 
+	
+	
+	this.m_weapon.m_projectile.damagedone = 0;
+	this.m_weapon.m_projectile.snailhit = 0;
+	
+	if(this.m_actionPoints < maxActionPoints)
+	{
+		this.m_actionPoints += 1;
+	}
+
 };
 
 Snail.prototype.kill = function()

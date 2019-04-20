@@ -38,6 +38,9 @@ eurecaServer.onConnect(function (conn) {
 	remote.setId(conn.id);	
 });
 
+
+
+
 //detect client disconnection
 eurecaServer.onDisconnect(function (conn) {    
     console.log('Client disconnected ', conn.id);
@@ -55,7 +58,8 @@ eurecaServer.onDisconnect(function (conn) {
 	}	
 });
 
-
+	
+	
 eurecaServer.exports.handshake = function()
 {
 	for (var c in clients)

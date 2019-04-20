@@ -6,7 +6,6 @@ var m_lifespan;
 var m_sprite;
 
 var isAlive;
-
 var currentLifetime;
 
 var explosionEmitter;
@@ -15,6 +14,9 @@ var trailEmitter;
 var m_explosionCount;
 var m_explosionParticleKey;
 var m_trailParticleKey;
+
+var damagedone;
+var snailHit;
 
 
 //Contructor//
@@ -53,7 +55,10 @@ Projectile.prototype.init = function(x, y)
 	
 	this.trailEmitter.start(false, 500, 0.2, 10);
 	
-	console.log(this.m_explosionParticleKey + " " + this.m_trailParticleKey);
+	//console.log(this.m_explosionParticleKey + " " + this.m_trailParticleKey);
+	
+	this.damagedone = 0;
+	this.snailHit = 0;
 
 }; 	
 
@@ -71,8 +76,9 @@ Projectile.prototype.destroy = function()
 //Update Function//	
 Projectile.prototype.update = function()
 {
+	
 	if(this.isAlive == true)
-	{
+	{	
 		this.particleTrail(this.m_sprite.x, this.m_sprite.y);
 		//Check if projectile has went out of range...
 		if(this.currentLifetime > this.m_lifespan)
@@ -84,20 +90,24 @@ Projectile.prototype.update = function()
 			this.currentLifetime += 1;
 		}
 		
-		var targets = [eplayer.m_sprite];
 		
 		//Check for collisions...
-		if(PhaserMMORPG.game.physics.arcade.overlap(this.m_sprite, targets[0]))
-		{
-			console.log("Collided with snail.");
-			this.onCollision();
+		for (var i in PhaserMMORPG.playerList)
+		{		
+			//console.log( "X"+PhaserMMORPG.playerList[i].m_sprite.position.x);
+	
+			if(PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, PhaserMMORPG.playerList[i].m_sprite))
+			{
+				console.log("Collided with snail.");
+				this.onCollision();
+			}
+			else if (PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01))
+			{
+				console.log("Collided with world.");
+				this.onCollision();
+			}	
 		}
-		else if (PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, layer01))
-		{
-			console.log("Collided with world.");
-			this.onCollision();
-		}
-		
+			
 		//Rotate the sprite to match direction of movement...
 		//...
 		//...
@@ -109,21 +119,27 @@ Projectile.prototype.update = function()
 Projectile.prototype.onCollision = function()
 {
     //Check for collisions within the hitradius, apply damage...
-	//for loop for every snail
-	
 	this.particleBurst(this.m_sprite.x, this.m_sprite.y);
 	
-	var dist = Phaser.Math.distance(this.m_sprite.body.center.x, this.m_sprite.body.center.y, eplayer.m_sprite.body.center.x, eplayer.m_sprite.body.center.y);
-	console.log(dist);
-	console.log(this.m_hitRadius);
-	
-	if(dist <= this.m_hitRadius)
+	for (var i in PhaserMMORPG.playerList)
 	{
-		console.log("Kablam!!!");
-		eplayer.m_health -= this.m_damage;
+		var dist = Phaser.Math.distance(this.m_sprite.body.center.x, this.m_sprite.body.center.y, PhaserMMORPG.playerList[i].m_sprite.position.x, PhaserMMORPG.playerList[i].m_sprite.position.y);
+		console.log(dist);
+		console.log(this.m_hitRadius);
+	
+		if(dist <= this.m_hitRadius)
+		{
+			console.log("Kablam!!!");
+			
+			this.damagedone = this.m_damage;
+			this.snailhit = i;
+			console.log("Index: " + i);
+		}
+		
 	}
+	
 	this.destroy();
-	//for loop end
+
 };
 
 
