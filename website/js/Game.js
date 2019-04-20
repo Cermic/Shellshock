@@ -15,14 +15,6 @@ PhaserMMORPG.Game = function(){};
 	var m_inputHandler;
 	var playerSpriteWidth = 32, playerSpriteHeight = 32;
 
-var ap_text;
-
-var gameOptions = {
-    playerGravity: 500,
-	wallGravity: 100,
-	noGravity: 0
-}
-
 PhaserMMORPG.Game.prototype = {
 	 
  	preload: function(){
@@ -111,17 +103,7 @@ PhaserMMORPG.Game.prototype = {
 		
 		//Input//
 		m_inputHandler = new InputHandler();	
-	
 
-		//HUD
-		ap_Text = PhaserMMORPG.game.add.text(player.x, player.y, "", 
-		{
-			font: "32px Arial",
-			fill: "#ff0044",
-			align: "center"
-		});
-		ap_Text.anchor.setTo(0.5, 0.75);
-		
 		// Stick UI to Camera space
 		weapon_slot_box = PhaserMMORPG.game.add.image(350, 520 , 'UI_Wide_Box');
 		weapon_slot_box.fixedToCamera = true;
@@ -148,11 +130,7 @@ PhaserMMORPG.Game.prototype = {
 		PhaserMMORPG.eurecaServer.spawnOtherPlayers();
   
   },
-  
-
-
-
-	
+ 	
 
  update: function() {
 		player.update();	

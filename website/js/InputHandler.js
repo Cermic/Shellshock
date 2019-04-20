@@ -9,9 +9,6 @@ var ceilingGravity = -1;
 var slotOffset = 67;
 var yOffset = 6
 
-var APCosts = { jump: 0, horizontalMove: 0, verticalMove:  0 }
-
-
 var InputHandler = function(){ 
 	
 	this.cursors = PhaserMMORPG.game.input.keyboard.createCursorKeys();
@@ -27,15 +24,7 @@ InputHandler.prototype.updateActivePlayer = function(activePlayer, layer)
 	this.checkFacing(activePlayer);
 	this.checkVerticalMove(activePlayer);
 	this.checkHorizontalMove(activePlayer, layer);
-	this.updateText(this.activePlayer.m_actionPoints, this.activePlayer);
 	this.switchWeapon(this.activePlayer, ui_weapon_box);
-}
-
-InputHandler.prototype.updateText = function(newText, activePlayer)
-{
-	ap_Text.setText("AP: " + newText);
-	ap_Text.x = activePlayer.m_sprite.x;
-	ap_Text.y = activePlayer.m_sprite.y - 50;
 }
 
 InputHandler.prototype.switchWeapon = function(activePlayer, ui_weapon_box)
@@ -208,10 +197,8 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		if ((this.cursors.left.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.A))/* && !activePlayer.m_onWall*/)
 		{
 			//Ap Calculation...
-			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
-			{
+		
 				activePlayer.m_sprite.m_moving = true;
-				activePlayer.m_actionPoints -= APCosts.horizontalMove;
 				activePlayer.m_sprite.body.velocity.x = -150;
 
 				if (activePlayer.m_facing == 'left')
@@ -220,7 +207,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 
 					//activePlayer.m_facing = 'left';
 				}
-			}
+			
 			else
 			{
 				activePlayer.m_sprite.animations.play('moveRight');
@@ -229,18 +216,16 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		else if ((this.cursors.right.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.D))/* && !activePlayer.m_onWall*/)
 		{
 			//Ap Calculation...
-			if(this.activePlayer.m_actionPoints >= APCosts.horizontalMove)
-			{
+
 							activePlayer.m_sprite.m_moving = true;
 
-				activePlayer.m_actionPoints -= APCosts.horizontalMove;
 				activePlayer.m_sprite.body.velocity.x = 150;
 
 				if (activePlayer.m_facing == 'right')
 				{
 					activePlayer.m_sprite.animations.play('moveRight');
 				}
-			}
+			
 			else
 			{
 				activePlayer.m_sprite.animations.play('moveLeft');
@@ -248,9 +233,7 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 		}
 		else if((this.cursors.up.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.W)) && (activePlayer.m_onWallLeft || activePlayer.m_onWallRight))
 		{
-			if(this.activePlayer.m_actionPoints >= APCosts.verticalMove)
-			{
-				activePlayer.m_actionPoints -= APCosts.verticalMove;
+
 				activePlayer.m_sprite.body.velocity.y = -150;
 				
 			if(activePlayer.m_onWallLeft){
@@ -261,18 +244,15 @@ InputHandler.prototype.checkHorizontalMove = function(activePlayer, layer)
 			}
 				
 				activePlayer.m_sprite.body.gravity.y = worldGravity;
-			}
 		}
 		else if((this.cursors.down.isDown || PhaserMMORPG.game.input.keyboard.isDown(Phaser.Keyboard.S)) && ((activePlayer.m_onWallLeft || activePlayer.m_onWallRight) || activePlayer.m_onCeiling))
 		{
 			//Ap Calculation...
-			if(this.activePlayer.m_actionPoints >= APCosts.verticalMove)
-			{
-				activePlayer.m_actionPoints -= APCosts.verticalMove;
+
 				activePlayer.m_sprite.body.velocity.y = 150;
 				activePlayer.m_sprite.body.gravity.y = worldGravity;
 				activePlayer.m_sprite.m_moving = true;
-			}
+			
 		}
 		else
 		{
