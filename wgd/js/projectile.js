@@ -94,9 +94,10 @@ Projectile.prototype.update = function()
 		//Check for collisions...
 		for (var i in PhaserMMORPG.playerList)
 		{		
-			//console.log( "X"+PhaserMMORPG.playerList[i].m_sprite.position.x);
+			console.log( "bullet X y "+ this.m_sprite.position.x + ", " + this.m_sprite.position.y);
+			console.log( "Snail X y "+ PhaserMMORPG.playerList[i].m_sprite.position.x + ", " + PhaserMMORPG.playerList[i].m_sprite.position.y);
 	
-			if(PhaserMMORPG.game.physics.arcade.collide(this.m_sprite, PhaserMMORPG.playerList[i].m_sprite))
+			if(PhaserMMORPG.game.physics.arcade.intersects(this.m_sprite, PhaserMMORPG.playerList[i].m_sprite))
 			{
 				console.log("Collided with snail.");
 				this.onCollision();
